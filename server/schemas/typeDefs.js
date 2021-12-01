@@ -1,12 +1,28 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type User {
+  type User implements Node {
     _id: ID
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    friendsConnection(
+      first: Int,
+      after: String,
+      last: Int,
+      before: String
+    ): UserFriendsConnection
+  }
+
+  type UserFriendsConnection {
+    pageInfo: PageInfo!
+    edges: [UserFriendsEdge]
+  }
+
+  type UserFriendsEdge {
+    cursor: String!
+    node: User
+    friendedAt: DateTime
   }
 
   type Thought {

@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const thoughtSchema = new Schema({
+const gameSchema = new Schema({
   Title: {
     type: String,
     required: 'Game needs a title',
@@ -21,6 +21,6 @@ const thoughtSchema = new Schema({
   },
 });
 
-const Thought = model('Thought', thoughtSchema);
+const Game = model('Game', gameSchema);
 
-module.exports = Thought;
+module.exports = Game;

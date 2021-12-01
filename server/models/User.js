@@ -1,11 +1,5 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, connection } = require('mongoose');
 const bcrypt = require('bcrypt');
-
-class User extends Model {
-  checkPassword(loginPw) {
-    return bcrypt.compareSync(loginPw, this.password);
-  }
-}
 
 const userSchema = new Schema({
   username: {
@@ -28,8 +22,26 @@ const userSchema = new Schema({
   games: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Gamew',
+      ref: 'Game',
     },
+  ],
+  friends: [
+    {
+      type:Schema.Types.ObjectId,
+      ref: 'User',
+    }
+  ],
+  blockedUsers: [
+    {
+      type:Schema.Types.ObjectId,
+      ref: 'User',
+    }
+  ],
+  friendRequests: [
+    {
+      type:Schema.Types.ObjectId,
+      ref: 'User',
+    }
   ],
 });
 
