@@ -1,0 +1,19 @@
+{
+  "name": "dangerous-to-go-alone",
+  "version": "1.0.0",
+  "description": "Website dedicated to bringing gamers together to meet new people and enjoy their favorite games together",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AWSMProdigy/dangerous-to-go-alone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AWSMProdigy/dangerous-to-go-alone/issues"
+  },
+  "homepage": "https://github.com/AWSMProdigy/dangerous-to-go-alone#readme"
+}
