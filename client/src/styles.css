@@ -1,0 +1,61 @@
+/* Custom CSS */
+.bg-black {
+    background-color: rgb(24, 24, 24);
+}
+
+.bg-red {
+    background-color: #f00;
+}
+
+.red-text {
+    color: #f00;
+}
+
+.nav-logo {
+    width: auto;
+    height: 50px;
+}
+
+.nav {
+    display: flex;
+    justify-content: end;
+}
+
+.nav > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.navItem {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 20px;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.navItem:hover {
+    color: #f00;
+    transition: 0.3s;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+form > .btn, form > div > .btn {
+    background-color:#f00;
+}
+
+form > .btn:hover {
+    background-color:#ffffff;
+}
+
+#footer-logo {
+    width: auto;
+    height: 30px;
+}
+
+.footer-heart {
+    width: 21px;
+    height: 21px;
+}
