@@ -17,8 +17,8 @@ const resolvers = {
       const params = username ? { username } : {};
       return Games.find(params).sort({ createdAt: -1 });
     },
-    game: async (parent, { gameId }) => {
-      return Game.findOne({ _id: gameId });
+    game: async (parent, { title }) => {
+      return Game.find({ title: {$regex : title} });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -66,6 +66,19 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    addUserGame: async (parent, {title}, context) => {
+      if(context.user) {
+        const game = await Game.findOne({
+          title: title,
+        })
+      }
+
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: {games: game}}
+      );
+      return game;
+    },
     // addComment: async (parent, { thoughtId, commentText }, context) => {
     //   if (context.user) {
     //     return Thought.findOneAndUpdate(
@@ -88,6 +101,15 @@ const resolvers = {
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { friends: userName } }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeFriend: async (parent, { title }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { games: title } }
         );
       }
       throw new AuthenticationError('You need to be logged in!');
