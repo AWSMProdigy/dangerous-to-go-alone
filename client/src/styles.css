@@ -54,3 +54,8 @@ form > .btn:hover {
     width: auto;
     height: 30px;
 }
+
+.footer-heart {
+    width: 21px;
+    height: 21px;
+}

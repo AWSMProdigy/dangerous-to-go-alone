@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/Dangerous-Logo-White.png';
+import heart from '../../assets/8-bit_heart.png';
 import '../../styles.css'
 
 import Auth from '../../utils/auth';
@@ -12,12 +13,14 @@ const Footer = () => {
   };
   return (
     <footer className="mt-auto p-5 bg-black">
-      <div className="container text-left mb-5">
+      <div className="container text-left">
         <div className="row gy-4 flex-shrink-0">
-          <div className="col-lg-4 col-md-6">
+          <div className="col-lg-4 col-md-6 d-flex flex-row">
             <img id="footer-logo" src={logo} alt="Dangerous Logo"></img>
-            <p className="small text-muted mb-0 mt-2">&copy; Copyright 2021 Dangerous To Go Alone</p> 
-            <p className="small text-muted mb-0">All Rights reserved.</p>
+            <p className="small text-muted">&copy; 2021 Dangerous To Go Alone</p>
+            <p className="small text-muted align-self-end">
+              Made with{' '} <img className="footer-heart" src={heart} alt="8-Bit Heart"></img>{' '}by the Beau Street Boys.
+            </p>
           </div>
           <div className="col-lg-3 col-md-6 text-left">
             <h5 className="text-white mb-3">Quick Links</h5>
@@ -54,20 +57,6 @@ const Footer = () => {
                 </form>
             </div>
         </div>
-
-
-        {/* <h4>
-          Made with{' '}
-          <span
-            className="emoji"
-            role="img"
-            aria-label="heart"
-            aria-hidden="false"
-          >
-            ❤️
-          </span>{' '}
-          by the Tech Thoughts team.
-        </h4> */}
       </div>
     </footer>
   );
