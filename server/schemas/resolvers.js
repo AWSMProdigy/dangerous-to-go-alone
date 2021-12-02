@@ -5,8 +5,13 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     // May not need this, only going to find users with certain params
-    users: async () => {
-      return User.find();
+    users: async (parent, {useGames, useAvailability, usePlatform}, context) => {
+      const gameParam = useGames ? { context.user.games } : {};
+      const availabilityParam = useAvailability ? { context.user.availability } : {};
+      const platformParam = usePlatform ? { context.user.games } : {};
+      return User.find({
+        
+      });
     },
     // THis one can stay
     user: async (parent, { username }) => {

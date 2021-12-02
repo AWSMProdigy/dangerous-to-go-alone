@@ -35,6 +35,10 @@ const userSchema = new Schema({
       ref: 'User',
     }
   ],
+  platform: {
+    type: String, 
+    required: true
+  }
   // blockedUsers: [
   //   {
   //     type:Schema.Types.ObjectId,
