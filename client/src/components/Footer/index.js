@@ -7,17 +7,13 @@ import '../../styles.css'
 import Auth from '../../utils/auth';
 
 const Footer = () => {
-  const logout = (event) => {
-    event.preventDefault();
-    Auth.logout();
-  };
   return (
-    <footer className="mt-auto p-5 bg-black">
+    <footer className="mt-4 p-5 bg-black">
       <div className="container text-left">
         <div className="row gy-4 flex-shrink-0">
           <div className="col-lg-4 col-md-6 d-flex flex-row">
-            <img id="footer-logo" src={logo} alt="Dangerous Logo"></img>
-            <p className="small text-muted">&copy; 2021 Dangerous To Go Alone</p>
+            <img id="footer-logo" className="mb-3" src={logo} alt="Dangerous Logo"></img>
+            <p className="small text-muted d-block">&copy; 2021 Dangerous To Go Alone</p>
             <p className="small text-muted align-self-end">
               Made with{' '} <img className="footer-heart" src={heart} alt="8-Bit Heart"></img>{' '}by the Beau Street Boys.
             </p>

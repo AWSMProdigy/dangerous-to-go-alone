@@ -11,7 +11,7 @@ const Header = () => {
     Auth.logout();
   };
   return (
-    <header className="bg-black text-light mb-4 py-3 flex-row align-center">
+    <header className="bg-black text-light py-3 flex-row align-center">
       <div className="container flex-row justify-space-between-lg align-center">
         <nav className="col-12 nav p-3 d-flex justify-content-between">
             <Link className="navItem" to="/">

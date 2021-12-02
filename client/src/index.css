@@ -24,9 +24,10 @@ body {
 /**
  * Render the `main` element consistently in IE.
  */
-main {
+/* main {
   display: block;
-}
+  margin: 0;
+} */
 
 /**
  * Correct the font size and margin on `h1` elements within `section` and
@@ -399,8 +400,8 @@ h6 {
 }
 
 p {
-  font-size: 1.1rem;
-  margin: 0 0 1rem;
+  font-size: 1rem;
+  margin-bottom: 8px !important;
   line-height: 1.5;
 }
 
@@ -1168,14 +1169,13 @@ label form [type='radio'] {
 }
 
 .container {
-  width: 85%;
-  max-width: 1200px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .container.container-fluid {
-  width: 92%;
+  width: 100%;
 }
 
 /* FLEX CONTENT */
@@ -1255,15 +1255,11 @@ label form [type='radio'] {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin-left: -15px;
-  margin-right: -15px;
 }
 
 [class*='col-'] {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
 }
 
 .col-auto {
