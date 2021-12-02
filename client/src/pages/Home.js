@@ -14,7 +14,7 @@ const Home = () => {
         <h1 className="text-light">It's Dangerous To Go Alone...</h1>
         <h1 className="text-light mb-3">Take A Friend!</h1>
         <p className="text-light">Need some buds to play with or just want to organize the time spent gaming with your friends better? You've come to the right place.</p>
-        <p className="text-light">Dangerous To Go Alone helps assists in pairing up friends and randos alike so no one has to play alone!</p>
+        <p className="text-light">Dangerous To Go Alone helps assist in pairing up friends and randos alike so no one has to play alone!</p>
         <Link to="/signup">
           <button type="button" className="custom-btn mt-4">Sign Up</button>
         </Link>
