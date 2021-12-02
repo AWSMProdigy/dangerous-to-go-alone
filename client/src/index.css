@@ -1255,14 +1255,11 @@ label form [type='radio'] {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin-left: -15px;
-  margin-right: -15px;
 }
 
 [class*='col-'] {
   position: relative;
   width: 100%;
-  padding-right: 15px;
 }
 
 .col-auto {
