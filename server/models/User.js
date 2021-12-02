@@ -31,18 +31,18 @@ const userSchema = new Schema({
       ref: 'User',
     }
   ],
-  blockedUsers: [
-    {
-      type:Schema.Types.ObjectId,
-      ref: 'User',
-    }
-  ],
-  friendRequests: [
-    {
-      type:Schema.Types.ObjectId,
-      ref: 'User',
-    }
-  ],
+  // blockedUsers: [
+  //   {
+  //     type:Schema.Types.ObjectId,
+  //     ref: 'User',
+  //   }
+  // ],
+  // friendRequests: [
+  //   {
+  //     type:Schema.Types.ObjectId,
+  //     ref: 'User',
+  //   }
+  // ],
 });
 
 // set up pre-save middleware to create password

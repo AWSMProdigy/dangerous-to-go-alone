@@ -1,43 +1,20 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type User implements Node {
+  type User {
     _id: ID
     username: String
     email: String
     password: String
-    friendsConnection(
-      first: Int,
-      after: String,
-      last: Int,
-      before: String
-    ): UserFriendsConnection
+    games: [Game]
+    friends: [User]
   }
 
-  type UserFriendsConnection {
-    pageInfo: PageInfo!
-    edges: [UserFriendsEdge]
-  }
-
-  type UserFriendsEdge {
-    cursor: String!
-    node: User
-    friendedAt: DateTime
-  }
-
-  type Thought {
+  type Game {
     _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
-  }
-
-  type Comment {
-    _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
+    title: String
+    developer: String
+    releaseYear: String
   }
 
   type Auth {
@@ -48,18 +25,17 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
+    games(username: String!): [Game]
+    game(gameId: String!): Game
     me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addThought(thoughtText: String!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addFriend(thoughtText: String!): User
+    
+    removeFriend(userName: String!): User
   }
 `;
 
