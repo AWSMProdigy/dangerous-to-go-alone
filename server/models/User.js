@@ -25,6 +25,10 @@ const userSchema = new Schema({
       ref: 'Game',
     },
   ],
+  availability:
+  {
+    type: Date,
+  },
   friends: [
     {
       type:Schema.Types.ObjectId,
