@@ -2,9 +2,14 @@ import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import "../../src/library.css";
+import "../../src/styles.css";
 
 import Auth from '../utils/auth';
-
+import battle from "../assets/images/libraryImages/battle.jpg"
+import halo from "../assets/images/libraryImages/halo.jpg"
+import league from "../assets/images/libraryImages/league.jpg"
+import cod from "../assets/images/libraryImages/cod.jpg"
 const Profile = () => {
   const { username: userParam } = useParams();
 
@@ -33,48 +38,53 @@ const Profile = () => {
 
   return (
     <div>
-      <div className="flex-row justify-center mb-3">
-        <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {userParam ? `${user.username}'s` : 'your'} games.
+      <div className="flex-row mb-3">
+        <h2 className="col-12 bg-dark text-white p-3 mb-5">
+          Viewing {userParam ? `${user.username}'s` : 'your'} games
         </h2>
-        <button>Add Games</button>
+
       </div>
       <div class="row">
 
         <div class="col-sm-6 col-md-4">
-            <div class="card border-white">
-                <div class="card-header">Heading 1</div>
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build 
-                           on the card 
-                        title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
+          <div class="card border-white">
+
+            <div class="card-body">
+              <img class="bat" src={battle} alt="battlefield"></img>
             </div>
-            <div class="col-sm-6 col-md-4">
-            <div class="card border-white">
-                <div class="card-header">Heading 1</div>
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build 
-                           on the card 
-                        title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div><div class="col-sm-6 col-md-4">
-            <div class="card border-white">
-                <div class="card-header">Heading 1</div>
-                    <div class="card-body">
-                        <p class="card-text">Some quick example text to build 
-                           on the card 
-                        title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="card border-white">
+
+            <div class="card-body">
+              <img class="bat" src={halo} alt="halo"></img>
             </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="card border-white">
+            
+            <div class="card-body">
+            <img class="bat" src={league} alt="leagueOfLegends"></img>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+          <div class="card border-white">
+            
+            <div class="card-body">
+            <img class="bat" src={cod} alt="callfoduty"></img>
+            </div>
+          </div>
+        </div>
+
       </div>
 
 
 
-     
+
 
 
     </div>
