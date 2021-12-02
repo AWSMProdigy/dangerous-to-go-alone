@@ -7,12 +7,8 @@ import '../../styles.css'
 import Auth from '../../utils/auth';
 
 const Footer = () => {
-  const logout = (event) => {
-    event.preventDefault();
-    Auth.logout();
-  };
   return (
-    <footer className="mt-auto p-5 bg-black">
+    <footer className="mt-4 p-5 bg-black">
       <div className="container text-left">
         <div className="row gy-4 flex-shrink-0">
           <div className="col-lg-4 col-md-6 d-flex flex-row">
