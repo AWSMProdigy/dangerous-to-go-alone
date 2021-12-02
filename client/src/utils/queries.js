@@ -6,10 +6,9 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      thoughts {
+      friends {
         _id
-        thoughtText
-        createdAt
+        username
       }
     }
   }
