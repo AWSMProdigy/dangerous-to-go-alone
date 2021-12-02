@@ -370,7 +370,7 @@ h4,
 h5,
 h6 {
   font-family: 'JetBrains Mono', monospace;
-  margin: 0 0 0.5rem;
+  margin: 0;
   line-height: 1.25;
 }
 
