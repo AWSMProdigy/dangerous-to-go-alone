@@ -1,6 +1,7 @@
 .bat{
     width: 600px;
     height: 400px;
+    border-radius: 0.5rem;
 }
 h2{
     text-align: center;
