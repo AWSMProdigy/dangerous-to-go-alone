@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/89664909/144477141-810f04c2-1c9c-4ec7-8993-b56bbce1370a.png)
+![image](https://user-images.githubusercontent.com/89664909/144488535-fceef6ce-e57d-40e8-ae15-51bf0d8ef83d.png)
 
 ## Description
 Website dedicated to bringing gamers together to meet new people and enjoy their favorite games together
