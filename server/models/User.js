@@ -25,6 +25,9 @@ const userSchema = new Schema({
       ref: 'Game',
     },
   ],
+  description: {
+    type: String
+  },
   availability:
   {
     type: Date,
@@ -35,6 +38,10 @@ const userSchema = new Schema({
       ref: 'User',
     }
   ],
+  platform: {
+    type: String, 
+    required: true
+  }
   // blockedUsers: [
   //   {
   //     type:Schema.Types.ObjectId,

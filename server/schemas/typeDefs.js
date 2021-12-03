@@ -23,7 +23,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
+    users(useGames: Boolean!, useAvailability: Boolean!, usePlatform: Boolean!): [User]
     user(username: String!): User
     games(username: String!): [Game]
     game(gameId: String!): Game
@@ -36,7 +36,11 @@ const typeDefs = gql`
     addFriend(friendName: String!): User
     addUserGame(title: String!): Game
     removeFriend(userName: String!): User
-    removeGame(title: String!): Game
+    removeGame(title: String!): User
+    updateGames(title: String!): User
+    updateAvailability(availability: String!): User
+    updatePlatform(platform: String!): User
+    updateDesc(description: String!): User
   }
 `;
 

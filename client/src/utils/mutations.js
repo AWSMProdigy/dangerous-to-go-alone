@@ -32,18 +32,36 @@ export const ADD_FRIEND = gql`
   }
 `;
 
-export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        createdAt
-      }
+export const REMOVE_FRIEND = gql`
+  mutation removeFriend($friendName: String!) {
+    removeFriend(friendName: $friendName) {
+      username
     }
   }
 `;
+
+export const ADD_GAME = gql`
+  mutation addUserGame($title: String!) {
+    addUserGame(title: $title) {
+     games
+    }
+  }
+`;
+
+export const REMOVE_GAME = gql`
+  mutation removeGame($title: String!) {
+    removeGame(title: $title) {
+      games
+    }
+  }
+`;
+
+export const UPDATE_GAMES = gql`
+  mutation updateGames($title: String!) {
+    updateGames(title: $title) {
+      games
+    }
+  }
+`;
+
+
