@@ -23,7 +23,7 @@ const Header = () => {
                   <Link className="navItem" to="/me">
                   <h6>Profile</h6>
                   </Link>
-                  <Link className="navItem" to="/library">
+                  <Link className="navItem" to="/Library">
                   <h6>My Games</h6>
                   </Link>
                   <Link className="navItem" onClick={logout}>

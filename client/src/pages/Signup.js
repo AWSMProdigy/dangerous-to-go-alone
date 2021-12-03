@@ -76,7 +76,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <button
-                  className="custom-btn-join mt-3"
+                  className="custom-btn mt-3"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >
