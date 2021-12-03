@@ -8,7 +8,7 @@ import league from "../assets/images/libraryImages/LoL.jpg"
 import cod from "../assets/images/libraryImages/blackops.jpg"
 import forza from "../assets/images/libraryImages/forza.jpg"
 import stardew from "../assets/images/libraryImages/stardew.jpg"
-const Library = () =>{
+const Wishlist = () =>{
 return (
     <div className="container mb-3">
       <div className="flex-row mb-3">
@@ -64,4 +64,4 @@ return (
   );
 };
 
-export default Library;
+export default Wishlist;
