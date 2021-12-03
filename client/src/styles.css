@@ -129,12 +129,37 @@ form > .btn:hover {
     background-color:#ffffff;
 }
 
+.login-form-input {
+    border: 1px solid;
+    border-color: #242424;
+    border-radius: 0.5rem;
+    padding: 10px 10px;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+
 .popular-now {
     border-radius: 0.5rem;
 }
 
 .join-us {
     text-align: center;
+}
+
+#redirect-text-signup, #redirect-text-login {
+    margin-bottom: 0 !important;
+}
+
+.redirect-link {
+    text-decoration: none;
+    color: rgb(24, 24, 24);
+}
+
+.redirect-link:hover {
+    text-decoration: none;
+    color: #f00;
 }
 
 #footer-logo {
