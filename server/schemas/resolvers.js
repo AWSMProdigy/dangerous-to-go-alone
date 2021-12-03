@@ -64,13 +64,15 @@ const resolvers = {
         const friend = await User.findOne({
           username: friendName,
         });
+        //Make sure character exists
+        if(friend){
+          await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { friends: friendName } }
+          );
+        }
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { friends: friend } }
-        );
-
-        return friend;
+        return context.user;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
