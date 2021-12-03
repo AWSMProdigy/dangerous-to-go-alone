@@ -39,10 +39,10 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
+    <main className="flex-row justify-center mb-4 mt-5">
+      <div className="col-12 col-lg-4">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
+          <h4 className="card-header bg-black red-text p-3">Sign Up</h4>
           <div className="card-body">
             {data ? (
               <p>
@@ -50,9 +50,9 @@ const Signup = () => {
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
+              <form className="d-flex flex-column justify-content-center" onSubmit={handleFormSubmit}>
                 <input
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="Your username"
                   name="username"
                   type="text"
@@ -60,7 +60,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -68,7 +68,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="******"
                   name="password"
                   type="password"
@@ -76,7 +76,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <button
-                  className="btn btn-block btn-primary"
+                  className="custom-btn-join mt-3"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >
@@ -90,6 +90,10 @@ const Signup = () => {
                 {error.message}
               </div>
             )}
+            <p id="redirect-text-login" className="mt-3 d-flex justify-content-center"> Already have an account?</p>
+            <Link className="redirect-link d-flex justify-content-center" to="/login">
+            <p>Sign In</p>
+            </Link>
           </div>
         </div>
       </div>
