@@ -221,7 +221,11 @@ form > .btn:hover {
 .border{
     border-radius: 0.5rem;
 }
-
+.addgames-btn{
+    display: flex;
+    justify-content: space-between;
+    float: right;
+}
 /* Footer CSS */
 #footer-logo {
     width: auto;
