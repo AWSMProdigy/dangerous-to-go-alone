@@ -4,6 +4,8 @@ import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import "../../src/styles.css";
 import profile from "../assets/images/profile/profile.jpg";
+import { ADD_FRIEND } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
@@ -14,6 +16,27 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
+
+  const [addFriend, { error }] = useMutation(ADD_FRIEND);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(event.target.searchInput.value);
+    try {
+      const { data } = await addFriend({
+        variables: {
+          friendName: event.target.searchInput.value.trim()
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+
+  
+
 
   const user = data?.me || data?.user || {};
   // redirect to personal profile page if username is yours
@@ -40,7 +63,7 @@ const Profile = () => {
         <img className="image-fluid profile-img" src={profile} alt=""></img>
         <div className="col-5 p-3">
             <h2 className=" mb-3 d-flex justify-content-start">
-            <svg className="online-icon mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
+            <svg className="online-icon mr-2 bi bi-circle-fill" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" viewBox="0 0 16 16">
               <circle cx="8" cy="8" r="8"/></svg>
               {userParam ? `${user.username}'s` : "User"}'s Profile 
             </h2>
@@ -50,15 +73,13 @@ const Profile = () => {
         </div>
         <div className="col-3 p-3 ml-5">
           <div className="friends-search-bar">
-            <Link className="navItem" to="/search">
-                    <form className="form-inline input-group" id="searchFriend">
-                      <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
-                      <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                            </svg>
-                      </button>
-                    </form>
-            </Link>
+                <form className="form-inline input-group" id="searchFriend" onSubmit={handleFormSubmit}>
+                  <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
+                  <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                  </button>
+                </form>
           </div>
           <div className="sidebar p-3">
             <h4><b>Games</b> <span className="red-text">86</span></h4>
@@ -79,7 +100,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div className="row">
 
       </div>
 

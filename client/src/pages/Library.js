@@ -16,38 +16,38 @@ return (
         </h2>
 
       </div>
-      <div class="row">
+      <div className="row">
 
-        <div class="col-sm-6 col-md-4">
-          <div class="card border-white">
+        <div className="col-sm-6 col-md-4">
+          <div className="card border-white">
 
-            <div class="card-body">
-              <img class="bat" src={battle} alt="battlefield"></img>
+            <div className="card-body">
+              <img className="bat" src={battle} alt="battlefield"></img>
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="card border-white">
+        <div className="col-sm-6 col-md-4">
+          <div className="card border-white">
 
-            <div class="card-body">
-              <img class="bat" src={halo} alt="halo"></img>
+            <div className="card-body">
+              <img className="bat" src={halo} alt="halo"></img>
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-md-4">
-          <div class="card border-white">
+        <div className="col-sm-6 col-md-4">
+          <div className="card border-white">
             
-            <div class="card-body">
-            <img class="bat" src={league} alt="leagueOfLegends"></img>
+            <div className="card-body">
+            <img className="bat" src={league} alt="leagueOfLegends"></img>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-6 col-md-4">
-          <div class="card border-white">
+        <div className="col-sm-6 col-md-4">
+          <div className="card border-white">
             
-            <div class="card-body">
-            <img class="bat" src={cod} alt="callfoduty"></img>
+            <div className="card-body">
+            <img className="bat" src={cod} alt="callfoduty"></img>
             </div>
           </div>
         </div>
