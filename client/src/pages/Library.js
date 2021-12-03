@@ -23,10 +23,7 @@ const Library = () => {
   </div>
 </nav>
 
-
-
       <div class="row">
-
         <div class="col-sm-6 col-lg-3">
           <div class="">
             <div class="card-body">
@@ -34,7 +31,7 @@ const Library = () => {
             </div>
           </div>
         </div>
-
+    
         <div class="col-sm-6 col-lg-3">
           <div class="">
             <div class="card-body">
@@ -50,7 +47,7 @@ const Library = () => {
             </div>
           </div>
         </div>
-
+  
         <div class="col-sm-6 col-lg-3">
           <div class="">
             <div class="card-body">

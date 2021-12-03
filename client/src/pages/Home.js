@@ -21,7 +21,7 @@ const Home = () => {
         <p className="text-light">Need some buds to play with or just want to organize the time spent gaming with your friends better? You've come to the right place.</p>
         <p className="text-light">Dangerous To Go Alone helps assist in pairing up friends and randos alike so no one has to play alone!</p>
         <Link to="/signup">
-          <button type="button" class="custom-btn mt-3">Find Some Buds</button>
+          <button type="button" className="custom-btn mt-3">Find Some Buds</button>
         </Link>
       </div>
       </div>
@@ -31,7 +31,7 @@ const Home = () => {
         <h1 className="text-light mb-3 ml-3">Keep a Game Library</h1>
         <p className="text-light ml-3">Collect your games across all platforms into one convenient space. Even better, your friends can see what you choose to share so you can compare games and plan gaming sessions.</p>
         <Link to="/signup">
-          <button type="button" class="custom-btn mt-3 ml-3">Build My Library</button>
+          <button type="button" className="custom-btn mt-3 ml-3">Build My Library</button>
         </Link>
       </div>
       <div className="col-8 g-0">
@@ -47,7 +47,7 @@ const Home = () => {
         <h1 className="text-light">Pair Up Anywhere</h1>
         <p className="text-light">We encourage cross-platform gaming here. Match up with a friend on any console or PC.</p>
         <Link to="/signup">
-          <button type="button" class="custom-btn mt-3">Match It Up</button>
+          <button type="button" className="custom-btn mt-3">Match It Up</button>
         </Link>
       </div>
       </div>
@@ -72,7 +72,9 @@ const Home = () => {
           <h3 className="pt-5 text-light">Ready To Join Us?</h3>
           <p className="justify-content-center text-light">Join the biggest community of multiplayer gamers on the internet.</p>
           <Link to="/signup">
-          <button type="button" class="custom-btn mt-3 mb-4">Sign Up</button>
+
+          <button type="button" className="custom-btn mt-3">Sign Up</button>
+
           </Link>
         </div>
       </div>
