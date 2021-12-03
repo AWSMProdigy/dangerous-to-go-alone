@@ -25,6 +25,9 @@ const userSchema = new Schema({
       ref: 'Game',
     },
   ],
+  description: {
+    type: String
+  },
   availability:
   {
     type: Date,

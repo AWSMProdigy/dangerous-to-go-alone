@@ -6,12 +6,13 @@ const resolvers = {
   Query: {
     // May not need this, only going to find users with certain params
     users: async (parent, {useGames, useAvailability, usePlatform}, context) => {
-      const gameParam = useGames ? { context.user.games } : {};
-      const availabilityParam = useAvailability ? { context.user.availability } : {};
-      const platformParam = usePlatform ? { context.user.games } : {};
-      return User.find({
-        
-      });
+      let games = context.user.games;
+      let availability = context.user.availability;
+      let platform = context.user.platform;
+      const gameParam = useGames ? { games } : {};
+      const availabilityParam = useAvailability ? { availability } : {};
+      const platformParam = usePlatform ? { platform } : {};
+      return User.find({ gameParam, availabilityParam, availabilityParam });
     },
     // THis one can stay
     user: async (parent, { username }) => {
@@ -84,23 +85,6 @@ const resolvers = {
       );
       return game;
     },
-    // addComment: async (parent, { thoughtId, commentText }, context) => {
-    //   if (context.user) {
-    //     return Thought.findOneAndUpdate(
-    //       { _id: thoughtId },
-    //       {
-    //         $addToSet: {
-    //           comments: { commentText, commentAuthor: context.user.username },
-    //         },
-    //       },
-    //       {
-    //         new: true,
-    //         runValidators: true,
-    //       }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
     removeFriend: async (parent, { userName }, context) => {
       if (context.user) {
         await User.findOneAndUpdate(
@@ -110,7 +94,7 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    removeFriend: async (parent, { title }, context) => {
+    removeGame: async (parent, { title }, context) => {
       if (context.user) {
         await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -119,23 +103,42 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    // removeComment: async (parent, { thoughtId, commentId }, context) => {
-    //   if (context.user) {
-    //     return Thought.findOneAndUpdate(
-    //       { _id: thoughtId },
-    //       {
-    //         $pull: {
-    //           comments: {
-    //             _id: commentId,
-    //             commentAuthor: context.user.username,
-    //           },
-    //         },
-    //       },
-    //       { new: true }
-    //     );
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+    updateGames: async (parent, { title }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $push: { games: title } }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    updateAvailability: async (parent, { availability }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { availability: availability } }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    updatePlatform: async (parent, { platform }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { platform: platform } }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    updateDesc: async (parent, { description }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { description: description } }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
 };
 
