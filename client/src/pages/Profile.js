@@ -4,10 +4,15 @@ import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import "../../src/styles.css";
 import profile from "../assets/images/profile/profile.jpg";
+
 import stardew from "../assets/images/profile/stardew.jpg";
 import mario from "../assets/images/profile/mariokart.jpg";
 import itTakes2 from "../assets/images/profile/ittakes2.jpg";
 import ac from "../assets/images/profile/ac.jpg";
+
+import { ADD_FRIEND } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
+
 
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
@@ -18,6 +23,27 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
+
+  const [addFriend, { error }] = useMutation(ADD_FRIEND);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(event.target.searchInput.value);
+    try {
+      const { data } = await addFriend({
+        variables: {
+          friendName: event.target.searchInput.value.trim()
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+
+  
+
 
   const user = data?.me || data?.user || {};
   // redirect to personal profile page if username is yours
@@ -39,6 +65,7 @@ const Profile = () => {
   // }
 
   return (
+
     <div className="container">
     <div className="row py-3">
         <div className="col-3 order-2" id="sticky-sidebar">
@@ -46,7 +73,7 @@ const Profile = () => {
                 <div className="flex-column">
                 <div className="friends-search-bar">
                     <Link className="navItem" to="/search">
-                      <form className="form-inline input-group" id="searchFriend">
+                      <form className="form-inline input-group" id="searchFriend" onSubmit={handleFormSubmit}>
                         <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
                         <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -89,6 +116,7 @@ const Profile = () => {
               <h6 className="mt-2 ml-2"><b>Last Online:</b> Now</h6>
               <p className="mt-2 ml-2 mt-4">Hey, I'm Sarah. I play all types of games but particularly enjoy multiplayer on PC, Switch, and Playstation. I'm into more casual games so if you're into Stardew Valley, Animal Crossing, or Mario Kart, let's play together! </p>
             </div>
+
           </div>
           <div className="row mt-5 mb-4">
             <h2>Upcoming Schedule</h2>
@@ -119,6 +147,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
+
     </div>
   </div>
   );
