@@ -8,7 +8,7 @@ import Auth from '../../utils/auth';
 
 const Footer = () => {
   return (
-    <footer className="mt-4 p-5 bg-black">
+    <footer className="pt-5 p-5 bg-black">
       <div className="container text-left">
         <div className="row gy-4 flex-shrink-0">
           <div className="col-lg-4 col-md-6 d-flex flex-row">
@@ -23,10 +23,10 @@ const Footer = () => {
             <div>
               {Auth.loggedIn() ? (
                 <>
-                  <Link className="navItem" to="/profile">
+                  <Link className="navItem" to="/me">
                   <h6>Profile</h6>
                   </Link>
-                  <Link className="navItem" to="/library">
+                  <Link className="navItem" to="/Library">
                   <h6>My Games</h6>
                   </Link>
                 </>

@@ -52,27 +52,29 @@ const Home = () => {
       </div>
       </div>
 
-      <div className="row mt-4">
+      <div className="row pt-4 pb-5 bg-black popular-row">
         <div className="join-us">
-        <h1 className="mt-3">Popular Right Now</h1>
+          <h1 className="pt-5 text-light">Popular Right Now</h1>
           <div className="flex-row">
             <div className="col-3 mt-3">
-              <img className="popular-now" src={battlefield} alt="Man looking over shoulder holding gun"></img>
+              <img className="popular-item" src={battlefield} alt="Man looking over shoulder holding gun"></img>
             </div>
             <div className="col-3 mt-3">
-              <img className="popular-now" src={forza} alt="Red Mercedes in the dirt"></img>
+              <img className="popular-item" src={forza} alt="Red Mercedes in the dirt"></img>
             </div>
             <div className="col-3 mt-3">
-              <img className="popular-now" src={stardew} alt="Pixel house in front of mountains"></img>
+              <img className="popular-item" src={stardew} alt="Pixel house in front of mountains"></img>
             </div>
             <div className="col-3 mt-3">
-              <img className="popular-now" src={halo} alt="Soldier holding gun"></img>
+              <img className="popular-item" src={halo} alt="Soldier holding gun"></img>
             </div>
           </div>
-          <h3 className="mt-5">Ready To Join Us?</h3>
-          <p className="justify-content-center">Join the biggest community of multiplayer gamers on the internet.</p>
+          <h3 className="pt-5 text-light">Ready To Join Us?</h3>
+          <p className="justify-content-center text-light">Join the biggest community of multiplayer gamers on the internet.</p>
           <Link to="/signup">
+
           <button type="button" className="custom-btn-join mt-3">Sign Up</button>
+
           </Link>
         </div>
       </div>

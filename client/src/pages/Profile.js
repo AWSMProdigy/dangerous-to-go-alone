@@ -62,6 +62,7 @@ const Profile = () => {
       <div className="flex-row mb-3">
         <img className="image-fluid profile-img" src={profile} alt=""></img>
         <div className="col-5 p-3">
+
             <h2 className=" mb-3 d-flex justify-content-start">
             <svg className="online-icon mr-2 bi bi-circle-fill" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" viewBox="0 0 16 16">
               <circle cx="8" cy="8" r="8"/></svg>
