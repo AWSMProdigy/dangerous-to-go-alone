@@ -43,9 +43,7 @@ export const REMOVE_FRIEND = gql`
 export const ADD_GAME = gql`
   mutation addUserGame($title: String!) {
     addUserGame(title: $title) {
-      user{
-        games
-      }
+     games
     }
   }
 `;
@@ -53,9 +51,15 @@ export const ADD_GAME = gql`
 export const REMOVE_GAME = gql`
   mutation removeGame($title: String!) {
     removeGame(title: $title) {
-      user{
-        games
-      }
+      games
+    }
+  }
+`;
+
+export const UPDATE_GAMES = gql`
+  mutation updateGames($title: String!) {
+    updateGames(title: $title) {
+      games
     }
   }
 `;

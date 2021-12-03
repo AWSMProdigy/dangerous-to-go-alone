@@ -36,8 +36,8 @@ const typeDefs = gql`
     addFriend(friendName: String!): User
     addUserGame(title: String!): Game
     removeFriend(userName: String!): User
-    removeGame(title: String!): Game
-    updateGames(title: String!): Game
+    removeGame(title: String!): User
+    updateGames(title: String!): User
     updateAvailability(availability: String!): User
     updatePlatform(platform: String!): User
     updateDesc(description: String!): User
