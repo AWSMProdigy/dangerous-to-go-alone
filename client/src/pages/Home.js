@@ -73,7 +73,7 @@ const Home = () => {
           <p className="justify-content-center text-light">Join the biggest community of multiplayer gamers on the internet.</p>
           <Link to="/signup">
 
-          <button type="button" className="custom-btn-join mt-3">Sign Up</button>
+          <button type="button" className="custom-btn mt-3">Sign Up</button>
 
           </Link>
         </div>

@@ -124,23 +124,23 @@ const Profile = () => {
               <div className="col-12 flex-row mt-2">
                 <div className="col-3">
                     <img className="scheduled-game mt-3" src={stardew} alt="Pixel house in front of mountains"></img>
-                    <h6 className="mt-3"><b>Sat, Dec 11</b></h6>
+                    <h6 className="mt-3 red-text"><b>Sat, Dec 11</b></h6>
                     <p className="small"> 7:00pm - 9:00pm EST</p>
                 </div>
                 <div className="col-3 ml-4">
                     <img className="scheduled-game mt-3" src={mario} alt="Pixel house in front of mountains"></img>
-                    <h6 className="mt-3"><b>Sun, Dec 12</b></h6>
+                    <h6 className="mt-3 red-text"><b>Sun, Dec 12</b></h6>
                     <p className="small"> 6:00pm - 10:00pm EST</p>
                 </div>
                 <div className="col-3 ml-4">
                     <img className="scheduled-game mt-3" src={itTakes2} alt="Pixel house in front of mountains"></img>
-                    <h6 className="mt-3"><b>Wed, Dec 15</b></h6>
+                    <h6 className="mt-3 red-text"><b>Wed, Dec 15</b></h6>
                     <p className="small"> 9:00pm - 11:00pm EST</p>
                 </div>
                 <div className="col-3">
                     <img className="scheduled-game mt-3" src={ac} alt="Pixel house in front of mountains"></img>
-                    <h6 className="mt-3"><b>Fri, Dec 17</b></h6>
-                    <p className="small"> 10:00pm - 1:00am EST</p>
+                    <h6 className="mt-3 red-text"><b>Fri, Dec 17</b></h6>
+                    <p className="small"> 10:00pm - 1:00pm EST</p>
                 </div>
                 
               </div>
