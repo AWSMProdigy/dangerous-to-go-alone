@@ -24,9 +24,11 @@ const Profile = () => {
     variables: { username: userParam },
   });
 
+  console.log(data);
+
   const [addFriend, { error }] = useMutation(ADD_FRIEND);
 
-  const handleFormSubmit = async (event) => {
+  const handleFriendSubmit = async (event) => {
     event.preventDefault();
     console.log(event.target.searchInput.value);
     try {
@@ -73,7 +75,7 @@ const Profile = () => {
                 <div className="flex-column">
                 <div className="friends-search-bar">
                     <Link className="navItem" to="/search">
-                      <form className="form-inline input-group" id="searchFriend" onSubmit={handleFormSubmit}>
+                      <form className="form-inline input-group" id="searchFriend" onSubmit={handleFriendSubmit}>
                         <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
                         <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -110,7 +112,7 @@ const Profile = () => {
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
                 <circle cx="8" cy="8" r="8"/></svg>
-                {userParam ? `${user.username}'s` : "User"}'s Profile 
+                {`${user.username}'s`} Profile 
               </h2>
               <h6 className="ml-2"><b>Platforms:</b> PC, Switch, Playstation</h6>
               <h6 className="mt-2 ml-2"><b>Last Online:</b> Now</h6>

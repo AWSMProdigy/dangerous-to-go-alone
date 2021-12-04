@@ -8,6 +8,9 @@ const typeDefs = gql`
     password: String
     games: [Game]
     friends: [String]
+    description: String
+    availability: String
+    platform: String
   }
 
   type Game {
