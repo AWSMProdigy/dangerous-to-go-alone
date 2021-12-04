@@ -6,22 +6,15 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    games: [Game]
+    friends: [User]
   }
 
-  type Thought {
+  type Game {
     _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
-  }
-
-  type Comment {
-    _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
+    title: String
+    developer: String
+    releaseYear: String
   }
 
   type Auth {
@@ -30,20 +23,24 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
+    users(useGames: Boolean!, useAvailability: Boolean!, usePlatform: Boolean!): [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
+    games(username: String!): [Game]
+    game(gameId: String!): Game
     me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addThought(thoughtText: String!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addFriend(friendName: String!): User
+    addUserGame(title: String!): Game
+    removeFriend(userName: String!): User
+    removeGame(title: String!): User
+    updateGames(title: String!): User
+    updateAvailability(availability: String!): User
+    updatePlatform(platform: String!): User
+    updateDesc(description: String!): User
   }
 `;
 

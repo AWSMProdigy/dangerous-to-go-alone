@@ -41,10 +41,10 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
+    <main className="flex-row justify-center mb-2 mt-5">
+      <div className="col-12 col-lg-4">
         <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
+          <h4 className="card-header bg-black red-text p-3">Login</h4>
           <div className="card-body">
             {data ? (
               <p>
@@ -52,9 +52,9 @@ const Login = (props) => {
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
+              <form className="d-flex flex-column justify-content-center" onSubmit={handleFormSubmit}>
                 <input
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -62,7 +62,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="login-form-input"
                   placeholder="******"
                   name="password"
                   type="password"
@@ -70,7 +70,7 @@ const Login = (props) => {
                   onChange={handleChange}
                 />
                 <button
-                  className="btn btn-block btn-primary"
+                  className="custom-btn mt-3"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >
@@ -84,6 +84,10 @@ const Login = (props) => {
                 {error.message}
               </div>
             )}
+            <p id="redirect-text-signup" className="mt-4 d-flex justify-content-center text-muted"> Don't have an account?</p>
+            <Link className="redirect-link d-flex justify-content-center" to="/signup">
+            <p>Sign Up</p>
+            </Link>
           </div>
         </div>
       </div>

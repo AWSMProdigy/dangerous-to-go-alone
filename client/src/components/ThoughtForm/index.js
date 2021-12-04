@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
-import { ADD_THOUGHT } from '../../utils/mutations';
+import { ADD_FRIEND } from '../../utils/mutations';
 import { QUERY_THOUGHTS, QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
@@ -12,44 +12,45 @@ const ThoughtForm = () => {
 
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addThought, { error }] = useMutation(ADD_THOUGHT, {
-    update(cache, { data: { addThought } }) {
-      try {
-        const { thoughts } = cache.readQuery({ query: QUERY_THOUGHTS });
+  const [addFriend, { error }] = useMutation(ADD_FRIEND);
+  //   , {
+  //   update(cache, { data: { addThought } }) {
+  //     try {
+  //       const { thoughts } = cache.readQuery({ query: QUERY_THOUGHTS });
 
-        cache.writeQuery({
-          query: QUERY_THOUGHTS,
-          data: { thoughts: [addThought, ...thoughts] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
+  //       cache.writeQuery({
+  //         query: QUERY_THOUGHTS,
+  //         data: { thoughts: [addThought, ...thoughts] },
+  //       });
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
 
-      // update me object's cache
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
-      });
-    },
-  });
+  //     // update me object's cache
+  //     const { me } = cache.readQuery({ query: QUERY_ME });
+  //     cache.writeQuery({
+  //       query: QUERY_ME,
+  //       data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
+  //     });
+  //   },
+  // });
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  // const handleFormSubmit = async (event) => {
+  //   event.preventDefault();
 
-    try {
-      const { data } = await addThought({
-        variables: {
-          thoughtText,
-          thoughtAuthor: Auth.getProfile().data.username,
-        },
-      });
+  //   try {
+  //     const { data } = await addThought({
+  //       variables: {
+  //         thoughtText,
+  //         thoughtAuthor: Auth.getProfile().data.username,
+  //       },
+  //     });
 
-      setThoughtText('');
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //     setThoughtText('');
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -75,7 +76,7 @@ const ThoughtForm = () => {
           </p>
           <form
             className="flex-row justify-center justify-space-between-md align-center"
-            onSubmit={handleFormSubmit}
+            // onSubmit={handleFormSubmit}
           >
             <div className="col-12 col-lg-9">
               <textarea

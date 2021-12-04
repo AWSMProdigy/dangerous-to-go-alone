@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, connection } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -19,14 +19,44 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  thoughts: [
+  games: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Thought',
+      ref: 'Game',
     },
   ],
+  description: {
+    type: String
+  },
+  availability:
+  {
+    type: Date,
+  },
+  friends: [
+    {
+      type:Schema.Types.ObjectId,
+      ref: 'User',
+    }
+  ],
+  platform: {
+    type: String, 
+    required: true
+  }
+  // blockedUsers: [
+  //   {
+  //     type:Schema.Types.ObjectId,
+  //     ref: 'User',
+  //   }
+  // ],
+  // friendRequests: [
+  //   {
+  //     type:Schema.Types.ObjectId,
+  //     ref: 'User',
+  //   }
+  // ],
 });
 
+// set up pre-save middleware to create password
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
@@ -36,6 +66,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// compare the incoming password with the hashed password
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };

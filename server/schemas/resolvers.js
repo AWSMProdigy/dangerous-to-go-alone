@@ -1,25 +1,34 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Thought } = require('../models');
+const { User, Game } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    users: async () => {
-      return User.find().populate('thoughts');
+    // May not need this, only going to find users with certain params
+    users: async (parent, {useGames, useAvailability, usePlatform}, context) => {
+      let games = context.user.games;
+      let availability = context.user.availability;
+      let platform = context.user.platform;
+      const gameParam = useGames ? { games } : {};
+      const availabilityParam = useAvailability ? { availability } : {};
+      const platformParam = usePlatform ? { platform } : {};
+      return User.find({ gameParam, availabilityParam, availabilityParam });
     },
+    // THis one can stay
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('thoughts');
+      return User.findOne({ username });
     },
-    thoughts: async (parent, { username }) => {
+
+    games: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
+      return Games.find(params).sort({ createdAt: -1 });
     },
-    thought: async (parent, { thoughtId }) => {
-      return Thought.findOne({ _id: thoughtId });
+    game: async (parent, { title }) => {
+      return Game.find({ title: {$regex : title} });
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id }).populate('friends');
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -31,6 +40,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -48,69 +58,101 @@ const resolvers = {
 
       return { token, user };
     },
-    addThought: async (parent, { thoughtText }, context) => {
+
+    addFriend: async (parent, { friendName }, context) => {
       if (context.user) {
-        const thought = await Thought.create({
-          thoughtText,
-          thoughtAuthor: context.user.username,
+        const friend = await User.findOne({
+          username: friendName,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { thoughts: thought._id } }
+          { $addToSet: { friends: friend } }
         );
 
-        return thought;
+        return friend;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    addComment: async (parent, { thoughtId, commentText }, context) => {
-      if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    removeThought: async (parent, { thoughtId }, context) => {
-      if (context.user) {
-        const thought = await Thought.findOneAndDelete({
-          _id: thoughtId,
-          thoughtAuthor: context.user.username,
-        });
 
+    addUserGame: async (parent, {title}, context) => {
+      if(context.user) {
+        const game = await Game.findOne({
+          title: title,
+        })
+      }
+
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: {games: game}}
+      );
+      return game;
+    },
+
+    removeFriend: async (parent, { userName }, context) => {
+      if (context.user) {
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { thoughts: thought._id } }
+          { $pull: { friends: userName } }
         );
-
-        return thought;
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    removeComment: async (parent, { thoughtId, commentId }, context) => {
+    
+
+    removeGame: async (parent, { title }, context) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
-          {
-            $pull: {
-              comments: {
-                _id: commentId,
-                commentAuthor: context.user.username,
-              },
-            },
-          },
-          { new: true }
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { games: title } }
         );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+
+    },
+
+    updateGames: async (parent, { title }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $push: { games: title } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateAvailability: async (parent, { availability }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { availability: availability } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updatePlatform: async (parent, { platform }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { platform: platform } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateDesc: async (parent, { description }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { description: description } }
+        );
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
