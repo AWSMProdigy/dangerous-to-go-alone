@@ -15,7 +15,7 @@ return (
             <th className="col-8">Stardew Valley</th>
             <th><a href="https://www.amazon.com/Stardew-Valley-Nintendo-Switch/dp/B08F8KRRGL/ref=sr_1_3?keywords=stardew+valley&qid=1638560414&sr=8-3" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">Amazon</button></a></th>
-            <th><a href="https://www.amazon.com/Stardew-Valley-Nintendo-Switch/dp/B08F8KRRGL/ref=sr_1_3?keywords=stardew+valley&qid=1638560414&sr=8-3" target="_blank" rel="noreferrer">
+            <th><a href="https://store.steampowered.com/app/413150/Stardew_Valley/" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">Steam</button></a></th>
             <th><a href="https://www.gamestop.com/video-games/nintendo-switch/products/stardew-valley---nintendo-switch/220265.html" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">GameStop</button></a></th>

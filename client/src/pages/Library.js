@@ -1,5 +1,4 @@
 import React from 'react';
-import "../../src/library.css";
 import "../../src/styles.css";
 
 
