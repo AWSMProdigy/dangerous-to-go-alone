@@ -11,7 +11,6 @@ import stardew from "../assets/images/libraryImages/stardew.jpg"
 const Library = () => {
   return (
 
-      </div>
       <div class="row">
 
         <div class="col-sm-6 col-md-4">
@@ -70,13 +69,6 @@ const Library = () => {
         </div>
 
       </div>
-
-
-
-
-
-
-    </div>
   );
 };
 
