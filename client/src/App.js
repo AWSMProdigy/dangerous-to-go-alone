@@ -15,6 +15,8 @@ import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Library from './pages/Library';
+import Wishlist from './pages/Wishlist';
+import Game from './pages/Game';
 
 import './styles.css';
 
@@ -66,6 +68,12 @@ function App() {
             </Route>
             <Route exact path="/library">
               <Library />
+            </Route>
+            <Route exact path="/wishlist">
+              <Wishlist />
+            </Route>
+            <Route exact path="/game/:title">
+              <Game />
             </Route>
           </div>
           <Footer />

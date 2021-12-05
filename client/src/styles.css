@@ -1,7 +1,8 @@
-/* Custom CSS */
+/* Homepage CSS */
 .container-custom {
     width: 100%;
     margin: 0;
+    min-height: 100vh;
 }
 
 .bg-black {
@@ -20,6 +21,11 @@ h1, h2, h3, h4, h5 , h6 {
     margin-bottom: 0 !important;
 }
 
+#custom-toggler, .navbar-toggler, .navbar-toggler-icon {
+    border-color: #f00;
+}
+
+/* Nav CSS */
 .nav-logo {
     width: auto;
     height: 50px;
@@ -51,6 +57,7 @@ h1, h2, h3, h4, h5 , h6 {
     list-style-type: none;
 }
 
+/* Form + Hero Images CSS */
 form > .btn, form > div > .btn {
     background-color: #f00;
     color: #ffffff;
@@ -61,8 +68,16 @@ form > .btn, form > div > .btn {
     padding: 80px 0 80px 0;
 }
 
+.hero-row-one {
+    padding: 0 0 80px 0;
+}
+
+.game-library {
+    padding-top: 50px;
+}
+
 .friends-btn {
-display: inline-block;
+  display: inline-block;
   font-size: 1.5rem;
   font-weight: 400;
   font-family: 'JetBrains Mono', monospace;
@@ -105,7 +120,7 @@ display: inline-block;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.custom-btn {
+.custom-btn, .custom-btn-wishlist {
   display: inline-block;
   font-size: 1.5rem;
   font-weight: 400;
@@ -148,22 +163,18 @@ display: inline-block;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.custom-btn-wishlist:hover {
+    color: #ffffff;
+    background-color: #f00;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
 form > .btn:hover {
     background-color:#ffffff;
 }
 
-.login-form-input {
-    border: 1px solid;
-    border-color: #242424;
-    border-radius: 0.5rem;
-    padding: 10px 10px;
-    display: flex;
-    margin-top: 5px;
-    margin-bottom: 3px;
-    width: 100%;
-}
 
-.popular-row {
+.popular-row, .pop-games {
     border: 1px solid;
     border-color: #f00;
     border-radius: 0.5rem;
@@ -177,6 +188,8 @@ form > .btn:hover {
     text-align: center;
 }
 
+
+/* Signup + Login page CSS */
 #redirect-text-signup, #redirect-text-login {
     margin-bottom: 0 !important;
 }
@@ -191,6 +204,19 @@ form > .btn:hover {
     color: #f00;
 }
 
+.login-form-input {
+    border: 1px solid;
+    border-color: #242424;
+    border-radius: 0.5rem;
+    padding: 10px 10px;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+
+
+/* Profile Page CSS */
 .profile-img {
     width: 50px;
     height: 50px;
@@ -205,6 +231,10 @@ form > .btn:hover {
     border-color: #f00;
     border-radius: 0.5rem;
     padding: 15px 15px 3px 15px;
+}
+
+.sidebar-medium {
+    flex-direction: column !important;
 }
 
 .profile-sidebar-link {
@@ -224,15 +254,25 @@ form > .btn:hover {
     border-color: #f00;
 }
 
+
 /* Game Library CSS */
 .border{
     border-radius: 0.5rem;
 }
-.addgames-btn{
-    display: flex;
-    justify-content: space-between;
-    float: right;
+
+/* Single Game Page CSS */
+#game {
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    border-color: #f00;
 }
+
+/* Wish List CSS */
+.wishlist-row {
+    line-height: 60px;
+}
+
 
 /* Footer CSS */
 #footer-logo {
@@ -243,4 +283,150 @@ form > .btn:hover {
 .footer-heart {
     width: 21px;
     height: 21px;
+}
+
+
+/* Mobile Screens */
+@media screen and (max-width: 400px){
+    .img-fluid {
+        display: none;
+    }
+    
+    .nav {
+        display: flex;
+        justify-content: center !important;
+    }
+
+    #searchInput {
+        max-height: 38px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-group {
+        align-items: center !important;
+    }
+
+    #take-friend {
+        margin-top: 80px;
+    }
+
+    .sidebarBtn-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+/* Small Screens */
+@media screen and (max-width: 576px) {
+    .spacing {
+        width: auto;
+        padding: 10px 0 40px 0;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: center !important;
+    }
+
+    .hero-one {
+        margin-top: 50px;
+    }
+
+    .pair-up {
+        margin-top: 50px;
+    }
+
+    #searchInput {
+        max-height: 38px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-group {
+        align-items: center !important;
+    }
+
+    .prof-games-sm {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 85%;
+    }
+
+    .play-sm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cond-sidebar-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+/* Medium Screens */
+@media screen and (max-width: 768px) {
+    .nav {
+        align-items: center !important;
+    }
+
+    .nav-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .nav > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    #take-friend, .pair-up {
+        margin-top: 50px;
+    }
+
+    .spacing {
+        width: auto;
+        padding: 10px 0 80px 0;
+    }
+
+    .play-sm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+
+/* Large Screens */
+@media screen and (max-width: 992px) {
+    .spacing {
+        width: auto;
+        padding: 0 0 80px 0;
+    }
+
+    #take-friend {
+        margin-top: 50px;
+    }
+
+    .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
 }

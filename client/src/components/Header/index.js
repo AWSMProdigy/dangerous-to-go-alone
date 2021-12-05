@@ -12,12 +12,12 @@ const Header = () => {
   };
   return (
     <header className="bg-black text-light py-3 flex-row align-center">
-      <div className="container flex-row justify-space-between-lg align-center">
-        <nav className="col-12 nav p-3 d-flex justify-content-between">
+      <div className="container flex-row justify-space-between-sm align-center">
+        <nav className="col-md-12 nav navbar-expand-md p-3 nav-wrapper">
             <Link className="navItem" to="/">
             <img className="nav-logo" src={logo} alt="Dangerous Logo"></img>
             </Link>
-            <div>
+            <div class="collapse navbar-collapse justify-content-end" id="mynav">
               {Auth.loggedIn() ? (
                 <>
                   <Link className="navItem" to="/me">
@@ -55,6 +55,13 @@ const Header = () => {
                   </Link>
                 </>
               )}
+            </div>
+            <div className="button-wrapper">
+              <button id="custom-toggler"class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="30" fill="#f00" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                  </svg>
+              </button>
             </div>
         </nav>
       </div>
