@@ -1,7 +1,7 @@
 import React from 'react';
 import "../../src/styles.css";
 
-const Library = () =>{
+const Wishlist = () =>{
 return (
     <div className="container mb-3">
       <div className="flex-row">
@@ -40,4 +40,4 @@ return (
   );
 };
 
-export default Library;
+export default Wishlist;
