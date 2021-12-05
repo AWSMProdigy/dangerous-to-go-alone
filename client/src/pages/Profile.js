@@ -201,6 +201,10 @@ const Profile = () => {
   }
 
   function EditPage(props){
+    const pcChecked = userText.platformText.includes("PC");
+    const xboxChecked = userText.platformText.includes("Xbox");
+    const playstationChecked = userText.platformText.includes("Playstation");
+    const switchChecked = userText.platformText.includes("Switch");
     if(userText.allowEdit){
       return(
         <form onSubmit={handleProfileEdit}>
@@ -209,13 +213,13 @@ const Profile = () => {
           <label>My Platforms</label>
           <div>
             <label>PC</label>
-            <input type="radio" value="PC" id="pcInput"></input>
+            <input type="radio" value="PC" id="pcInput" defaultChecked={pcChecked}></input>
             <label>PS5</label>
-            <input type="radio" value="PS5" id="playstationInput"></input>
+            <input type="radio" value="PS5" id="playstationInput" defaultChecked={playstationChecked}></input>
             <label>Xbox</label>
-            <input type="radio" value="Xbox" id="xboxInput"></input>
+            <input type="radio" value="Xbox" id="xboxInput" defaultChecked={xboxChecked}></input>
             <label>Switch</label>
-            <input type="radio" value="Switch" id="switchInput"></input>
+            <input type="radio" value="Switch" id="switchInput" defaultChecked={switchChecked}></input>
           </div>
           <label htmlFor="Availability">Edit Availability</label>
           <select name="Availability" type="text" id="fromTime">
@@ -238,6 +242,7 @@ const Profile = () => {
           username: userText.username,
           descText: userText.descText,
           fromTime: userText.fromTime,
+          toTime: userText.toTime,
           platformText: userText.platformText,
           allowEdit: true,
           friends: userText.friends
