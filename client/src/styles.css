@@ -260,6 +260,13 @@ form > .btn:hover {
     border-radius: 0.5rem;
 }
 
+/* Single Game Page CSS */
+#game {
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    border-color: #f00;
+}
 
 /* Wish List CSS */
 .wishlist-row {

@@ -94,10 +94,10 @@ const Profile = () => {
                       <h4><b>Games</b> <span className="red-text">86</span></h4>
                       <h4 className="mt-2"><b>Groups</b> <span className="red-text">3</span></h4>
                       <h4 className="mt-2"><b>Friends</b> <span className="red-text">18</span></h4>
-                      <Link className="profile-sidebar-link" to="/guardian855">
+                      <Link className="profile-sidebar-link" to="/profile/:guardian855">
                         <p className="mt-1">guardian855</p>
                       </Link>
-                      <Link className="profile-sidebar-link" to="/pledias25">
+                      <Link className="profile-sidebar-link" to="/profile/:pledias25">
                         <p className="mt-1">pledias25</p>
                       </Link>
                         <h4 className="mt-3"><b>Quick Links</b></h4>
@@ -133,22 +133,30 @@ const Profile = () => {
             <div className="col-md-12">
               <div className="mt-2 d-flex flex-wrap ml-2">
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
+                  <Link to="/game/:title">
                     <img className="scheduled-game mt-3" src={stardew} alt="Pixel house in front of mountains"></img>
+                  </Link>
                     <h6 className="mt-3 red-text"><b>Sat, Dec 11</b></h6>
                     <p className="small"> 7:00pm - 9:00pm EST</p>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                    <img className="scheduled-game mt-3" src={mario} alt="Pixel house in front of mountains"></img>
+                  <Link to="/game/:title">
+                    <img className="scheduled-game mt-3" src={mario} alt="Mario characters riding go kart's on a rainbow track"></img>
+                  </Link>
                     <h6 className="mt-3 red-text"><b>Sun, Dec 12</b></h6>
                     <p className="small"> 6:00pm - 10:00pm EST</p>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                    <img className="scheduled-game mt-3" src={itTakes2} alt="Pixel house in front of mountains"></img>
+                  <Link to="/game/:title">
+                    <img className="scheduled-game mt-3" src={itTakes2} alt="Two small people flying on a dandelion"></img>
+                  </Link>
                     <h6 className="mt-3 red-text"><b>Wed, Dec 15</b></h6>
                     <p className="small"> 9:00pm - 11:00pm EST</p>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                    <img className="scheduled-game mt-3" src={ac} alt="Pixel house in front of mountains"></img>
+                  <Link to="/game/:title">
+                    <img className="scheduled-game mt-3" src={ac} alt="Animated human and animal characters in a campsite"></img>
+                  </Link>
                     <h6 className="mt-3 red-text"><b>Fri, Dec 17</b></h6>
                     <p className="small"> 10:00pm - 1:00am EST</p>
                 </div>
