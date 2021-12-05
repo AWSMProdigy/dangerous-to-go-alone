@@ -15,11 +15,9 @@ const Library = () => {
    
 
 <nav class="flex-row mb-3 col-12 d-flex addgames-btn">
-  <div class="container-fluid">
+  <div class="container-fluid btn-fun">
     <h2 class="p-1 pt-3 mb-3 mt-3 text-white">My Games</h2>
-    <form class="d-flex">
       <button class="custom-btn" type="submit">Add Games</button>
-    </form>
   </div>
 </nav>
 
@@ -27,7 +25,7 @@ const Library = () => {
         <div class="col-sm-6 col-lg-3">
           <div class="">
             <div class="card-body">
-              <img class="img-fluid" src={battle} alt="battlefield"></img>
+              <img class="img-fluid pop-games" src={battle} alt="battlefield"></img>
               <button class="custom-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 </svg></button>
@@ -38,7 +36,7 @@ const Library = () => {
         <div class="col-sm-6 col-lg-3">
           <div class="">
             <div class="card-body">
-              <img class="img-fluid" src={halo} alt="halo"></img>
+              <img class="img-fluid pop-games" src={halo} alt="halo"></img>
             </div>
           </div>
         </div>
@@ -46,7 +44,7 @@ const Library = () => {
         <div class="col-sm-6 col-lg-3">
           <div class="">
             <div class="card-body">
-              <img class="img-fluid" src={league} alt="leagueOfLegends"></img>
+              <img class="img-fluid pop-games" src={league} alt="leagueOfLegends"></img>
             </div>
           </div>
         </div>
@@ -54,7 +52,7 @@ const Library = () => {
         <div class="col-sm-6 col-lg-3">
           <div class="">
             <div class="card-body">
-              <img class="img-fluid" src={cod} alt="callfoduty"></img>
+              <img class="img-fluid pop-games" src={cod} alt="callfoduty"></img>
             </div>
           </div>
         </div>
@@ -62,7 +60,7 @@ const Library = () => {
         <div class="col-sm-6 col-lg-3 mt-5">
           <div class="">
             <div class="card-body">
-              <img class="img-fluid" src={forza} alt="callfoduty"></img>
+              <img class="img-fluid pop-games" src={forza} alt="callfoduty"></img>
             </div>
           </div>
         </div>
@@ -70,7 +68,7 @@ const Library = () => {
         <div class="col-sm-6 col-lg-3 mt-5">
           <div class="">
             <div class="card-body">
-              <img class="img-fluid" src={stardew} alt="callfoduty"></img>
+              <img class="img-fluid pop-games" src={stardew} alt="callfoduty"></img>
             </div>
           </div>
         </div>
