@@ -42,12 +42,12 @@ const Profile = () => {
     if(!loading){
       setUserText({
         username: user?.username,
-        descText: user?.description,
-        fromTime: user?.fromTime,
-        toTime: user?.toTime,
-        platformText: user?.platform,
+        descText: user?.description || "",
+        fromTime: user?.fromTime || "",
+        toTime: user?.toTime || "",
+        platformText: user?.platform || "",
         allowEdit: userText.allowEdit,
-        friends: user?.friends
+        friends: user?.friends || []
       })
     }
     else{
@@ -256,6 +256,10 @@ const Profile = () => {
   }
 
   console.log(loading);
+
+  if(loading){
+    return(<h1>Loading...</h1>);
+  }
 
   return (
     <div className="container">
