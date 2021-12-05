@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import logo from '../../assets/Dangerous-Logo-White.png';
 import '../../styles.css'
 
@@ -9,6 +9,7 @@ const Header = () => {
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
+    window.location.assign('/');
   };
   return (
     <header className="bg-black text-light py-3 flex-row align-center">
