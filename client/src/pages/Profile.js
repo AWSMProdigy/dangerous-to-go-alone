@@ -222,10 +222,10 @@ const Profile = () => {
             <input type="radio" value="Switch" id="switchInput" defaultChecked={switchChecked}></input>
           </div>
           <label htmlFor="Availability">Edit Availability</label>
-          <select name="Availability" type="text" id="fromTime">
+          <select name="Availability" type="text" id="fromTime" defaultValue={userText.fromTime}>
             <TimeOptions/>
           </select>
-          <select name="Availability" type="text" id="toTime">
+          <select name="Availability" type="text" id="toTime" defaultValue={userText.toTime}>
             <TimeOptions/>
           </select>
           <br></br>
