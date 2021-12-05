@@ -5,7 +5,7 @@
     min-height: 100vh;
 }
 
-.bg-black {
+.bg-black, .games-library {
     background-color: rgb(24, 24, 24);
 }
 
@@ -260,6 +260,10 @@ form > .btn:hover {
     border-radius: 0.5rem;
 }
 
+.addgamesBtn {
+    height: 50px;
+}
+
 /* Single Game Page CSS */
 #game {
     padding: 0px;
@@ -340,15 +344,10 @@ form > .btn:hover {
         margin-top: 50px;
     }
 
-    #searchInput {
-        max-height: 38px;
-        height: 50px;
+    .game-library {
         display: flex;
-        align-items: center;
-    }
-
-    .input-group {
-        align-items: center !important;
+        flex-direction: column;
+        margin-bottom: 20px;
     }
 
     .prof-games-sm {
