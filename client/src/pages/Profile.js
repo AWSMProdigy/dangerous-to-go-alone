@@ -70,12 +70,12 @@ const Profile = () => {
     }
   }
 
-  const handleAvailabilityChange = async (event) => {
-    event.preventDefault();
+  const handleAvailabilityChange = async (from, to) => {
     try {
       const { data } = await updateAvailability({
         variables: {
-          availability: event.target.searchInput.value.trim()
+          from: from,
+          to: to
         }
       })
     }
@@ -84,18 +84,42 @@ const Profile = () => {
     }
   }
 
-  const handlePlatformChange = async (event) => {
-    event.preventDefault();
+  const handlePlatformChange = async (pc, playstation, xbox, nintendo) => {
+    const pcString = pc ? "PC, " : "";
+    const playstationString = playstation ? "Playstation, " : "";
+    const xboxString = xbox ? "Xbox, " : "";
+    const switchString = nintendo ? "Switch" : "";
+    const platforms = `${pcString, playstationString, xboxString, switchString}`
     try {
       const { data } = await updatePlatform({
         variables: {
-          platform: event.target.searchInput.value.trim()
+          platform: platforms
         }
       })
     }
     catch(err){
       console.error(err);
     }
+  }
+
+  const handleDescChange = async (description) => {
+    try{
+      const { data } = await updateDesc({
+        variables: {
+          description: description
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+  const handleProfileEdit = async (event) => {
+    event.preventDefault();
+    handleDescChange(event.target.descInput.value.trim());
+    handlePlatformChange(event.target.pcInput.value, event.target.xboxInput.value, event.target.playstationInput.value, event.target.switchInput.value);
+    handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
   }
 
   const user = data?.me || data?.user || {};
@@ -135,21 +159,56 @@ const Profile = () => {
     return(<></>)
   }
 
+  function TimeOptions(){
+    const n = 12;
+    const AMarray = [...Array(n)].map((e, i) => <option value={`${i+1} AM`}>{`${i+1} AM`}</option>)
+    const PMarray = [...Array(n)].map((e, i) => <option value={`${i+1} PM`}>{`${i+1} PM`}</option>)
+    const fullArray = [...AMarray, ...PMarray];
+    return(
+      fullArray
+    )
+  }
+
+  function EditPage(props){
+    if(allowEdit){
+      return(
+        <form onSubmit={handleProfileEdit}>
+          <label htmlFor="Description">Edit Description</label>
+          <input name="Description" type="text" id="descInput"/>
+          <label>My Platforms</label>
+          <div>
+            <label>PC</label>
+            <input type="radio" value="PC" id="pcInput"></input>
+            <label>PS5</label>
+            <input type="radio" value="PS5" id="playstationInput"></input>
+            <label>Xbox</label>
+            <input type="radio" value="Xbox" id="xboxInput"></input>
+            <label>Switch</label>
+            <input type="radio" value="Switch" id="switchInput"></input>
+          </div>
+          <label htmlFor="Availability">Edit Availability</label>
+          <select name="Availability" type="text" id="fromTime">
+            <TimeOptions/>
+          </select>
+          <select name="Availability" type="text" id="toTime">
+            <TimeOptions/>
+          </select>
+          <br></br>
+          <input type="submit" value="Submit" />
+        </form>
+      )
+    }
+  }
+
   function ShowEditBtn(props){
     if(myProfile && !allowEdit){
       return(
         <button onClick={() => setEdit(!allowEdit)}></button>
       )
     }  
-    return(<></>)
-  }
-
-  function EditPage(props){
-    if(allowEdit){
-      // return(
-        
-      // )
-    }
+    return(
+      <EditPage/>
+    )
   }
 
 

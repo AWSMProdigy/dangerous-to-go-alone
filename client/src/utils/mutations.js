@@ -62,7 +62,7 @@ export const UPDATE_GAMES = gql`
 `;
 
 export const UPDATE_AVAILABILITY = gql`
-  mutation updateGames($availability: String!) {
+  mutation updateAvailability($availability: String!) {
     updateAvailability(availability: $availability) {
       availability
     }
