@@ -16,10 +16,7 @@ export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
       token
-      friend {
-        _id
-        username
-      }
+      
     }
   }
 `;
@@ -65,9 +62,25 @@ export const UPDATE_GAMES = gql`
 `;
 
 export const UPDATE_AVAILABILITY = gql`
-  mutation updateGames($title: String!) {
-    updateGames(title: $title) {
-      games
+  mutation updateGames($availability: String!) {
+    updateAvailability(availability: $availability) {
+      availability
+    }
+  }
+`;
+
+export const UPDATE_PLATFORM = gql`
+  mutation updatePlatform($platform: String!) {
+    updatePlatform(platform: $platform) {
+      platform
+    }
+  }
+`;
+
+export const UPDATE_DESC = gql`
+  mutation updateDesc($description: String!) {
+    updateDesc(description: $description) {
+      description
     }
   }
 `;
