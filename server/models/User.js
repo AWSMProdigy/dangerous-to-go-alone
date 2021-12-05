@@ -28,9 +28,13 @@ const userSchema = new Schema({
   description: {
     type: String
   },
-  availability:
+  fromTime:
   {
-    type: Date,
+    type: String,
+  },
+  toTime:
+  {
+    type: String,
   },
   friends: [
     {

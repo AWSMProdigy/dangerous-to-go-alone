@@ -46,7 +46,8 @@ export const QUERY_ME = gql`
       email
       friends
       description
-      availability
+      toTime
+      fromTime
       platform
       games{
         title

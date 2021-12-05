@@ -126,11 +126,12 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    updateAvailability: async (parent, { availability }, context) => {
+    updateAvailability: async (parent, { fromTime, toTime }, context) => {
       if (context.user) {
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $set: { availability: availability } }
+          { $set: { fromTime: fromTime } },
+          { $set: { toTime: toTime } }
         );
         return User.findOne({ _id: context.user._id });
       }

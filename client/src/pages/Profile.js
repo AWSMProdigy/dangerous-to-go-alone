@@ -18,18 +18,20 @@ import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
-  const [descText, setDesc] = useState('');
-  const [availabilityText, setAvailability] = useState('');
-  const [platformText, setPlatform] = useState('');
-  const [allowEdit, setEdit] = useState(false);
-
-  const { username: userParam } = useParams();
+    const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
+  const user = data?.me || data?.user || {};
+  const [userText, setUserText] = useState({
+    descText: user?.description,
+    fromTime: user?.fromTime,
+    platformText: user?.platform,
+    allowEdit: false
+  })
 
-  console.log(data);
+  
 
   const [addFriend] = useMutation(ADD_FRIEND);
   const [removeFriend] = useMutation(REMOVE_FRIEND);
@@ -117,22 +119,27 @@ const Profile = () => {
 
   const handleProfileEdit = async (event) => {
     event.preventDefault();
+    console.log(event);
     handleDescChange(event.target.descInput.value.trim());
     handlePlatformChange(event.target.pcInput.value, event.target.xboxInput.value, event.target.playstationInput.value, event.target.switchInput.value);
     handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
+    setUserText({allowEdit: false});
   }
 
-  const user = data?.me || data?.user || {};
   const myProfile = userParam === undefined;
-  console.log(userParam);
   console.log(myProfile);
   // redirect to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/me" />;
   }
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (!loading) {
+    setUserText({
+      descText: user?.description,
+      fromTime: user?.fromTime,
+      platformText: user?.platform,
+      allowEdit: userText.allowEdit
+    })
   }
 
   // if (!user?.username) {
@@ -170,7 +177,7 @@ const Profile = () => {
   }
 
   function EditPage(props){
-    if(allowEdit){
+    if(userText.allowEdit){
       return(
         <form onSubmit={handleProfileEdit}>
           <label htmlFor="Description">Edit Description</label>
@@ -201,9 +208,9 @@ const Profile = () => {
   }
 
   function ShowEditBtn(props){
-    if(myProfile && !allowEdit){
+    if(myProfile && !userText.allowEdit){
       return(
-        <button onClick={() => setEdit(!allowEdit)}></button>
+        <button onClick={() => setUserText(setUserText({allowEdit: true}))}></button>
       )
     }  
     return(
@@ -250,9 +257,9 @@ const Profile = () => {
                 <circle cx="8" cy="8" r="8"/></svg>
                 {`${user.username}'s`} Profile 
               </h2>
-              <h6 className="ml-2"><b>Platforms:</b> PC, Switch, Playstation</h6>
+              <h6 className="ml-2"><b>Platforms:</b>{`${userText.platformText}`}</h6>
               <h6 className="mt-2 ml-2"><b>Last Online:</b> Now</h6>
-              <p className="mt-2 ml-2 mt-4">Hey, I'm Sarah. I play all types of games but particularly enjoy multiplayer on PC, Switch, and Playstation. I'm into more casual games so if you're into Stardew Valley, Animal Crossing, or Mario Kart, let's play together! </p>
+              <p className="mt-2 ml-2 mt-4">{`${userText.descText}`}</p>
               <ShowEditBtn/>
             </div>
 
