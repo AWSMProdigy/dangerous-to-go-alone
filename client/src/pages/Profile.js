@@ -142,7 +142,7 @@ const Profile = () => {
                 <div className="col-3">
                     <img className="scheduled-game mt-3" src={ac} alt="Pixel house in front of mountains"></img>
                     <h6 className="mt-3 red-text"><b>Fri, Dec 17</b></h6>
-                    <p className="small"> 10:00pm - 1:00pm EST</p>
+                    <p className="small"> 10:00pm - 1:00am EST</p>
                 </div>
                 
               </div>

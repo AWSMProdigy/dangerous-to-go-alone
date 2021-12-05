@@ -2,6 +2,7 @@
 .container-custom {
     width: 100%;
     margin: 0;
+    min-height: 100vh;
 }
 
 .bg-black {
@@ -18,6 +19,10 @@
 
 h1, h2, h3, h4, h5 , h6 {
     margin-bottom: 0 !important;
+}
+
+#custom-toggler, .navbar-toggler, .navbar-toggler-icon {
+    border-color: #f00;
 }
 
 .nav-logo {
@@ -61,8 +66,16 @@ form > .btn, form > div > .btn {
     padding: 80px 0 80px 0;
 }
 
+.hero-row-one {
+    padding: 0 0 80px 0;
+}
+
+.game-library {
+    padding-top: 50px;
+}
+
 .friends-btn {
-display: inline-block;
+  display: inline-block;
   font-size: 1.5rem;
   font-weight: 400;
   font-family: 'JetBrains Mono', monospace;
@@ -105,7 +118,7 @@ display: inline-block;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.custom-btn {
+.custom-btn, .custom-btn-wishlist {
   display: inline-block;
   font-size: 1.5rem;
   font-weight: 400;
@@ -148,6 +161,12 @@ display: inline-block;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.custom-btn-wishlist:hover {
+    color: #ffffff;
+    background-color: #f00;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
 form > .btn:hover {
     background-color:#ffffff;
 }
@@ -163,7 +182,7 @@ form > .btn:hover {
     width: 100%;
 }
 
-.popular-row {
+.popular-row, .pop-games {
     border: 1px solid;
     border-color: #f00;
     border-radius: 0.5rem;
@@ -229,6 +248,13 @@ form > .btn:hover {
     border-radius: 0.5rem;
 }
 
+
+/* Wish List CSS */
+.wishlist-row {
+    line-height: 60px;
+}
+
+
 /* Footer CSS */
 #footer-logo {
     width: auto;
@@ -238,4 +264,94 @@ form > .btn:hover {
 .footer-heart {
     width: 21px;
     height: 21px;
+}
+
+@media screen and (max-width: 400px){
+    .img-fluid {
+        display: none;
+    }
+    
+    .nav {
+        display: flex;
+        justify-content: center !important;
+    }
+
+    #searchInput {
+        max-height: 38px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-group {
+        align-items: center !important;
+    }
+
+    #take-friend {
+        margin-top: 80px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .spacing {
+        width: auto;
+        padding: 10px 0 40px 0;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: center !important;
+    }
+
+    .hero-one {
+        margin-top: 50px;
+    }
+
+    .pair-up {
+        margin-top: 50px;
+    }
+
+    #searchInput {
+        max-height: 38px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-group {
+        align-items: center !important;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .nav-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .button-wrapper {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #take-friend, .pair-up {
+        margin-top: 50px;
+    }
+
+    .spacing {
+        width: auto;
+        padding: 10px 0 80px 0;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .spacing {
+        width: auto;
+        padding: 0 0 80px 0;
+    }
+
+    #take-friend {
+        margin-top: 50px;
+    }
 }
