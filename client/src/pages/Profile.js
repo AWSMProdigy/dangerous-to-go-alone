@@ -144,8 +144,9 @@ const Profile = () => {
     const pcString = event.target.pcInput.checked ? "PC " : "";
     const playstationString = event.target.playstationInput.checked ? "Playstation " : "";
     const xboxString = event.target.xboxInput.checked ? "Xbox " : "";
-    const switchString = event.target.switchInput.checked ? "Switch" : "";
-    const platforms = pcString + playstationString + xboxString + switchString
+    const switchString = event.target.switchInput.checked ? "Switch " : "";
+    const mobileString = event.target.mobileInput.checked ? "Mobile" : "";
+    const platforms = pcString + playstationString + xboxString + switchString + mobileString
     handlePlatformChange(platforms);
     handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
     setUserText({
@@ -179,7 +180,7 @@ const Profile = () => {
     if(myProfile){
       return (
         <form className="form-inline input-group" id="searchFriend" onSubmit={() => handleFriendSubmit()}>
-            <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
+            <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-p="Search" id="searchInput"></input>
             <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                   </svg>
@@ -205,31 +206,48 @@ const Profile = () => {
     const xboxChecked = userText.platformText.includes("Xbox");
     const playstationChecked = userText.platformText.includes("Playstation");
     const switchChecked = userText.platformText.includes("Switch");
+    const mobileChecked = userText.platformText.includes("Mobile");
     if(userText.allowEdit){
       return(
-        <form onSubmit={handleProfileEdit}>
-          <label htmlFor="Description">Edit Description</label>
-          <input name="Description" type="text" id="descInput" defaultValue={userText.descText}/>
-          <label>My Platforms</label>
-          <div>
-            <label>PC</label>
-            <input type="radio" value="PC" id="pcInput" defaultChecked={pcChecked}></input>
-            <label>PS5</label>
-            <input type="radio" value="PS5" id="playstationInput" defaultChecked={playstationChecked}></input>
-            <label>Xbox</label>
-            <input type="radio" value="Xbox" id="xboxInput" defaultChecked={xboxChecked}></input>
-            <label>Switch</label>
-            <input type="radio" value="Switch" id="switchInput" defaultChecked={switchChecked}></input>
+        <form className="ml-2" onSubmit={handleProfileEdit}>
+          <p htmlFor="Description"><b>Edit Description</b></p>
+          <input className="description-input" name="Description" type="text" id="descInput" defaultValue={userText.descText}/>
+          <p className="mt-2"><b>My Platforms</b></p>
+          <div className="col-12 d-flex flex-wrap">
+              <div className="d-flex flex-wrap flex-column col-6">
+                <div className="col-lg-2 flex-row align-items-baseline">
+                  <input type="checkbox" value="PC" id="pcInput" defaultChecked={pcChecked}></input>
+                  <p className="ml-1">PC</p>
+                </div>
+                <div className="col-2 flex-row align-items-baseline">
+                  <input type="checkbox" value="PC" id="playstationInput" defaultChecked={playstationChecked}></input>
+                  <p className="ml-1">Playstation</p>
+                </div>
+                <div className="col-2 flex-row align-items-baseline">
+                  <input type="checkbox" value="PC" id="xboxInput" defaultChecked={xboxChecked}></input>
+                  <p className="ml-1">Xbox</p>
+                </div>
+              </div>
+              <div className="d-flex flex-wrap flex-column col-6">
+                <div className="col-2 flex-row align-items-baseline">
+                  <input type="checkbox" value="PC" id="switchInput" defaultChecked={switchChecked}></input>
+                  <p className="ml-1">Switch</p>
+                </div>
+                <div className="col-2 flex-row align-items-baseline">
+                  <input type="checkbox" value="PC" id="mobileInput" defaultChecked={mobileChecked}></input>
+                  <p className="ml-1">Mobile</p>
+                </div>
+              </div>
           </div>
-          <label htmlFor="Availability">Edit Availability</label>
-          <select name="Availability" type="text" id="fromTime" defaultValue={userText.fromTime}>
+          <p className="mt-2" htmlFor="Availability"><b>Edit Availability</b></p>
+          <select className="time-select"name="Availability" type="text" id="fromTime" defaultValue={userText.fromTime}>
             <TimeOptions/>
           </select>
-          <select name="Availability" type="text" id="toTime" defaultValue={userText.toTime}>
+          <select className="time-select" name="Availability" type="text" id="toTime" defaultValue={userText.toTime}>
             <TimeOptions/>
           </select>
           <br></br>
-          <input type="submit" value="Submit" />
+          <button className="custom-btn" type="submit" value="Submit">Submit</button>
         </form>
       )
     }
@@ -278,7 +296,7 @@ const Profile = () => {
                   <div className="friends-search-bar">
                       <Link className="navItem" to="/search">
                         <form className="form-inline input-group" id="searchFriend" onSubmit={handleFriendSubmit}>
-                          <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
+                          <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-p="Search" id="searchInput"></input>
                           <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                 </svg>
@@ -310,8 +328,8 @@ const Profile = () => {
 
         <div className="col col-md-9" id="main">
           <div className="row">
-            <img className="img-fluid profile-img col-lg-5 col-md-12 col-sm-10" src={profile} alt=""></img>
-            <div className="col-md-12 col-lg-7">
+            <img className="img-fluid profile-img col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
+            <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
                 <circle cx="8" cy="8" r="8"/></svg>

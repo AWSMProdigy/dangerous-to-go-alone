@@ -254,6 +254,18 @@ form > .btn:hover {
     border-color: #f00;
 }
 
+.description-input {
+    width: 90%;
+}
+
+.time-select {
+    border: 1px solid;
+    border-radius: 0.5rem;
+    border-color: #242424;
+    padding: 5px 10px 5px 10px;
+    margin: 5px 5px 20px 0;
+}
+
 
 /* Game Library CSS */
 .border{
