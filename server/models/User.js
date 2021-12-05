@@ -28,19 +28,22 @@ const userSchema = new Schema({
   description: {
     type: String
   },
-  availability:
+  fromTime:
   {
-    type: Date,
+    type: String,
+  },
+  toTime:
+  {
+    type: String,
   },
   friends: [
     {
-      type:Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
+      unique: true
     }
   ],
   platform: {
-    type: String, 
-    required: true
+    type: String
   }
   // blockedUsers: [
   //   {

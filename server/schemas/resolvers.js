@@ -28,7 +28,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('friends');
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -64,13 +64,15 @@ const resolvers = {
         const friend = await User.findOne({
           username: friendName,
         });
+        //Make sure character exists
+        if(friend){
+          await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { friends: friendName } }
+          );
+        }
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { friends: friend } }
-        );
-
-        return friend;
+        return context.user;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -124,11 +126,11 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    updateAvailability: async (parent, { availability }, context) => {
+    updateAvailability: async (parent, { fromTime, toTime }, context) => {
       if (context.user) {
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $set: { availability: availability } }
+          {fromTime: fromTime, toTime: toTime}
         );
         return User.findOne({ _id: context.user._id });
       }

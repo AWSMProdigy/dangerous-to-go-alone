@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
@@ -10,7 +10,7 @@ import mario from "../assets/images/profile/mariokart.jpg";
 import itTakes2 from "../assets/images/profile/ittakes2.jpg";
 import ac from "../assets/images/profile/ac.jpg";
 
-import { ADD_FRIEND } from '../utils/mutations';
+import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 
@@ -19,14 +19,54 @@ import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { username: userParam } = useParams();
+  
 
+  
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
 
-  const [addFriend, { error }] = useMutation(ADD_FRIEND);
+  const user = data?.me || data?.user || {};
 
-  const handleFormSubmit = async (event) => {
+  const [userText, setUserText] = useState({
+    username: "",
+    descText: "",
+    fromTime: "",
+    toTime: "",
+    platformText: "",
+    allowEdit: false,
+    friends: []
+  })
+
+  useEffect(() => {
+    if(!loading){
+      setUserText({
+        username: user?.username,
+        descText: user?.description,
+        fromTime: user?.fromTime,
+        toTime: user?.toTime,
+        platformText: user?.platform,
+        allowEdit: userText.allowEdit,
+        friends: user?.friends
+      })
+    }
+    else{
+      return (<h1>loading</h1>)
+    }
+  }, [loading]);
+  
+
+  const [addFriend] = useMutation(ADD_FRIEND);
+  const [removeFriend] = useMutation(REMOVE_FRIEND);
+  const [addGame] = useMutation(ADD_GAME);
+  const [removeGame] = useMutation(REMOVE_GAME);
+  const [updateGame] = useMutation(UPDATE_GAMES);
+  const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
+  const [updatePlatform] = useMutation(UPDATE_PLATFORM);
+  const [updateDesc] = useMutation(UPDATE_DESC);
+
+
+  const handleFriendSubmit = async (event) => {
     event.preventDefault();
     console.log(event.target.searchInput.value);
     try {
@@ -41,19 +81,90 @@ const Profile = () => {
     }
   }
 
+  const handleFriendDelete = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await removeFriend({
+        variables: {
+          friendName: event.target.searchInput.value.trim()
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
 
-  
+  const handleAvailabilityChange = async (from, to) => {
+    try {
+      const { data } = await updateAvailability({
+        variables: {
+          fromTime: from,
+          toTime: to
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
 
+  const handlePlatformChange = async (platforms) => {
+    try {
+      const { data } = await updatePlatform({
+        variables: {
+          platform: platforms
+        }
+      })
+      return platforms;
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
 
-  const user = data?.me || data?.user || {};
+  const handleDescChange = async (description) => {
+    try{
+      const { data } = await updateDesc({
+        variables: {
+          description: description
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+  const handleProfileEdit = async (event) => {
+    event.preventDefault();
+    handleDescChange(event.target.descInput.value.trim());
+    console.log(event.target.toTime.value);
+    console.log(event.target.fromTime.value);
+    const pcString = event.target.pcInput.checked ? "PC " : "";
+    const playstationString = event.target.playstationInput.checked ? "Playstation " : "";
+    const xboxString = event.target.xboxInput.checked ? "Xbox " : "";
+    const switchString = event.target.switchInput.checked ? "Switch" : "";
+    const platforms = pcString + playstationString + xboxString + switchString
+    handlePlatformChange(platforms);
+    handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
+    setUserText({
+      username: userText.username,
+      descText: event.target.descInput.value.trim(),
+      fromTime: event.target.fromTime.value,
+      toTime: event.target.toTime.value,
+      platformText: platforms,
+      allowEdit: false,
+      friends: userText.friends
+    });
+  }
+
+  const myProfile = userParam === undefined;
   // redirect to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/me" />;
   }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   // if (!user?.username) {
   //   return (
@@ -64,8 +175,84 @@ const Profile = () => {
   //   );
   // }
 
-  return (
+  function ShowFriendSearch(props){
+    if(myProfile){
+      return (
+        <form className="form-inline input-group" id="searchFriend" onSubmit={() => handleFriendSubmit()}>
+            <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
+            <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+            </button>
+          </form>
+      )
+    }
+    return(<></>)
+  }
 
+  function TimeOptions(){
+    const n = 12;
+    const AMarray = [...Array(n)].map((e, i) => <option value={`${i+1} AM`}>{`${i+1} AM`}</option>)
+    const PMarray = [...Array(n)].map((e, i) => <option value={`${i+1} PM`}>{`${i+1} PM`}</option>)
+    const fullArray = [...AMarray, ...PMarray];
+    return(
+      fullArray
+    )
+  }
+
+  function EditPage(props){
+    if(userText.allowEdit){
+      return(
+        <form onSubmit={handleProfileEdit}>
+          <label htmlFor="Description">Edit Description</label>
+          <input name="Description" type="text" id="descInput" defaultValue={userText.descText}/>
+          <label>My Platforms</label>
+          <div>
+            <label>PC</label>
+            <input type="radio" value="PC" id="pcInput"></input>
+            <label>PS5</label>
+            <input type="radio" value="PS5" id="playstationInput"></input>
+            <label>Xbox</label>
+            <input type="radio" value="Xbox" id="xboxInput"></input>
+            <label>Switch</label>
+            <input type="radio" value="Switch" id="switchInput"></input>
+          </div>
+          <label htmlFor="Availability">Edit Availability</label>
+          <select name="Availability" type="text" id="fromTime">
+            <TimeOptions/>
+          </select>
+          <select name="Availability" type="text" id="toTime">
+            <TimeOptions/>
+          </select>
+          <br></br>
+          <input type="submit" value="Submit" />
+        </form>
+      )
+    }
+  }
+
+  function ShowEditBtn(props){
+    if(myProfile && !userText.allowEdit){
+      return(
+        <button onClick={() => setUserText({
+          username: userText.username,
+          descText: userText.descText,
+          fromTime: userText.fromTime,
+          platformText: userText.platformText,
+          allowEdit: true,
+          friends: userText.friends
+        })}
+        ></button>
+      )
+    }  
+    return(
+      <EditPage/>
+    )
+  }
+
+  console.log(loading);
+
+  return (
     <div className="container">
     <div className="row py-3">
         <div className="col-sm-12 col-md-3 order-2" id="sticky-sidebar">
@@ -94,12 +281,11 @@ const Profile = () => {
                       <h4><b>Games</b> <span className="red-text">86</span></h4>
                       <h4 className="mt-2"><b>Groups</b> <span className="red-text">3</span></h4>
                       <h4 className="mt-2"><b>Friends</b> <span className="red-text">18</span></h4>
-                      <Link className="profile-sidebar-link" to="/profile/:guardian855">
-                        <p className="mt-1">guardian855</p>
-                      </Link>
-                      <Link className="profile-sidebar-link" to="/profile/:pledias25">
-                        <p className="mt-1">pledias25</p>
-                      </Link>
+                      {userText.friends.map((friend, index) => (
+                        <Link className="profile-sidebar-link" to={`/profiles/${friend}`}>
+                          <p key={index} className="mt-1">{friend}</p>
+                        </Link>
+                      ))}
                         <h4 className="mt-3"><b>Quick Links</b></h4>
                       <Link className="profile-sidebar-link" to="/wishlist">
                         <p className="mt-1">Wish List</p>
@@ -120,11 +306,12 @@ const Profile = () => {
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
                 <circle cx="8" cy="8" r="8"/></svg>
-                {userParam ? `${user.username}'s` : "User"}'s Profile 
+                {`${userText.username}'s`} Profile 
               </h2>
-              <h6 className="ml-2"><b>Platforms:</b> PC, Switch, Playstation</h6>
-              <h6 className="mt-2 ml-2"><b>Last Online:</b> Now</h6>
-              <p className="mt-2 ml-2 mt-4">Hey, I'm Sarah. I play all types of games but particularly enjoy multiplayer on PC, Switch, and Playstation. I'm into more casual games so if you're into Stardew Valley, Animal Crossing, or Mario Kart, let's play together! </p>
+              <h6 className="ml-2"><b>Platforms:</b>{`${userText.platformText}`}</h6>
+              <h6 className="mt-2 ml-2"><b>Availability:</b>{`${userText.fromTime}`} to {`${userText.toTime}`}</h6>
+              <p className="mt-2 ml-2 mt-4">{`${userText.descText}`}</p>
+              <ShowEditBtn/>
             </div>
           </div>
 
@@ -158,7 +345,7 @@ const Profile = () => {
                     <img className="scheduled-game mt-3" src={ac} alt="Animated human and animal characters in a campsite"></img>
                   </Link>
                     <h6 className="mt-3 red-text"><b>Fri, Dec 17</b></h6>
-                    <p className="small"> 10:00pm - 1:00am EST</p>
+                    <p className="small"> 10:00pm - 1:00pm EST</p>
                 </div>
               </div>
             </div>

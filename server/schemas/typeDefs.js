@@ -7,7 +7,11 @@ const typeDefs = gql`
     email: String
     password: String
     games: [Game]
-    friends: [User]
+    friends: [String]
+    description: String
+    fromTime: String
+    toTime: String
+    platform: String
   }
 
   type Game {
@@ -38,7 +42,7 @@ const typeDefs = gql`
     removeFriend(userName: String!): User
     removeGame(title: String!): User
     updateGames(title: String!): User
-    updateAvailability(availability: String!): User
+    updateAvailability(fromTime: String!, toTime: String!): User
     updatePlatform(platform: String!): User
     updateDesc(description: String!): User
   }
