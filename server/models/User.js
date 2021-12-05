@@ -43,8 +43,7 @@ const userSchema = new Schema({
     }
   ],
   platform: {
-    type: String, 
-    required: true
+    type: String
   }
   // blockedUsers: [
   //   {

@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
@@ -18,19 +18,42 @@ import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
-    const { username: userParam } = useParams();
+  const { username: userParam } = useParams();
+  
 
+  
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
+
   const user = data?.me || data?.user || {};
+
   const [userText, setUserText] = useState({
-    descText: user?.description,
-    fromTime: user?.fromTime,
-    platformText: user?.platform,
-    allowEdit: false
+    username: "",
+    descText: "",
+    fromTime: "",
+    toTime: "",
+    platformText: "",
+    allowEdit: false,
+    friends: []
   })
 
+  useEffect(() => {
+    if(!loading){
+      setUserText({
+        username: user?.username,
+        descText: user?.description,
+        fromTime: user?.fromTime,
+        toTime: user?.toTime,
+        platformText: user?.platform,
+        allowEdit: userText.allowEdit,
+        friends: user?.friends
+      })
+    }
+    else{
+      return (<h1>loading</h1>)
+    }
+  }, [loading]);
   
 
   const [addFriend] = useMutation(ADD_FRIEND);
@@ -76,8 +99,8 @@ const Profile = () => {
     try {
       const { data } = await updateAvailability({
         variables: {
-          from: from,
-          to: to
+          fromTime: from,
+          toTime: to
         }
       })
     }
@@ -86,18 +109,14 @@ const Profile = () => {
     }
   }
 
-  const handlePlatformChange = async (pc, playstation, xbox, nintendo) => {
-    const pcString = pc ? "PC, " : "";
-    const playstationString = playstation ? "Playstation, " : "";
-    const xboxString = xbox ? "Xbox, " : "";
-    const switchString = nintendo ? "Switch" : "";
-    const platforms = `${pcString, playstationString, xboxString, switchString}`
+  const handlePlatformChange = async (platforms) => {
     try {
       const { data } = await updatePlatform({
         variables: {
           platform: platforms
         }
       })
+      return platforms;
     }
     catch(err){
       console.error(err);
@@ -119,28 +138,33 @@ const Profile = () => {
 
   const handleProfileEdit = async (event) => {
     event.preventDefault();
-    console.log(event);
     handleDescChange(event.target.descInput.value.trim());
-    handlePlatformChange(event.target.pcInput.value, event.target.xboxInput.value, event.target.playstationInput.value, event.target.switchInput.value);
+    console.log(event.target.toTime.value);
+    console.log(event.target.fromTime.value);
+    const pcString = event.target.pcInput.checked ? "PC " : "";
+    const playstationString = event.target.playstationInput.checked ? "Playstation " : "";
+    const xboxString = event.target.xboxInput.checked ? "Xbox " : "";
+    const switchString = event.target.switchInput.checked ? "Switch" : "";
+    const platforms = pcString + playstationString + xboxString + switchString
+    handlePlatformChange(platforms);
     handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
-    setUserText({allowEdit: false});
+    setUserText({
+      username: userText.username,
+      descText: event.target.descInput.value.trim(),
+      fromTime: event.target.fromTime.value,
+      toTime: event.target.toTime.value,
+      platformText: platforms,
+      allowEdit: false,
+      friends: userText.friends
+    });
   }
 
   const myProfile = userParam === undefined;
-  console.log(myProfile);
   // redirect to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Redirect to="/me" />;
   }
 
-  if (!loading) {
-    setUserText({
-      descText: user?.description,
-      fromTime: user?.fromTime,
-      platformText: user?.platform,
-      allowEdit: userText.allowEdit
-    })
-  }
 
   // if (!user?.username) {
   //   return (
@@ -154,7 +178,7 @@ const Profile = () => {
   function ShowFriendSearch(props){
     if(myProfile){
       return (
-        <form className="form-inline input-group" id="searchFriend" onSubmit={handleFriendSubmit}>
+        <form className="form-inline input-group" id="searchFriend" onSubmit={() => handleFriendSubmit()}>
             <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-label="Search" id="searchInput"></input>
             <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -181,7 +205,7 @@ const Profile = () => {
       return(
         <form onSubmit={handleProfileEdit}>
           <label htmlFor="Description">Edit Description</label>
-          <input name="Description" type="text" id="descInput"/>
+          <input name="Description" type="text" id="descInput" defaultValue={userText.descText}/>
           <label>My Platforms</label>
           <div>
             <label>PC</label>
@@ -210,7 +234,15 @@ const Profile = () => {
   function ShowEditBtn(props){
     if(myProfile && !userText.allowEdit){
       return(
-        <button onClick={() => setUserText(setUserText({allowEdit: true}))}></button>
+        <button onClick={() => setUserText({
+          username: userText.username,
+          descText: userText.descText,
+          fromTime: userText.fromTime,
+          platformText: userText.platformText,
+          allowEdit: true,
+          friends: userText.friends
+        })}
+        ></button>
       )
     }  
     return(
@@ -218,6 +250,7 @@ const Profile = () => {
     )
   }
 
+  console.log(loading);
 
   return (
     <div className="container">
@@ -232,7 +265,7 @@ const Profile = () => {
                     <h4><b>Games</b> <span className="red-text">86</span></h4>
                     <h4 className="mt-2"><b>Groups</b> <span className="red-text">3</span></h4>
                     <h4 className="mt-2"><b>Friends</b> <span className="red-text">18</span></h4>
-                    {user.friends.map((friend, index) => (
+                    {userText.friends.map((friend, index) => (
                         <Link className="profile-sidebar-link" to={`/profiles/${friend}`}>
                           <p key={index} className="mt-1">{friend}</p>
                         </Link>
@@ -255,10 +288,10 @@ const Profile = () => {
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
                 <circle cx="8" cy="8" r="8"/></svg>
-                {`${user.username}'s`} Profile 
+                {`${userText.username}'s`} Profile 
               </h2>
               <h6 className="ml-2"><b>Platforms:</b>{`${userText.platformText}`}</h6>
-              <h6 className="mt-2 ml-2"><b>Last Online:</b> Now</h6>
+              <h6 className="mt-2 ml-2"><b>Availability:</b>{`${userText.fromTime}`} to {`${userText.toTime}`}</h6>
               <p className="mt-2 ml-2 mt-4">{`${userText.descText}`}</p>
               <ShowEditBtn/>
             </div>

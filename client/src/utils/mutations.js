@@ -64,7 +64,8 @@ export const UPDATE_GAMES = gql`
 export const UPDATE_AVAILABILITY = gql`
   mutation updateAvailability($fromTime: String!, $toTime: String!) {
     updateAvailability(fromTime: $fromTime, toTime: $toTime) {
-      availability
+      fromTime
+      toTime
     }
   }
 `;

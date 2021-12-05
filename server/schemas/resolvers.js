@@ -130,8 +130,7 @@ const resolvers = {
       if (context.user) {
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $set: { fromTime: fromTime } },
-          { $set: { toTime: toTime } }
+          {fromTime: fromTime, toTime: toTime}
         );
         return User.findOne({ _id: context.user._id });
       }

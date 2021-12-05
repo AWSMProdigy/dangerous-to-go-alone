@@ -6,6 +6,14 @@ export const QUERY_USER = gql`
       _id
       username
       friends
+      email
+      description
+      fromTime
+      toTime
+      platform
+      games{
+        title
+      }
     }
   }
 `;
