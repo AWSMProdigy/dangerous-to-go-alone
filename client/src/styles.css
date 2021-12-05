@@ -1,4 +1,4 @@
-/* Custom CSS */
+/* Homepage CSS */
 .container-custom {
     width: 100%;
     margin: 0;
@@ -25,6 +25,7 @@ h1, h2, h3, h4, h5 , h6 {
     border-color: #f00;
 }
 
+/* Nav CSS */
 .nav-logo {
     width: auto;
     height: 50px;
@@ -56,6 +57,7 @@ h1, h2, h3, h4, h5 , h6 {
     list-style-type: none;
 }
 
+/* Form + Hero Images CSS */
 form > .btn, form > div > .btn {
     background-color: #f00;
     color: #ffffff;
@@ -171,16 +173,6 @@ form > .btn:hover {
     background-color:#ffffff;
 }
 
-.login-form-input {
-    border: 1px solid;
-    border-color: #242424;
-    border-radius: 0.5rem;
-    padding: 10px 10px;
-    display: flex;
-    margin-top: 5px;
-    margin-bottom: 3px;
-    width: 100%;
-}
 
 .popular-row, .pop-games {
     border: 1px solid;
@@ -196,6 +188,8 @@ form > .btn:hover {
     text-align: center;
 }
 
+
+/* Signup + Login page CSS */
 #redirect-text-signup, #redirect-text-login {
     margin-bottom: 0 !important;
 }
@@ -210,6 +204,19 @@ form > .btn:hover {
     color: #f00;
 }
 
+.login-form-input {
+    border: 1px solid;
+    border-color: #242424;
+    border-radius: 0.5rem;
+    padding: 10px 10px;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+
+
+/* Profile Page CSS */
 .profile-img {
     width: 50px;
     height: 50px;
@@ -224,6 +231,10 @@ form > .btn:hover {
     border-color: #f00;
     border-radius: 0.5rem;
     padding: 15px 15px 3px 15px;
+}
+
+.sidebar-medium {
+    flex-direction: column !important;
 }
 
 .profile-sidebar-link {
@@ -243,11 +254,19 @@ form > .btn:hover {
     border-color: #f00;
 }
 
+
 /* Game Library CSS */
 .border{
     border-radius: 0.5rem;
 }
 
+/* Single Game Page CSS */
+#game {
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    border-color: #f00;
+}
 
 /* Wish List CSS */
 .wishlist-row {
@@ -266,6 +285,8 @@ form > .btn:hover {
     height: 21px;
 }
 
+
+/* Mobile Screens */
 @media screen and (max-width: 400px){
     .img-fluid {
         display: none;
@@ -290,8 +311,16 @@ form > .btn:hover {
     #take-friend {
         margin-top: 80px;
     }
+
+    .sidebarBtn-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
+
+/* Small Screens */
 @media screen and (max-width: 576px) {
     .spacing {
         width: auto;
@@ -321,17 +350,48 @@ form > .btn:hover {
     .input-group {
         align-items: center !important;
     }
+
+    .prof-games-sm {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 85%;
+    }
+
+    .play-sm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cond-sidebar-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 
+/* Medium Screens */
 @media screen and (max-width: 768px) {
+    .nav {
+        align-items: center !important;
+    }
+
     .nav-wrapper {
         display: flex;
         justify-content: space-between;
     }
 
+    .nav > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .button-wrapper {
         display: flex;
+        align-items: center;
         justify-content: flex-end;
     }
 
@@ -343,8 +403,17 @@ form > .btn:hover {
         width: auto;
         padding: 10px 0 80px 0;
     }
+
+    .play-sm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 }
 
+
+/* Large Screens */
 @media screen and (max-width: 992px) {
     .spacing {
         width: auto;
@@ -353,5 +422,11 @@ form > .btn:hover {
 
     #take-friend {
         margin-top: 50px;
+    }
+
+    .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
     }
 }
