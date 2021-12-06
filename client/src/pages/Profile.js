@@ -328,7 +328,7 @@ const Profile = () => {
 
         <div className="col col-md-9" id="main">
           <div className="row">
-            <img className="img-fluid profile-img col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
+            <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
             <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
