@@ -23,6 +23,8 @@ const typeDefs = gql`
     title: String
     developer: String
     releaseYear: String
+    Players: [String]
+    src: String
   }
 
   type Auth {
@@ -33,7 +35,7 @@ const typeDefs = gql`
   type Query {
     users(useGames: Boolean!, useAvailability: Boolean!, usePlatform: Boolean!): [User]
     user(username: String!): User
-    games(username: String!): [Game]
+    games: [Game]
     game(gameId: String!): Game
     me: User
   }
@@ -42,6 +44,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addFriend(friendName: String!): User
+    createGame(title: String!, developer: String!, releaseYear: String!, src: String!): Game
     addUserGame(title: String!): Game
     removeFriend(userName: String!): User
     removeGame(title: String!): User

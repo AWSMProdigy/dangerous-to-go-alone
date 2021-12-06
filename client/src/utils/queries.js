@@ -28,7 +28,6 @@ export const QUERY_GAMES = gql`
       title
       developer
       releaseYear
-      src
     }
   }
 `;

@@ -23,6 +23,7 @@ const userSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'Game',
+      unique: true
     },
   ],
   description: {
@@ -39,7 +40,6 @@ const userSchema = new Schema({
   friends: [
     {
       type: String,
-      unique: true
     }
   ],
   platform: {

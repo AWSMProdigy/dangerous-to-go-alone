@@ -21,6 +21,14 @@ export const ADD_USER = gql`
   }
 `;
 
+export const CREATE_GAME = gql`
+  mutation createGame($title: String!, $developer: String!, $releaseYear: String!, $src: String!) {
+    createGame(title: $title, developer: $developer, releaseYear: $releaseYear, src: $src) {
+      title
+    }
+  }
+`;
+
 export const ADD_FRIEND = gql`
   mutation addFriend($friendName: String!) {
     addFriend(friendName: $friendName) {
@@ -40,7 +48,7 @@ export const REMOVE_FRIEND = gql`
 export const ADD_GAME = gql`
   mutation addUserGame($title: String!) {
     addUserGame(title: $title) {
-     games
+     title
     }
   }
 `;

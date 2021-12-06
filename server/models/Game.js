@@ -8,6 +8,7 @@ const gameSchema = new Schema({
     minlength: 1,
     maxlength: 280,
     trim: true,
+    unique: true
   },
   developer: {
     type: String,

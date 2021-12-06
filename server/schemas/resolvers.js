@@ -19,9 +19,9 @@ const resolvers = {
       return User.findOne({ username });
     },
 
-    games: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Games.find(params).sort({ createdAt: -1 });
+    games: async (parent, { title }) => {
+      const params = title ? { title } : {};
+      return Game.find(params).sort({ createdAt: -1 });
     },
     game: async (parent, { title }) => {
       return Game.find({ title: {$regex : title} });
@@ -78,17 +78,18 @@ const resolvers = {
     },
 
     addUserGame: async (parent, {title}, context) => {
+      const game = await Game.findOne({
+        title: title,
+      });
       if(context.user) {
-        const game = await Game.findOne({
-          title: title,
-        })
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: {games: game}}
+        );
+        return game;
       }
-
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: {games: game}}
-      );
-      return game;
+      throw new AuthenticationError('You need to be logged in!');
+      
     },
 
     removeFriend: async (parent, { userName }, context) => {
@@ -203,8 +204,11 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-
-  },
-};
+    createGame: async (parent, { title, developer, releaseYear, src }) => {
+      const game = await Game.create({title, developer, releaseYear, src});
+      return game;
+    }
+  }
+}
 
 module.exports = resolvers;
