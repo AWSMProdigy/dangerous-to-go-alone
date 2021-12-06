@@ -21,8 +21,7 @@ const userSchema = new Schema({
   },
   games: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Game',
+      type: String,
     },
   ],
   description: {
@@ -39,12 +38,24 @@ const userSchema = new Schema({
   friends: [
     {
       type: String,
-      unique: true
     }
   ],
   platform: {
     type: String
-  }
+  },
+  discord:{
+    type: String
+  },
+  xboxName:{
+    type: String
+  },
+  steamName:{
+    type: String
+  },
+  playstationName:{
+    type: String
+  },
+
   // blockedUsers: [
   //   {
   //     type:Schema.Types.ObjectId,

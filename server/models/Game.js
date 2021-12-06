@@ -7,7 +7,7 @@ const gameSchema = new Schema({
     required: 'Game needs a title',
     minlength: 1,
     maxlength: 280,
-    trim: true,
+    unique: true
   },
   developer: {
     type: String,
@@ -15,16 +15,19 @@ const gameSchema = new Schema({
     trim: true,
   },
   releaseYear: {
-    type: Date,
-    default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
+    type: String
   },
   players: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
+      type: String
     }
-  ]
+  ],
+  src: {
+    type: String
+  },
+  platforms: {
+    type: String
+  }
 });
 
 const Game = model('Game', gameSchema);

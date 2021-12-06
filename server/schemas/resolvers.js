@@ -19,12 +19,12 @@ const resolvers = {
       return User.findOne({ username });
     },
 
-    games: async (parent, { username }) => {
-      const params = username ? { username } : {};
-      return Games.find(params).sort({ createdAt: -1 });
+    games: async (parent, { title }) => {
+      const params = title ? { title } : {};
+      return Game.find(params).sort({ createdAt: -1 });
     },
     game: async (parent, { title }) => {
-      return Game.find({ title: {$regex : title} });
+      return Game.findOne({ title });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -77,18 +77,21 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    addUserGame: async (parent, {title}, context) => {
-      if(context.user) {
-        const game = await Game.findOne({
-          title: title,
-        })
+    addUserGame: async (parent, { title }, context) => {
+      const game = await Game.findOne({
+         title
+      });
+      if(context.user && game) {
+        console.log("Resolver 86" + game);
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: {games: title}},
+          { new: true }
+        );
+        return game;
       }
-
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: {games: game}}
-      );
-      return game;
+      throw new AuthenticationError('You need to be logged in!');
+      
     },
 
     removeFriend: async (parent, { userName }, context) => {
@@ -158,7 +161,56 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-  },
-};
+
+    updateDiscord: async (parent, { discord }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { discord: discord } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateXbox: async (parent, { xboxName }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { xboxName: xboxName } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateSteam: async (parent, { steamName }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { steamName: steamName } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updatePlaystation: async (parent, { playstationName }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { playstationName: playstationName } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    createGame: async (parent, { title, developer, releaseYear, src }) => {
+      const game = await Game.create({title, developer, releaseYear, src});
+      return game;
+    }
+  }
+}
 
 module.exports = resolvers;

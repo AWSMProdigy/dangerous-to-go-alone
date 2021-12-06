@@ -11,37 +11,37 @@ export const QUERY_USER = gql`
       fromTime
       toTime
       platform
-      games{
-        title
-      }
+      games
+      discord
+      xboxName
+      steamName
+      playstationName
     }
   }
 `;
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
+export const QUERY_GAMES = gql`
+  query games{
+    games{
+      title
+      developer
+      releaseYear
+      src
+      players
+      platforms
     }
   }
 `;
 
-export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        commentAuthor
-        createdAt
-      }
+export const QUERY_GAME = gql`
+  query game($title: String!){
+    game(title: $title){
+      title
+      developer
+      releaseYear
+      src
+      players
+      platforms
     }
   }
 `;
@@ -57,9 +57,27 @@ export const QUERY_ME = gql`
       toTime
       fromTime
       platform
-      games{
-        title
-      }
+      games
+      discord
+      xboxName
+      steamName
+      playstationName
     }
   }
 `;
+
+export const QUERY_LIBRARY = gql`
+  query library {
+    games{
+      title
+      developer
+      releaseYear
+      src
+      players
+      platforms
+    }
+    me{
+      games
+    }
+  }
+`

@@ -21,6 +21,14 @@ export const ADD_USER = gql`
   }
 `;
 
+export const CREATE_GAME = gql`
+  mutation createGame($title: String!, $developer: String!, $releaseYear: String!, $src: String!) {
+    createGame(title: $title, developer: $developer, releaseYear: $releaseYear, src: $src) {
+      title
+    }
+  }
+`;
+
 export const ADD_FRIEND = gql`
   mutation addFriend($friendName: String!) {
     addFriend(friendName: $friendName) {
@@ -40,7 +48,8 @@ export const REMOVE_FRIEND = gql`
 export const ADD_GAME = gql`
   mutation addUserGame($title: String!) {
     addUserGame(title: $title) {
-     games
+     title
+     src
     }
   }
 `;
@@ -82,6 +91,38 @@ export const UPDATE_DESC = gql`
   mutation updateDesc($description: String!) {
     updateDesc(description: $description) {
       description
+    }
+  }
+`;
+
+export const UPDATE_DISCORD = gql`
+  mutation updateDiscord($discord: String!) {
+    updateDiscord(discord: $discord) {
+      discord
+    }
+  }
+`;
+
+export const UPDATE_XBOX = gql`
+  mutation updateXbox($xboxName: String!) {
+    updateXbox(xboxName: $xboxName) {
+      xboxName
+    }
+  }
+`;
+
+export const UPDATE_STEAM = gql`
+  mutation updateSteam($steamName: String!) {
+    updateSteam(steamName: $steamName) {
+      steamName
+    }
+  }
+`;
+
+export const UPDATE_PLAYSTATION = gql`
+  mutation updatePlaystation($playstationName: String!) {
+    updatePlaystation(playstationName: $playstationName) {
+      playstationName
     }
   }
 `;
