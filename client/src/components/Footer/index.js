@@ -27,7 +27,7 @@ const Footer = () => {
                   <h6>Profile</h6>
                   </Link>
                   <Link className="navItem" to="/Library">
-                  <h6>My Games</h6>
+                  <h6>Games</h6>
                   </Link>
                 </>
               ) : (

@@ -256,7 +256,7 @@ const Profile = () => {
   function ShowEditBtn(props){
     if(myProfile && !userText.allowEdit){
       return(
-        <button onClick={() => setUserText({
+        <button className="custom-btn ml-2" onClick={() => setUserText({
           username: userText.username,
           descText: userText.descText,
           fromTime: userText.fromTime,
@@ -265,7 +265,7 @@ const Profile = () => {
           allowEdit: true,
           friends: userText.friends
         })}
-        ></button>
+        >Edit Profile</button>
       )
     }  
     return(
