@@ -15,16 +15,16 @@ const gameSchema = new Schema({
     trim: true,
   },
   releaseYear: {
-    type: Date,
-    default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
+    type: String
   },
   players: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
+      type: String
     }
-  ]
+  ],
+  src: {
+    type: String
+  }
 });
 
 const Game = model('Game', gameSchema);

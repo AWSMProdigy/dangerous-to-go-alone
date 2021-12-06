@@ -10,7 +10,7 @@ import mario from "../assets/images/profile/mariokart.jpg";
 import itTakes2 from "../assets/images/profile/ittakes2.jpg";
 import ac from "../assets/images/profile/ac.jpg";
 
-import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC } from '../utils/mutations';
+import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 
@@ -28,6 +28,10 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
+  const [showSteam, setSteam] = useState(false);
+  const [showXbox, setXbox] = useState(false);
+  const [showPlaystation, setPlaystation] = useState(false);
+
   const [userText, setUserText] = useState({
     username: "",
     descText: "",
@@ -35,7 +39,12 @@ const Profile = () => {
     toTime: "",
     platformText: "",
     allowEdit: false,
-    friends: []
+    friends: [],
+    games: [],
+    discord: "",
+    steam: "",
+    xbox: "",
+    playstation: ""
   })
 
   useEffect(() => {
@@ -47,7 +56,12 @@ const Profile = () => {
         toTime: user?.toTime || "",
         platformText: user?.platform || "",
         allowEdit: userText.allowEdit,
-        friends: user?.friends || []
+        friends: user?.friends || [],
+        games: user?.games || [],
+        discord: user?.discord || "",
+        steam: user?.steamName || "",
+        xbox: user?.xboxName || "",
+        playstation: user?.playstationName || ""
       })
     }
     else{
@@ -64,6 +78,10 @@ const Profile = () => {
   const [updateAvailability] = useMutation(UPDATE_AVAILABILITY);
   const [updatePlatform] = useMutation(UPDATE_PLATFORM);
   const [updateDesc] = useMutation(UPDATE_DESC);
+  const [updateDiscord] = useMutation(UPDATE_DISCORD);
+  const [updateXbox] = useMutation(UPDATE_XBOX);
+  const [updateSteam] = useMutation(UPDATE_STEAM);
+  const [updatePlaystation] = useMutation(UPDATE_PLAYSTATION);
 
 
   const handleFriendSubmit = async (event) => {
@@ -136,19 +154,77 @@ const Profile = () => {
     }
   }
 
+  const handleDiscordChange = async (discord) => {
+    try{
+      const { data } = await updateDiscord({
+        variables: {
+          discord: discord
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+  const handleXboxChange = async (xboxName) => {
+    try{
+      const { data } = await updateXbox({
+        variables: {
+          xboxName: xboxName
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+  const handlePlaystationChange = async (playstationName) => {
+    try{
+      const { data } = await updatePlaystation({
+        variables: {
+          playstationName: playstationName
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+  const handleSteamChange = async (steamName) => {
+    try{
+      const { data } = await updateSteam({
+        variables: {
+          steamName: steamName
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+  
+
   const handleProfileEdit = async (event) => {
+    console.log(userText.discord);
     event.preventDefault();
     handleDescChange(event.target.descInput.value.trim());
     console.log(event.target.toTime.value);
     console.log(event.target.fromTime.value);
     const pcString = event.target.pcInput.checked ? "PC " : "";
-    const playstationString = event.target.playstationInput.checked ? "Playstation " : "";
-    const xboxString = event.target.xboxInput.checked ? "Xbox " : "";
+    const playstationString = event.target.playstationCheck.checked ? "Playstation " : "";
+    const xboxString = event.target.xboxCheck.checked ? "Xbox " : "";
     const switchString = event.target.switchInput.checked ? "Switch " : "";
     const mobileString = event.target.mobileInput.checked ? "Mobile" : "";
     const platforms = pcString + playstationString + xboxString + switchString + mobileString
     handlePlatformChange(platforms);
     handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
+    handleDiscordChange(event.target.discordInput.value.trim());
+    handleXboxChange(event.target.xboxInput.value.trim());
+    handleSteamChange(event.target.steamInput.value.trim());
+    handlePlaystationChange(event.target.playstationInput.value.trim());
     setUserText({
       username: userText.username,
       descText: event.target.descInput.value.trim(),
@@ -156,7 +232,12 @@ const Profile = () => {
       toTime: event.target.toTime.value,
       platformText: platforms,
       allowEdit: false,
-      friends: userText.friends
+      friends: userText.friends,
+      games: userText.games,
+      discord: event.target.discordInput.value.trim(),
+      steam: event.target.steamInput.value.trim(),
+      xbox: event.target.xboxInput.value.trim(),
+      playstation: event.target.playstationInput.value.trim()
     });
   }
 
@@ -201,12 +282,41 @@ const Profile = () => {
     )
   }
 
+  function NameChanges(props){
+    console.log(props.showXbox);
+    const xboxVis = props.showXbox ? "visible" : "hidden";
+    const steamVis = props.showSteam ? "visible" : "hidden";
+    const playstationVis = props.showPlaystation ? "visible" : "hidden";
+    return(
+      <>
+        <p htmlFor="Discord"><b>Discord:</b></p>
+        <input className="description-input" name="Discord" type="text" id="discordInput" defaultValue={userText.discord}/>
+        <p htmlFor="Steam"><b>Steam Username:</b></p>
+        <input className="description-input" name="Steam" type="text" id="steamInput" defaultValue={userText.steam} style={{visibility: steamVis}}/>
+        <p htmlFor="Xbox"><b>Xbox gamertag:</b></p>
+        <input className="description-input" name="Xbox" type="text" id="xboxInput" defaultValue={userText.xbox} style={{visibility: xboxVis}}/>
+        <p htmlFor="Playstation"><b>Playstation Username:</b></p>
+        <input className="description-input" name="Playstation" type="text" id="playstationInput" defaultValue={userText.playstation} style={{visibility: playstationVis}}/>
+      </>
+    )
+    }
+
   function EditPage(props){
+    const [showSteam, setSteam] = useState(false);
+    const [showXbox, setXbox] = useState(false);
+    const [showPlaystation, setPlaystation] = useState(false);
+    
     const pcChecked = userText.platformText.includes("PC");
     const xboxChecked = userText.platformText.includes("Xbox");
     const playstationChecked = userText.platformText.includes("Playstation");
     const switchChecked = userText.platformText.includes("Switch");
     const mobileChecked = userText.platformText.includes("Mobile");
+    useEffect(() => {    
+      setSteam(pcChecked);
+      setXbox(xboxChecked);
+      setPlaystation(playstationChecked);
+    
+  }, [pcChecked, xboxChecked, playstationChecked]);
     if(userText.allowEdit){
       return(
         <form className="ml-2" onSubmit={handleProfileEdit}>
@@ -216,15 +326,15 @@ const Profile = () => {
           <div className="col-12 d-flex flex-wrap">
               <div className="d-flex flex-wrap flex-column col-6">
                 <div className="col-lg-2 flex-row align-items-baseline">
-                  <input type="checkbox" value="PC" id="pcInput" defaultChecked={pcChecked}></input>
+                  <input type="checkbox" value="PC" id="pcInput" defaultChecked={pcChecked} onClick={() => {setSteam(!showSteam)}}></input>
                   <p className="ml-1">PC</p>
                 </div>
                 <div className="col-2 flex-row align-items-baseline">
-                  <input type="checkbox" value="PC" id="playstationInput" defaultChecked={playstationChecked}></input>
+                  <input type="checkbox" value="Playstation" id="playstationCheck" defaultChecked={playstationChecked} onClick={() => {setPlaystation(!showPlaystation)}}></input>
                   <p className="ml-1">Playstation</p>
                 </div>
                 <div className="col-2 flex-row align-items-baseline">
-                  <input type="checkbox" value="PC" id="xboxInput" defaultChecked={xboxChecked}></input>
+                  <input type="checkbox" value="Xbox" id="xboxCheck" defaultChecked={xboxChecked} onClick={() => {setXbox(!showXbox)}}></input>
                   <p className="ml-1">Xbox</p>
                 </div>
               </div>
@@ -239,6 +349,7 @@ const Profile = () => {
                 </div>
               </div>
           </div>
+          <NameChanges showXbox={showXbox} showSteam={showSteam} showPlaystation={showPlaystation} /> 
           <p className="mt-2" htmlFor="Availability"><b>Edit Availability</b></p>
           <select className="time-select"name="Availability" type="text" id="fromTime" defaultValue={userText.fromTime}>
             <TimeOptions/>
@@ -249,6 +360,11 @@ const Profile = () => {
           <br></br>
           <button className="custom-btn" type="submit" value="Submit">Submit</button>
         </form>
+      )
+    }
+    else{
+      return(
+        <></>
       )
     }
   }
@@ -263,7 +379,12 @@ const Profile = () => {
           toTime: userText.toTime,
           platformText: userText.platformText,
           allowEdit: true,
-          friends: userText.friends
+          friends: userText.friends,
+          games: userText.games,
+          discord: userText.discord,
+          steam: userText.steam,
+          xbox: userText.xbox,
+          playstation: userText.playstation
         })}
         ></button>
       )
@@ -305,21 +426,28 @@ const Profile = () => {
                       </Link>
                   </div>
                   <div className="sidebar">
-                      <h4><b>Games</b> <span className="red-text">86</span></h4>
-                      <h4 className="mt-2"><b>Groups</b> <span className="red-text">3</span></h4>
-                      <h4 className="mt-2"><b>Friends</b> <span className="red-text">18</span></h4>
-                      {userText.friends.map((friend, index) => (
+                      <h4><b>Games</b> <span className="red-text">{userText.games.length}</span></h4>
+                      {/* <h4 className="mt-2"><b>Groups</b> <span className="red-text">3</span></h4> */}
+                      <h4 className="mt-2"><b>Friends</b> <span className="red-text">{userText.friends.length}</span></h4>
+                      {userText.friends.map((friend, index) => ( 
                         <Link className="profile-sidebar-link" to={`/profiles/${friend}`}>
                           <p key={index} className="mt-1">{friend}</p>
                         </Link>
                       ))}
-                        <h4 className="mt-3"><b>Quick Links</b></h4>
-                      <Link className="profile-sidebar-link" to="/wishlist">
-                        <p className="mt-1">Wish List</p>
-                      </Link>
-                      <Link className="profile-sidebar-link" to="/Library">
-                        <p className="">Library</p>
-                      </Link>
+                      {myProfile ? (
+                        <>
+                          <h4 className="mt-3"><b>Quick Links</b></h4>
+                        <Link className="profile-sidebar-link" to="/wishlist">
+                          <p className="mt-1">Wish List</p>
+                        </Link>
+                        <Link className="profile-sidebar-link" to="/Library">
+                          <p className="">Library</p>
+                        </Link>
+                      </>
+                      ) : (
+                        <></>
+                      )
+                    }
                   </div>
                 </div>
                 </div>
@@ -337,6 +465,7 @@ const Profile = () => {
               </h2>
               <h6 className="ml-2"><b>Platforms:</b>{`${userText.platformText}`}</h6>
               <h6 className="mt-2 ml-2"><b>Availability:</b>{`${userText.fromTime}`} to {`${userText.toTime}`}</h6>
+              <h6 className="mt-2 ml-2"><b>Discord:</b>{`${userText.discord}`}</h6>
               <p className="mt-2 ml-2 mt-4">{`${userText.descText}`}</p>
               <ShowEditBtn/>
             </div>

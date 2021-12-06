@@ -12,6 +12,10 @@ const typeDefs = gql`
     fromTime: String
     toTime: String
     platform: String
+    discord: String
+    xboxName: String
+    steamName: String
+    playstationName: String
   }
 
   type Game {
@@ -45,6 +49,10 @@ const typeDefs = gql`
     updateAvailability(fromTime: String!, toTime: String!): User
     updatePlatform(platform: String!): User
     updateDesc(description: String!): User
+    updateDiscord(discord: String!): User
+    updateXbox(xboxName: String!): User
+    updateSteam(steamName: String!): User
+    updatePlaystation(playstationName: String!): User
   }
 `;
 

@@ -158,6 +158,52 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+
+    updateDiscord: async (parent, { discord }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { discord: discord } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateXbox: async (parent, { xboxName }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { xboxName: xboxName } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateSteam: async (parent, { steamName }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { steamName: steamName } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updatePlaystation: async (parent, { playstationName }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { playstationName: playstationName } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+
   },
 };
 

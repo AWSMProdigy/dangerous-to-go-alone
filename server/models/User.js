@@ -44,7 +44,20 @@ const userSchema = new Schema({
   ],
   platform: {
     type: String
-  }
+  },
+  discord:{
+    type: String
+  },
+  xboxName:{
+    type: String
+  },
+  steamName:{
+    type: String
+  },
+  playstationName:{
+    type: String
+  },
+
   // blockedUsers: [
   //   {
   //     type:Schema.Types.ObjectId,

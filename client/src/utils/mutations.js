@@ -86,4 +86,36 @@ export const UPDATE_DESC = gql`
   }
 `;
 
+export const UPDATE_DISCORD = gql`
+  mutation updateDiscord($discord: String!) {
+    updateDiscord(discord: $discord) {
+      discord
+    }
+  }
+`;
+
+export const UPDATE_XBOX = gql`
+  mutation updateXbox($xboxName: String!) {
+    updateXbox(xboxName: $xboxName) {
+      xboxName
+    }
+  }
+`;
+
+export const UPDATE_STEAM = gql`
+  mutation updateSteam($steamName: String!) {
+    updateSteam(steamName: $steamName) {
+      steamName
+    }
+  }
+`;
+
+export const UPDATE_PLAYSTATION = gql`
+  mutation updatePlaystation($playstationName: String!) {
+    updatePlaystation(playstationName: $playstationName) {
+      playstationName
+    }
+  }
+`;
+
 
