@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5 , h6 {
     visibility: visible;
   }
 
-  
+
 /* Form + Hero Images CSS */
 form > .btn, form > div > .btn {
     background-color: #f00;
@@ -234,9 +234,9 @@ form > .btn:hover {
 
 
 /* Profile Page CSS */
-.profile-img {
-    width: auto;
-    height: auto;
+#profile-img {
+    width: 400px;
+    height: 400px;
 }
 
 #online-icon {
@@ -352,7 +352,6 @@ form > .btn:hover {
     }
 }
 
-
 /* Small Screens */
 @media screen and (max-width: 576px) {
     .spacing {
@@ -456,5 +455,12 @@ form > .btn:hover {
         display: flex;
         flex-direction: column;
         align-items: start;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #profile-img {
+        max-width: 336px;
+        max-height: 336px;
     }
 }
