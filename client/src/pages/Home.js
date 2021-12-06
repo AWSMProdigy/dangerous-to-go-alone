@@ -10,8 +10,28 @@ import halo from '../assets/images/homepage/halo.png';
 
 const Home = () => {
 
+  function FadeInSection(props) {
+    const [isVisible, setVisible] = React.useState(false);
+    const domRef = React.useRef();
+    React.useEffect(() => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => setVisible(entry.isIntersecting));
+      });
+      observer.observe(domRef.current);
+    }, []);
+    return (
+      <div
+        className={`fade-in-section ${isVisible ? 'is-visible' : ''}`}
+        ref={domRef}
+      >
+        {props.children}
+      </div>
+    );
+  }
+
   return (
-    <main className="main">
+    <main className="main bg-black">
+      <FadeInSection>
       <div className="row bg-black hero-row-one">
         <div id="hero" className="hero col-sm-12 col-md-12 col-lg-7 col-xl-8">
           <img className="img-fluid" src={manGaming} alt="Man staring at a screen with gaming headphones on"></img>
@@ -25,7 +45,9 @@ const Home = () => {
         </Link>
       </div>
       </div>
+      </FadeInSection>
 
+      <FadeInSection>
       <div className="row bg-black spacing">
         <div className="col-sm-10 col-md-3 my-auto mx-auto col-xs-12">
           <h1 className="text-light mb-3 ml-3">Keep a Game Library</h1>
@@ -38,7 +60,9 @@ const Home = () => {
             <img className="img-fluid game-library" src={gameLibrary} alt="A collection of xBox games"></img>
         </div>
       </div>
+      </FadeInSection>
 
+      <FadeInSection>
       <div className="row bg-black spacing">
         <div id="hero" className="hero col-md-8">
           <img className="img-fluid" src={console} alt="A close up shot of a Playstation controller"></img>
@@ -51,6 +75,7 @@ const Home = () => {
           </Link>
         </div>
       </div>
+      </FadeInSection>
 
       <div className="row pt-1 pb-5 bg-black popular-row">
         <div className="join-us">
@@ -78,6 +103,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      
     </main>
   );
 };
