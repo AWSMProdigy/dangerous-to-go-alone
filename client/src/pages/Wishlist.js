@@ -12,18 +12,6 @@ return (
       <div className="row">
         <table class="ml-3">
           <tr className="wishlist-row">
-            <th className="col-8">Stardew Valley</th>
-            <th><a href="https://www.amazon.com/Stardew-Valley-Nintendo-Switch/dp/B08F8KRRGL/ref=sr_1_3?keywords=stardew+valley&qid=1638560414&sr=8-3" target="_blank" rel="noreferrer">
-              <button className="custom-btn-wishlist mx-1">Amazon</button></a></th>
-            <th><a href="https://store.steampowered.com/app/413150/Stardew_Valley/" target="_blank" rel="noreferrer">
-              <button className="custom-btn-wishlist mx-1">Steam</button></a></th>
-            <th><a href="https://www.gamestop.com/video-games/nintendo-switch/products/stardew-valley---nintendo-switch/220265.html" target="_blank" rel="noreferrer">
-              <button className="custom-btn-wishlist mx-1">GameStop</button></a></th>
-            <th><a href="https://www.target.com/p/stardew-valley-nintendo-switch-digital/-/A-54011133#lnk=sametab" target="_blank" rel="noreferrer">
-              <button className="custom-btn-wishlist mx-1">Target</button></a></th>
-          </tr>
-
-          <tr className="wishlist-row">
             <th className="col-8 wishlist-header">Sid Meier's Civilization VI</th>
             <th><a href="https://www.amazon.com/Sid-Meiers-Civilization-VI-Nintendo-Switch/dp/B07HH8ZSMM/ref=sr_1_1?keywords=civ+6&qid=1638805748&sr=8-1" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">Amazon</button></a></th>
@@ -96,7 +84,7 @@ return (
           </tr>
 
           <tr className="wishlist-row">
-            <th className="col-8 wishlist-header">No Mans Sky</th>
+            <th className="col-8 wishlist-header">No Man's Sky</th>
             <th><a href="https://www.amazon.com/No-Mans-Sky-Xbox-One/dp/B07CB6YFYC/ref=sr_1_1?keywords=no+mans+sky&qid=1638805795&sr=8-1" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">Amazon</button></a></th>
             <th><a href="https://store.steampowered.com/app/275850/No_Mans_Sky/" target="_blank" rel="noreferrer">
@@ -106,23 +94,13 @@ return (
           </tr>
 
           <tr className="wishlist-row">
-            <th className="col-8 wishlist-header">Ultimate Chicken horse</th>
+            <th className="col-8 wishlist-header">Ultimate Chicken Horse</th>
             <th><a href="https://www.amazon.com/Ultimate-Chicken-Horse-Neigh-Versary-Nintendo-Switch/dp/B099YLVPVB/ref=sr_1_1?keywords=ultimate+chicken+horse&qid=1638805718&sr=8-1" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">Amazon</button></a></th>
             <th><a href="https://store.steampowered.com/app/386940/Ultimate_Chicken_Horse/" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">Steam</button></a></th>
             <th><a href="https://www.gamestop.com/video-games/nintendo-switch/products/ultimate-chicken-horse-a-neigh-versary-edition---nintendo-switch/304332.html" target="_blank" rel="noreferrer">
               <button className="custom-btn-wishlist mx-1">GameStop</button></a></th>
-          </tr>
-
-          <tr className="wishlist-row">
-            <th className="col-8 wishlist-header">Rocket League</th>
-            <th><a href="https://www.amazon.com/Rocket-League-Collectors-Xbox-One/dp/B076ZRR75Q/ref=sr_1_5?keywords=rocket+league&qid=1638805623&sr=8-5" target="_blank" rel="noreferrer">
-              <button className="custom-btn-wishlist mx-1">Amazon</button></a></th>
-            <th><a href="https://www.gamestop.com/video-games/nintendo-switch/products/rocket-league-ultimate-edition---nintendo-switch/179381.html" target="_blank" rel="noreferrer">
-              <button className="custom-btn-wishlist mx-1">GameStop</button></a></th>
-            <th><a href="https://www.epicgames.com/store/en-US/p/rocket-league" target="_blank" rel="noreferrer">
-              <button className="custom-btn-wishlist mx-1">Epic</button></a></th>
           </tr>
 
         </table>

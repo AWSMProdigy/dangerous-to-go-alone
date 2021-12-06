@@ -247,7 +247,7 @@ const Profile = () => {
             <TimeOptions/>
           </select>
           <br></br>
-          <button className="custom-btn" type="submit" value="Submit">Submit</button>
+          <button className="custom-btn" type="submit" value="Submit">Save</button>
         </form>
       )
     }
