@@ -11,9 +11,7 @@ export const QUERY_USER = gql`
       fromTime
       toTime
       platform
-      games{
-        title
-      }
+      games
       discord
       xboxName
       steamName
@@ -28,18 +26,22 @@ export const QUERY_GAMES = gql`
       title
       developer
       releaseYear
+      src
+      players
+      platforms
     }
   }
 `;
 
 export const QUERY_GAME = gql`
-  query game{
-    game{
+  query game($title: String!){
+    game(title: $title){
       title
       developer
       releaseYear
       src
       players
+      platforms
     }
   }
 `;
@@ -55,9 +57,7 @@ export const QUERY_ME = gql`
       toTime
       fromTime
       platform
-      games{
-        title
-      }
+      games
       discord
       xboxName
       steamName
@@ -65,3 +65,19 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_LIBRARY = gql`
+  query library {
+    games{
+      title
+      developer
+      releaseYear
+      src
+      players
+      platforms
+    }
+    me{
+      games
+    }
+  }
+`

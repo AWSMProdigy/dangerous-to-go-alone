@@ -427,6 +427,11 @@ const Profile = () => {
                   </div>
                   <div className="sidebar">
                       <h4><b>Games</b> <span className="red-text">{userText.games.length}</span></h4>
+                      {userText.games.map((game, index) => (
+                        <Link className="profile-sidebar-link" to={`/game/${game}`}>
+                          <p key={index} className="mt-1">{game}</p>
+                        </Link>
+                      ))}
                       {/* <h4 className="mt-2"><b>Groups</b> <span className="red-text">3</span></h4> */}
                       <h4 className="mt-2"><b>Friends</b> <span className="red-text">{userText.friends.length}</span></h4>
                       {userText.friends.map((friend, index) => ( 
@@ -476,28 +481,28 @@ const Profile = () => {
             <div className="col-md-12">
               <div className="mt-2 d-flex flex-wrap ml-2">
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/:title">
+                  <Link to="/game/Stardew Valley">
                     <img className="scheduled-game mt-3" src={stardew} alt="Pixel house in front of mountains"></img>
                   </Link>
                     <h6 className="mt-3 red-text"><b>Sat, Dec 11</b></h6>
                     <p className="small"> 7:00pm - 9:00pm EST</p>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/:title">
+                  <Link to="/game/Mariokart">
                     <img className="scheduled-game mt-3" src={mario} alt="Mario characters riding go kart's on a rainbow track"></img>
                   </Link>
                     <h6 className="mt-3 red-text"><b>Sun, Dec 12</b></h6>
                     <p className="small"> 6:00pm - 10:00pm EST</p>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/:title">
+                  <Link to="/game/It Takes Two">
                     <img className="scheduled-game mt-3" src={itTakes2} alt="Two small people flying on a dandelion"></img>
                   </Link>
                     <h6 className="mt-3 red-text"><b>Wed, Dec 15</b></h6>
                     <p className="small"> 9:00pm - 11:00pm EST</p>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/:title">
+                  <Link to="/game/Animal Crossing">
                     <img className="scheduled-game mt-3" src={ac} alt="Animated human and animal characters in a campsite"></img>
                   </Link>
                     <h6 className="mt-3 red-text"><b>Fri, Dec 17</b></h6>

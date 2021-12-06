@@ -21,9 +21,7 @@ const userSchema = new Schema({
   },
   games: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Game',
-      unique: true
+      type: String,
     },
   ],
   description: {

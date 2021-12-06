@@ -7,7 +7,6 @@ const gameSchema = new Schema({
     required: 'Game needs a title',
     minlength: 1,
     maxlength: 280,
-    trim: true,
     unique: true
   },
   developer: {
@@ -24,6 +23,9 @@ const gameSchema = new Schema({
     }
   ],
   src: {
+    type: String
+  },
+  platforms: {
     type: String
   }
 });

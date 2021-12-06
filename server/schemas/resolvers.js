@@ -24,7 +24,7 @@ const resolvers = {
       return Game.find(params).sort({ createdAt: -1 });
     },
     game: async (parent, { title }) => {
-      return Game.find({ title: {$regex : title} });
+      return Game.findOne({ title });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -77,14 +77,16 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    addUserGame: async (parent, {title}, context) => {
+    addUserGame: async (parent, { title }, context) => {
       const game = await Game.findOne({
-        title: title,
+         title
       });
-      if(context.user) {
+      if(context.user && game) {
+        console.log("Resolver 86" + game);
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: {games: game}}
+          { $addToSet: {games: title}},
+          { new: true }
         );
         return game;
       }

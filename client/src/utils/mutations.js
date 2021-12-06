@@ -49,6 +49,7 @@ export const ADD_GAME = gql`
   mutation addUserGame($title: String!) {
     addUserGame(title: $title) {
      title
+     src
     }
   }
 `;

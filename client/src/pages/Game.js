@@ -1,65 +1,24 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_GAME } from '../utils/queries';
 import "../../src/styles.css";
 
 import stardew from "../assets/images/libraryImages/stardew.jpg";
-
-import { ADD_FRIEND } from '../utils/mutations';
-import { useMutation } from '@apollo/client';
-
 
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
 const Game = () => {
-  const { username: userParam } = useParams();
+  const { title: titleParam } = useParams();
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-    variables: { username: userParam },
+  const { loading, data } = useQuery(QUERY_GAME, {
+    variables: { titleParam },
   });
-
-  const [addFriend, { error }] = useMutation(ADD_FRIEND);
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(event.target.searchInput.value);
-    try {
-      const { data } = await addFriend({
-        variables: {
-          friendName: event.target.searchInput.value.trim()
-        }
-      })
-    }
-    catch(err){
-      console.error(err);
-    }
-  }
-
-
-  
-
-
-  const user = data?.me || data?.user || {};
-  // redirect to personal profile page if username is yours
-  if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Redirect to="/me" />;
-  }
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  // if (!user?.username) {
-  //   return (
-  //     <h4>
-  //       You need to be logged in to see this. Use the navigation links above to
-  //       sign up or log in!
-  //     </h4>
-  //   );
-  // }
-
   return (
 
     <div className="container">
@@ -75,17 +34,7 @@ const Game = () => {
                   </button>
                 </div>
                 <div className="navbar-collapse sidebar-medium" id="sidebarNav">
-                  <div className="friends-search-bar">
-                      <Link className="navItem" to="/search">
-                        <form className="form-inline input-group" id="searchFriend" onSubmit={handleFormSubmit}>
-                          <input className="form-control mr-sm-2" type="search" placeholder="Search players" aria-label="Search" id="searchInput"></input>
-                          <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                          </button>
-                        </form>
-                      </Link>
-                  </div>
+                  
                   <div className="sidebar">
                         <h4 className=""><b>Who's Playing?</b></h4>
                       <Link className="profile-sidebar-link" to="/profile/:guardian855">
@@ -114,7 +63,7 @@ const Game = () => {
             <img id="game" className="img-fluid col-lg-5 col-md-12 col-sm-10" src={stardew} alt=""></img>
             <div className="col-md-12 col-lg-7">
               <h2 className="ml-4 mb-3 mt-4 d-flex justify-content-start">
-                {userParam ? `${user.username}'s` : "Stardew Valley"} 
+                
               </h2>
               <h6 className="ml-4"><b>Platforms:</b> <span className="red-text">PC, Switch, Playstation, XBox, iOS, Android</span></h6>
               <h6 className="mt-2 ml-4"><b>Current Player Count:</b> <span className="red-text">94,479</span></h6>
