@@ -58,7 +58,7 @@ const Game = () => {
         <div className="col col-md-9" id="main">
           <div className="row">
             <img id="game" className="img-fluid col-lg-5 col-md-12 col-sm-10" src={pic} alt=""></img>
-            <div className="col-md-12 col-lg-7">
+            <div className="col-md-12 col-lg-7 game-sm-spacing">
             <h2 className="ml-4 mb-3 d-flex justify-content-start">
               <b>{data.game.title}</b>
             </h2>

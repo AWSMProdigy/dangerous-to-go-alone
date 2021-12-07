@@ -452,6 +452,11 @@ form > .btn:hover {
         flex-direction: column;
         align-items: start;
     }
+
+    .game-sm-spacing {
+        margin-top: 30px !important;
+        margin-bottom: 30px;
+    }
 }
 
 @media screen and (min-width: 992px) {
