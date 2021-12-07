@@ -87,7 +87,7 @@ const Library = () => {
     console.log(data.me.games);
     const gameTitles = data.games.map(a =>({label: a.title, value: a.title}));
     return (
-      <main className="bg-black">
+      <main className="library-wrapper bg-black">
         <div id="games-library" className="pb-3 px-3">
         <div className="mb-3 d-flex justify-content-between align-items-end">
             <h2 className="p-2 ml-2 mt-4 text-white">My Games</h2>

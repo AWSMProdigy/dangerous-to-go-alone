@@ -52,7 +52,7 @@ const Login = (props) => {
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form className="d-flex flex-column justify-content-center" onSubmit={handleFormSubmit}>
+              <form className="d-flex flex-column" onSubmit={handleFormSubmit}>
                 <input
                   className="login-form-input"
                   placeholder="Your email"
