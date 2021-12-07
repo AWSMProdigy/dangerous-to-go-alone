@@ -289,10 +289,6 @@ form > .btn:hover {
     border-radius: 0.5rem;
 }
 
-.addgamesBtn {
-    height: 50px;
-}
-
 /* Single Game Page CSS */
 #game {
     padding: 0px;
