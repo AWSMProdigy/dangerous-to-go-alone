@@ -4,7 +4,12 @@ import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../utils/queries';
 import "../../src/styles.css";
 
-import stardew from "../assets/images/libraryImages/stardew.jpg";
+import battle from "../assets/images/libraryImages/battlefield.jpg"
+import halo from "../assets/images/libraryImages/haloinfinite.jpg"
+import league from "../assets/images/libraryImages/LoL.jpg"
+import cod from "../assets/images/libraryImages/blackops.jpg"
+import forza from "../assets/images/libraryImages/forza.jpg"
+import stardew from "../assets/images/libraryImages/stardew.jpg"
 
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
@@ -13,14 +18,42 @@ const Game = () => {
   const { title: titleParam } = useParams();
 
   const { loading, data } = useQuery(QUERY_GAME, {
-    variables: { titleParam },
+    variables: { 
+      title: titleParam 
+    },
   });
+
+ 
 
   if (loading) {
     return <div>Loading...</div>;
   }
+  console.log(data);
+  let pic;
+  switch(data.game.title){
+    case "Battlefield 2042":
+      pic=battle;
+      break;
+    case "Halo Infinite":
+      pic=halo;
+      break;
+    case "League of Legends":
+      pic=league;
+      break;
+    case "Black Ops 2":
+      pic=cod;
+      break;
+      case "Forza Horizon 5":
+      pic=forza;
+      break;
+    case "Stardew Valley":
+      pic=stardew;
+      break;
+    default:
+      pic = halo;
+      break;
+  }
   return (
-
     <div className="container">
     <div className="row py-3">
         <div className="col-sm-12 col-md-3 order-2" id="sticky-sidebar">
@@ -37,21 +70,11 @@ const Game = () => {
                   
                   <div className="sidebar">
                         <h4 className=""><b>Who's Playing?</b></h4>
-                      <Link className="profile-sidebar-link" to="/profile/:guardian855">
-                        <p className="mt-1">guardian855</p>
-                      </Link>
-                      <Link className="profile-sidebar-link" to="/profile/:pledias25">
-                        <p className="">pledias25</p>
-                      </Link>
-                      <Link className="profile-sidebar-link" to="/profile/:RiFFRaFF">
-                        <p className="">RiFFRaFF</p>
-                      </Link>
-                      <Link className="profile-sidebar-link" to="/profile/:bouttabebanned">
-                        <p className="">bouttabebanned</p>
-                      </Link>
-                      <Link className="profile-sidebar-link" to="/profile/:beau69">
-                        <p className="">beau69</p>
-                      </Link>
+                      {data.game.players.map((player, index) => (
+                        <Link className="profile-sidebar-link" to={`/profiles/${player}`}>
+                          <p className="mt-1">{player}</p>
+                        </Link>
+                      ))}
                   </div>
                 </div>
                 </div>
@@ -60,14 +83,14 @@ const Game = () => {
 
         <div className="col col-md-9" id="main">
           <div className="row">
-            <img id="game" className="img-fluid col-lg-5 col-md-12 col-sm-10" src={stardew} alt=""></img>
+            <img id="game" className="img-fluid col-lg-5 col-md-12 col-sm-10" src={pic} alt=""></img>
             <div className="col-md-12 col-lg-7">
               <h2 className="ml-4 mb-3 mt-4 d-flex justify-content-start">
                 
               </h2>
-              <h6 className="ml-4"><b>Platforms:</b> <span className="red-text">PC, Switch, Playstation, XBox, iOS, Android</span></h6>
-              <h6 className="mt-2 ml-4"><b>Current Player Count:</b> <span className="red-text">94,479</span></h6>
-              <p className="mt-2 ml-4 mt-4">You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? </p>
+              <h6 className="ml-4"><b>Platforms:</b> <span className="red-text">{data.game.platforms}</span></h6>
+              <h6 className="mt-2 ml-4"><b>Current Player Count:</b> <span className="red-text">{data.game.players.length}</span></h6>
+              {/* <p className="mt-2 ml-4 mt-4">You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? </p> */}
             </div>
           </div>
         </div>

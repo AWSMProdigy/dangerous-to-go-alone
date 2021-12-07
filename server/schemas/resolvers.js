@@ -78,9 +78,12 @@ const resolvers = {
     },
 
     addUserGame: async (parent, { title }, context) => {
-      const game = await Game.findOne({
-         title
-      });
+      if(context.user){
+      
+      const game = await Game.findOneAndUpdate(
+        {title: title},
+        {$addToSet: {players: context.user.username}}
+      );
       if(context.user && game) {
         console.log("Resolver 86" + game);
         await User.findOneAndUpdate(
@@ -91,7 +94,7 @@ const resolvers = {
         return game;
       }
       throw new AuthenticationError('You need to be logged in!');
-      
+    }
     },
 
     removeFriend: async (parent, { userName }, context) => {
