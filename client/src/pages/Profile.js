@@ -415,7 +415,7 @@ const Profile = () => {
                 </div>
                 <div className="navbar-collapse sidebar-medium" id="sidebarNav">
                   <div className="friends-search-bar">
-                      <Link className="navItem" to="/search">
+                      
                         <form className="form-inline input-group" id="searchFriend" onSubmit={handleFriendSubmit}>
                           <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-p="Search" id="searchInput"></input>
                           <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -423,7 +423,7 @@ const Profile = () => {
                                 </svg>
                           </button>
                         </form>
-                      </Link>
+                      
                   </div>
                   <div className="sidebar">
                       <h4><b>Games</b> <span className="red-text">{userText.games.length}</span></h4>
@@ -476,41 +476,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="row mt-5 mb-4 d-flex flex-wrap">
-            <h2 className="play-sm ml-2">Wanna Play With Me?</h2>
-            <div className="col-md-12">
-              <div className="mt-2 d-flex flex-wrap ml-2">
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/Stardew Valley">
-                    <img className="scheduled-game mt-3" src={stardew} alt="Pixel house in front of mountains"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Sat, Dec 11</b></h6>
-                    <p className="small"> 7:00pm - 9:00pm EST</p>
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/Mariokart">
-                    <img className="scheduled-game mt-3" src={mario} alt="Mario characters riding go kart's on a rainbow track"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Sun, Dec 12</b></h6>
-                    <p className="small"> 6:00pm - 10:00pm EST</p>
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/It Takes Two">
-                    <img className="scheduled-game mt-3" src={itTakes2} alt="Two small people flying on a dandelion"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Wed, Dec 15</b></h6>
-                    <p className="small"> 9:00pm - 11:00pm EST</p>
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/Animal Crossing">
-                    <img className="scheduled-game mt-3" src={ac} alt="Animated human and animal characters in a campsite"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Fri, Dec 17</b></h6>
-                    <p className="small"> 10:00pm - 1:00pm EST</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
     </div>
   </div>
