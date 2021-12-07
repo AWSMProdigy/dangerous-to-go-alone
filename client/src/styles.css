@@ -57,6 +57,23 @@ h1, h2, h3, h4, h5 , h6 {
     list-style-type: none;
 }
 
+
+/* Fade-in Effect Homepage CSS */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20vh);
+    visibility: hidden;
+    transition: opacity 1200ms ease-out, transform 600ms ease-out,
+      visibility 1200ms ease-out;
+    will-change: opacity, transform, visibility;
+  }
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+
+
 /* Form + Hero Images CSS */
 form > .btn, form > div > .btn {
     background-color: #f00;
@@ -217,9 +234,9 @@ form > .btn:hover {
 
 
 /* Profile Page CSS */
-.profile-img {
-    width: 50px;
-    height: 50px;
+#profile-img {
+    width: 400px;
+    height: 400px;
 }
 
 #online-icon {
@@ -270,10 +287,6 @@ form > .btn:hover {
 /* Game Library CSS */
 .border{
     border-radius: 0.5rem;
-}
-
-.addgamesBtn {
-    height: 50px;
 }
 
 /* Single Game Page CSS */
@@ -334,7 +347,6 @@ form > .btn:hover {
         justify-content: center;
     }
 }
-
 
 /* Small Screens */
 @media screen and (max-width: 576px) {
@@ -439,5 +451,12 @@ form > .btn:hover {
         display: flex;
         flex-direction: column;
         align-items: start;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #profile-img {
+        max-width: 336px;
+        max-height: 336px;
     }
 }

@@ -2,12 +2,12 @@ import React, { useState, useEffect }  from 'react';
 import "../../src/styles.css";
 import Select from 'react-select';
 
-import battle from "../assets/images/libraryImages/battlefield.jpg"
-import halo from "../assets/images/libraryImages/haloinfinite.jpg"
-import league from "../assets/images/libraryImages/LoL.jpg"
-import cod from "../assets/images/libraryImages/blackops.jpg"
-import forza from "../assets/images/libraryImages/forza.jpg"
-import stardew from "../assets/images/libraryImages/stardew.jpg"
+// import battle from "../assets/images/libraryImages/battlefield.jpg"
+// import halo from "../assets/images/libraryImages/haloinfinite.jpg"
+// import league from "../assets/images/libraryImages/LoL.jpg"
+// import cod from "../assets/images/libraryImages/blackops.jpg"
+// import forza from "../assets/images/libraryImages/forza.jpg"
+// import stardew from "../assets/images/libraryImages/stardew.jpg"
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
@@ -85,13 +85,13 @@ const Library = () => {
       <div id="games-library" className="pb-3 bg-black px-3">
         <div className="mb-3 d-flex justify-content-between align-items-end">
             <h2 className="p-2 ml-2 mt-4 text-white">My Games</h2>
-            <Select options={gameTitles} placeholder={"Type something..."} isClearable={true} onChange={handleChange}/>
-            <button className="custom-btn mr-3 addgamesBtn" onClick={()=>addGame()}>Add Game</button>
-            <button className="custom-btn mr-3 addgamesBtn" type="submit">Add Games</button>
+            <div className="flex-row pb-2">
+              <Select className="mr-4 red-text" options={gameTitles} placeholder={"Search for a game"} isClearable={true} onChange={handleChange}/>
+              <button className="custom-btn mr-3" onClick={()=>addGame()}> + </button>
+            </div>
         </div>
 
         {data.me.games.map((game, index) => (
-          
           <div className="col-sm-6 col-md-4 col-lg-2">
           <div className="p-3 game-library">
             {game}
@@ -105,7 +105,7 @@ const Library = () => {
           </div>
       </div>
         ))}
-          <div className="row">
+          {/* <div className="row">
             <div className="col-sm-6 col-md-4 col-lg-2">
                 <div className="p-3 game-library">
                   <img className="img-fluid pop-games" src={battle} alt="battlefield"></img>
@@ -168,7 +168,7 @@ const Library = () => {
                   </button>
                 </div>
             </div>
-          </div>
+          </div> */}
       </div>
     );
   };
