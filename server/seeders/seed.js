@@ -1,26 +1,49 @@
 const db = require('../config/connection');
-const { User, Thought } = require('../models');
-const userSeeds = require('./userSeeds.json');
-const thoughtSeeds = require('./thoughtSeeds.json');
+const { User, Game } = require('../models');
+
 
 db.once('open', async () => {
   try {
-    await Thought.deleteMany({});
     await User.deleteMany({});
+    await Game.deleteMany({});
 
-    await User.create(userSeeds);
+    await Game.create({
+      title: "Battlefield 2042",
+      developer: "Dice",
+      releaseYear: "2021",
+      platforms: "PC Xbox Playstation"
+    });
+    await Game.create({
+      title: "Halo Infinite",
+      developer: "343",
+      releaseYear: "2021",
+      platforms: "PC Xbox"
+    });
+    await Game.create({
+      title: "Stardew Valley",
+      developer: "Dice",
+      releaseYear: "2021",
+      platforms: "PC Xbox Playstation"
+    });
+    await Game.create({
+      title: "League of Legends",
+      developer: "Riot Games",
+      releaseYear: "2010",
+      platforms: "PC"
+    });
+    await Game.create({
+      title: "Forza Horizon 5",
+      developer: "Playground Games",
+      releaseYear: "2021",
+      platforms: "PC Xbox"
+    });
+    await Game.create({
+      title: "Black Ops 2",
+      developer: "Treyarch",
+      releaseYear: "2012",
+      platforms: "PC Xbox Playstation"
+    });
 
-    for (let i = 0; i < thoughtSeeds.length; i++) {
-      const { _id, thoughtAuthor } = await Thought.create(thoughtSeeds[i]);
-      const user = await User.findOneAndUpdate(
-        { username: thoughtAuthor },
-        {
-          $addToSet: {
-            thoughts: _id,
-          },
-        }
-      );
-    }
   } catch (err) {
     console.error(err);
     process.exit(1);
