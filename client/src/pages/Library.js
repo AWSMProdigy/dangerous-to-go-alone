@@ -10,6 +10,8 @@ import forza from "../assets/images/libraryImages/forza.jpg"
 import stardew from "../assets/images/libraryImages/stardew.jpg"
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
+
 
 import { QUERY_LIBRARY } from '../utils/queries';
 import { ADD_GAME } from '../utils/mutations';
@@ -44,6 +46,34 @@ const Library = () => {
     }
   }
 
+  const getPic = (title) => {
+    let pic;
+    switch(title){
+      case "Battlefield 2042":
+        pic=battle;
+        break;
+      case "Halo Infinite":
+        pic=halo;
+        break;
+      case "League of Legends":
+        pic=league;
+        break;
+      case "Black Ops 2":
+        pic=cod;
+        break;
+        case "Forza Horizon 5":
+        pic=forza;
+        break;
+      case "Stardew Valley":
+        pic=stardew;
+        break;
+      default:
+        pic = halo;
+        break;
+    }
+    return pic;
+  }
+
   if(loading){
     return(<h1>Loading...</h1>)
   }
@@ -65,9 +95,9 @@ const Library = () => {
           <div className="col-sm-6 col-md-4 col-lg-2">
           <div className="p-3 game-library">
             {game}
-            <img className="img-fluid pop-games" src={(data.games.filter(obj => {
-              return obj.title === game
-            })).src} alt={game}></img>
+            <Link to={`/game/${game}`}>
+            <img className="img-fluid pop-games" src={getPic(game)} alt={game}></img>
+            </Link>
             <button className="custom-btn game-btn mx-auto mt-3" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
               <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
               </svg>
