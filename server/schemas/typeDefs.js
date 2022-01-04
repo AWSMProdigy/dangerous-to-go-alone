@@ -28,17 +28,23 @@ const typeDefs = gql`
     platforms: String
   }
 
+  type gameAndUser {
+    game: Game
+    players: [User]
+  }
+
   type Auth {
     token: ID!
     user: User
   }
 
   type Query {
-    users(useGames: Boolean!, useAvailability: Boolean!, usePlatform: Boolean!): [User]
+    users: [User]
     user(username: String!): User
     games: [Game]
-    game(title: String!): Game
+    game(title: String!): gameAndUser
     me: User
+    gameUsers(gamers: [String]!): [User]
   }
 
   type Mutation {

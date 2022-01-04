@@ -1,22 +1,19 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Game } = require('../models');
+const { User, Game, gameAndUser } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     // May not need this, only going to find users with certain params
-    users: async (parent, {useGames, useAvailability, usePlatform}, context) => {
-      let games = context.user.games;
-      let availability = context.user.availability;
-      let platform = context.user.platform;
-      const gameParam = useGames ? { games } : {};
-      const availabilityParam = useAvailability ? { availability } : {};
-      const platformParam = usePlatform ? { platform } : {};
-      return User.find({ gameParam, availabilityParam, availabilityParam });
+    users: async (parent) => {
+      return User.find();
     },
     // THis one can stay
     user: async (parent, { username }) => {
       return User.findOne({ username });
+    },
+    gameUsers: async (parent, {gamers}) => {
+      return User.find({ username: {"$in": gamers}})
     },
 
     games: async (parent, { title }) => {
@@ -24,7 +21,8 @@ const resolvers = {
       return Game.find(params).sort({ createdAt: -1 });
     },
     game: async (parent, { title }) => {
-      return Game.findOne({ title });
+      let myGame = await Game.findOne({title});
+      return {game: myGame, players: await User.find({ username: {"$in": myGame.players}})}
     },
     me: async (parent, args, context) => {
       if (context.user) {

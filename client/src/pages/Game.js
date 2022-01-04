@@ -23,14 +23,12 @@ const Game = () => {
     },
   });
 
- 
-
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(data);
+  console.log(data.game.players);
   let pic;
-  switch(data.game.title){
+  switch(data.game.game.title){
     case "Battlefield 2042":
       pic=battle;
       break;
@@ -66,9 +64,9 @@ const Game = () => {
             <h6 className="mt-2 ml-4"><b>Current Player Count:</b> <span className="red-text">{data.game.players.length}</span></h6>
             {/* <p className="mt-2 ml-4 mt-4">You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? </p> */}
             <h4 className="ml-4 mt-5">Who's Playing?</h4>
-            {data.game.players.map((player, index) => (
-              <Link className="profile-sidebar-link" to={`/profiles/${player}`}>
-                <p className="mt-1 ml-4">{player}</p>
+            {Object.keys(data.game.players).map((player, index) => (
+              <Link className="profile-sidebar-link" to={`/profiles/${data.game.players[player].username}`}>
+                <p className="mt-1 ml-4">{data.game.players[player].username}</p>
               </Link>
             ))}
           </div>

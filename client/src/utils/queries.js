@@ -36,12 +36,20 @@ export const QUERY_GAMES = gql`
 export const QUERY_GAME = gql`
   query game($title: String!){
     game(title: $title){
-      title
-      developer
-      releaseYear
-      src
-      players
-      platforms
+      game{
+        title
+        developer
+        releaseYear
+        src
+        players
+        platforms
+      }
+      players{
+        username
+        fromTime
+        toTime
+        platform
+      }
     }
   }
 `;
