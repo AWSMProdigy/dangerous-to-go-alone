@@ -53,7 +53,7 @@ const Game = () => {
   }
   return (
     <div className="container mt-5">
-        <div className="col col-md-9" id="main">
+        <div className="col col-md-12" id="main">
           <div className="row">
             <img id="game" className="img-fluid col-lg-5 col-md-12 col-sm-10" src={pic} alt=""></img>
             <div className="col-md-12 col-lg-7 game-sm-spacing">
@@ -64,11 +64,24 @@ const Game = () => {
             <h6 className="mt-2 ml-4"><b>Current Player Count:</b> <span className="red-text">{data.game.players.length}</span></h6>
             {/* <p className="mt-2 ml-4 mt-4">You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? </p> */}
             <h4 className="ml-4 mt-5">Who's Playing?</h4>
-            {Object.keys(data.game.players).map((player, index) => (
-              <Link className="profile-sidebar-link" to={`/profiles/${data.game.players[player].username}`}>
-                <p className="mt-1 ml-4">{data.game.players[player].username}</p>
-              </Link>
-            ))}
+            <div className="playerContainer">
+              <p className='player-entry'>Username</p>
+              <p className='player-entry'>Availability</p>
+              <p className='player-entry'>Platforms</p>
+              <p className='player-entry'>Playstyle</p>
+            </div>
+            <hr></hr>
+              {Object.keys(data.game.players).map((player, index) => (
+                <div className="playerContainer">
+                  <Link className="player-entry profile-sidebar-link" to={`/profiles/${data.game.players[player].username}`}>
+                    <p>{data.game.players[player].username}</p>
+                  </Link>
+                  <p className='player-entry'>{data.game.players[player].fromTime}-{data.game.players[player].toTime}</p>
+                  <p className='player-entry'>PC</p>
+                  <p className='player-entry'>Casual</p>
+                </div>
+              ))}
+            
           </div>
         </div>
       </div>
