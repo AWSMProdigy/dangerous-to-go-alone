@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../utils/queries';
@@ -17,8 +17,20 @@ import { Link } from 'react-router-dom';
 const Game = () => {
   const { title: titleParam } = useParams();
   const [playerArray, setPlayers] = useState([]);
-  const [from, setFrom] = useState();
-  const [to, setTo] = useState()
+  // const [from, setFrom] = useState();
+  // const [to, setTo] = useState()
+  const [state, setState] = useState({
+    playerArray: [],
+    to: "any",
+    from: "any",
+    platform: "Any"
+  })
+
+  let to;
+  let from;
+  let platform;
+  console.log(state);
+
 
   const { loading, data } = useQuery(QUERY_GAME, {
     variables: { 
@@ -28,48 +40,98 @@ const Game = () => {
 
   useEffect(() => {
     if(!loading){
-      setPlayers(data.game.players)
+      console.log("initial load");
+      setState({
+        playerArray: data.game.players,
+        to: state.to,
+        from: state.from,
+        platform: state.platform
+      });
     }
     else{
       return (<div>Loading...</div>)
     }
-  }, []);
-  console.log(playerArray);
+  }, [loading]);
+
+  function handleTo(e){
+    to=parseInt(e.target.value);
+    from=state.from;
+    platform = state.platform;
+    filterPlayers();
+  }
+
+  function handleFrom(e){
+    from=parseInt(e.target.value);
+    to=state.to;
+    platform = state.platform;
+    filterPlayers();
+  }
+
+  function handlePlatform(e){
+    platform = e.target.value;
+    to=state.to;
+    from = state.from;
+    filterPlayers();
+  }
 
   function TimeOptions(){
     const n = 12;
-    const AMarray = [...Array(n)].map((e, i) => <option value={`${i+1} AM`}>{`${i+1} AM`}</option>)
-    const PMarray = [...Array(n)].map((e, i) => <option value={`${i+1} PM`}>{`${i+1} PM`}</option>)
+    const AMarray = [...Array(n)].map((e, i) => <option value={i+1}>{`${i+1} AM`}</option>)
+    const PMarray = [...Array(n)].map((e, i) => <option value={i+13}>{`${i+1} PM`}</option>)
     const fullArray = [...AMarray, ...PMarray];
     return(
       fullArray
     )
   }
 
-  function filterPlayers(event){
-    console.log(event.target.value);
-    if(event.target.value === "Any"){
-      console.log("hello?");
-      setPlayers(data.game.players);
-      return;
+  function SelectTime(){
+    return (
+      <>
+      <p>Availability</p>
+      <select className="time-select"name="Availability" type="text" id="fromTime" onChange={handleFrom} defaultValue={state.from}>
+        <TimeOptions/>
+        <option value="any">N/A</option>
+      </select>
+      <select className="time-select" name="Availability" type="text" id="toTime" onChange={handleTo} defaultValue={state.to}>
+        <TimeOptions/>
+        <option value="any">N/A</option>
+      </select>
+      </>
+    )
+  }
+
+  function filterPlayers(){
+    let newPlayerArray = data.game.players;
+    if(platform !== "Any"){
+      newPlayerArray = data.game.players.filter(player => {
+        return player.platform != null && player.platform.includes(platform);
+      })
     }
-    let newPlayerArray = data.game.players.filter(player => {
-      return player.platform != null && player.platform.includes(event.target.value);
-    })
+    console.log(from !== "any" || to !== "any");
+    if(from !== "any" || to !== "any")
       newPlayerArray = newPlayerArray.filter(player => {
+        console.log(!player.fromTime || !player.toTime);
+        if(!player.fromTime || !player.toTime){
+          return true;
+        }
         let start = parseInt(player.fromTime.split(" ")[0]);
         if(player.fromTime.split(" ")[1] == "PM"){
           start += 12;
         }
-        let end = player.toTime.split(" ")[0];
+        let end = parseInt(player.toTime.split(" ")[0]);
         if(player.toTime.split(" ")[1] == "PM"){
           end += 12;
         }
-        
+        console.log(((start >= from && start < to) && end >= to));
+        return (start <= from && (end <= to && end > from)) || (start >= from && end <= to) || ((start >= from && start < to) && end >= to);
       })
     
-    console.log(newPlayerArray);
-    setPlayers(newPlayerArray);
+    setState({
+      playerArray: newPlayerArray,
+      from: from,
+      to: to,
+      platform: platform
+    });
   }
 
   if(loading){
@@ -116,15 +178,9 @@ const Game = () => {
             <div className="playerContainer">
               <p className='player-entry'>Username</p>
               <div className='player-entry'>
-                <p>Availability</p>
-                <select className="time-select"name="Availability" type="text" id="fromTime" onChange={e=>setFrom(e.target.value)}>
-                  <TimeOptions/>
-                </select>
-                <select className="time-select" name="Availability" type="text" id="toTime" onChange={e=>setTo(e.target.value)}>
-                  <TimeOptions/>
-                </select>
+                <SelectTime></SelectTime>
               </div>
-              <select className='player-entry' name="plats" defaultValue="Any Platform" onChange={filterPlayers}>
+              <select className='player-entry' name="plats" defaultValue="Any Platform" onChange={handlePlatform}>
                 <option value="Any">Any Platform</option>
                 <option value="PC">PC</option>
                 <option value="Xbox Series">Xbox Series</option>
@@ -137,13 +193,13 @@ const Game = () => {
               <p className='player-entry'>Playstyle</p>
             </div>
             <hr></hr>
-              {Object.keys(playerArray).map((player, index) => (
+              {Object.keys(state.playerArray).map((player, index) => (
                 <div className="playerContainer">
-                  <Link className="player-entry profile-sidebar-link" to={`/profiles/${playerArray[player].username}`}>
-                    <p>{playerArray[player].username}</p>
+                  <Link className="player-entry profile-sidebar-link" to={`/profiles/${state.playerArray[player].username}`}>
+                    <p>{state.playerArray[player].username}</p>
                   </Link>
-                  <p className='player-entry'>{playerArray[player].fromTime}-{playerArray[player].toTime}</p>
-                  <p className='player-entry'>{playerArray[player].platform}</p>
+                  <p className='player-entry'>{state.playerArray[player].fromTime}-{state.playerArray[player].toTime}</p>
+                  <p className='player-entry'>{state.playerArray[player].platform}</p>
                   <p className='player-entry'>Casual</p>
                 </div>
               ))}
