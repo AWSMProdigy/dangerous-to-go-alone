@@ -41,7 +41,8 @@ const userSchema = new Schema({
     }
   ],
   platform: {
-    type: String
+    type: String,
+    default: ""
   },
   discord:{
     type: String
