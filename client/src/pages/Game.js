@@ -54,14 +54,24 @@ const Game = () => {
   }, [loading]);
 
   function handleTo(e){
-    to=parseInt(e.target.value);
+    if(e.target.value === "any"){
+      to = e.target.value;
+    }
+    else{
+      to=parseInt(e.target.value);
+    }
     from=state.from;
     platform = state.platform;
     filterPlayers();
   }
 
   function handleFrom(e){
-    from=parseInt(e.target.value);
+    if(e.target.value === "any"){
+      from = e.target.value;
+    }
+    else{
+      from=parseInt(e.target.value);
+    }
     to=state.to;
     platform = state.platform;
     filterPlayers();
@@ -107,7 +117,6 @@ const Game = () => {
         return player.platform != null && player.platform.includes(platform);
       })
     }
-    console.log(from !== "any" || to !== "any");
     if(from !== "any" || to !== "any")
       newPlayerArray = newPlayerArray.filter(player => {
         console.log(!player.fromTime || !player.toTime);
@@ -122,10 +131,17 @@ const Game = () => {
         if(player.toTime.split(" ")[1] == "PM"){
           end += 12;
         }
+        if(to === "any"){
+          console.log("hello")
+          return from >= start && from < end;
+        }
+        if(from === "any"){
+          return to > start && to <= end;
+        }
         console.log(((start >= from && start < to) && end >= to));
         return (start <= from && (end <= to && end > from)) || (start >= from && end <= to) || ((start >= from && start < to) && end >= to);
       })
-    
+    console.log(from, to);
     setState({
       playerArray: newPlayerArray,
       from: from,
