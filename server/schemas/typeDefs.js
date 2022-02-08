@@ -2,6 +2,7 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
 
+  scalar Upload
 
   type User {
     _id: ID!
@@ -41,9 +42,7 @@ const typeDefs = gql`
   }
 
   type File {
-    filename: String!
-    mimetype: String!
-    encoding: String!
+    url: String!
   }
 
   type Query {

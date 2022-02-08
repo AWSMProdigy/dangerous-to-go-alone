@@ -5,12 +5,7 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import "../../src/styles.css";
 import profile from "../assets/images/profile/profile.jpg";
 
-import stardew from "../assets/images/profile/stardew.jpg";
-import mario from "../assets/images/profile/mariokart.jpg";
-import itTakes2 from "../assets/images/profile/ittakes2.jpg";
-import ac from "../assets/images/profile/ac.jpg";
-
-import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION } from '../utils/mutations';
+import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 
@@ -82,6 +77,9 @@ const Profile = () => {
   const [updateXbox] = useMutation(UPDATE_XBOX);
   const [updateSteam] = useMutation(UPDATE_STEAM);
   const [updatePlaystation] = useMutation(UPDATE_PLAYSTATION);
+  const [uploadFile] = useMutation(UPLOAD_FILE, {
+    onCompleted: data => console.log(data)
+  });
 
 
 
@@ -200,6 +198,24 @@ const Profile = () => {
       const { data } = await updateSteam({
         variables: {
           steamName: steamName
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
+  const handleFileUpload = async (e) => {
+    try{
+      const file = e.target.files[0];
+      console.log(file);
+      if(!file){
+        return;
+      }
+      const {data} = await uploadFile({
+        variables: {
+          file
         }
       })
     }
@@ -468,6 +484,7 @@ const Profile = () => {
         <div className="col col-md-9" id="main">
           <div className="row">
             <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
+            <input type="file" onChange={handleFileUpload}></input>
             <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">

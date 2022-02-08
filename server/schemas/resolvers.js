@@ -5,6 +5,9 @@ const {
   GraphQLUpload,
   graphqlUploadExpress, // A Koa implementation is also exported.
 } = require('graphql-upload');
+const path = require('path');
+const fs = require('fs');
+
 
 const resolvers = {
   Upload: GraphQLUpload,
@@ -224,14 +227,12 @@ const resolvers = {
       // Invoking the `createReadStream` will return a Readable Stream.
       // See https://nodejs.org/api/stream.html#stream_readable_streams
       const stream = createReadStream();
-
-      // This is purely for demonstration purposes and will overwrite the
-      // local-file-output.txt in the current working directory on EACH upload.
-      const out = require('fs').createWriteStream('local-file-output.txt');
-      stream.pipe(out);
-      await finished(out);
-
-      return { filename, mimetype, encoding };
+      const pathName = path.join(__dirname, `../public/images/${filename}`)
+      console.log(pathName);
+      await stream.pipe(fs.createWriteStream(pathName));
+      return {
+        url: `http://localhost:3001/images/${filename}`,
+      }
     },
   }
 }

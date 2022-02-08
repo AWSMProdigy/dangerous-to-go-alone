@@ -5,22 +5,36 @@ const path = require('path');
 
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
+const { graphqlUploadExpress } = require('graphql-upload');
 
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+app.use(express.static('public'));
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
+  cors: {
+    credentials: true,
+    origin: true
+  },
+  uploads: false,
+
 });
-
-server.applyMiddleware({ app });
-
+app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 10 }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+server.applyMiddleware({ app,
+  cors: {
+    credentials: true,
+    origin: true
+  } 
+});
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
