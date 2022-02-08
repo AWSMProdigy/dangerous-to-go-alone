@@ -1,8 +1,14 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Game, gameAndUser } = require('../models');
 const { signToken } = require('../utils/auth');
+const {
+  GraphQLUpload,
+  graphqlUploadExpress, // A Koa implementation is also exported.
+} = require('graphql-upload');
 
 const resolvers = {
+  Upload: GraphQLUpload,
+
   Query: {
     // May not need this, only going to find users with certain params
     users: async (parent) => {
@@ -210,7 +216,23 @@ const resolvers = {
     createGame: async (parent, { title, developer, releaseYear, src }) => {
       const game = await Game.create({title, developer, releaseYear, src});
       return game;
-    }
+    },
+
+    uploadFile: async (parent, { file }) => {
+      const { createReadStream, filename, mimetype, encoding } = await file;
+
+      // Invoking the `createReadStream` will return a Readable Stream.
+      // See https://nodejs.org/api/stream.html#stream_readable_streams
+      const stream = createReadStream();
+
+      // This is purely for demonstration purposes and will overwrite the
+      // local-file-output.txt in the current working directory on EACH upload.
+      const out = require('fs').createWriteStream('local-file-output.txt');
+      stream.pipe(out);
+      await finished(out);
+
+      return { filename, mimetype, encoding };
+    },
   }
 }
 

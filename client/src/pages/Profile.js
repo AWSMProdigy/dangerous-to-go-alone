@@ -84,6 +84,8 @@ const Profile = () => {
   const [updatePlaystation] = useMutation(UPDATE_PLAYSTATION);
 
 
+
+  
   const handleFriendSubmit = async (event) => {
     event.preventDefault();
     console.log(event.target.searchInput.value);

@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+
+
   type User {
     _id: ID!
     username: String
@@ -38,6 +40,12 @@ const typeDefs = gql`
     user: User
   }
 
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   type Query {
     users: [User]
     user(username: String!): User
@@ -63,6 +71,7 @@ const typeDefs = gql`
     updateXbox(xboxName: String!): User
     updateSteam(steamName: String!): User
     updatePlaystation(playstationName: String!): User
+    uploadFile(file: Upload!): File!
   }
 `;
 
