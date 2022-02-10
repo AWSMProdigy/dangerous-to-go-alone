@@ -43,9 +43,18 @@ const authLink = setContext((_, { headers }) => {
 });
 
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log('graphQLErrors', graphQLErrors);
+  }
+  if (networkError) {
+    console.log('networkError', networkError);
+  }
+});
+
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-  link: authLink.concat(httpLink),
+  link: ApolloLink.from([authLink, httpLink, errorLink]),
  
   cache: new InMemoryCache(),
 });

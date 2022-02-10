@@ -59,10 +59,6 @@ const Profile = () => {
         xbox: user?.xboxName || "",
         playstation: user?.playstationName || ""
       })
-      axios.get('http://localhost:3001/').then(
-        data => {
-        console.log(data)
-      })
     }
     else{
       return (<h1>loading</h1>)

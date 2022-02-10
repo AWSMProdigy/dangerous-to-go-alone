@@ -7,6 +7,8 @@ const {
 } = require('graphql-upload');
 const path = require('path');
 const fs = require('fs');
+const mongodb = require("mongodb");
+const db = require('../config/connection');
 
 
 const resolvers = {
@@ -222,15 +224,18 @@ const resolvers = {
     },
 
     uploadFile: async (parent, { file }) => {
-      const { stream, filename, mimetype, encoding } = await file;
-      const bucket = new mongodb.GridFSBucket(db._db);
+      const { createReadStream, filename, mimetype, encoding } = await file;
+      console.log(file);
+      const bucket = new mongodb.GridFSBucket(db.db, {bucketName:"images"});
       const uploadStream = bucket.openUploadStream(filename);
+
       await new Promise((resolve, reject) => {
-      stream
+      createReadStream(`./${filename}`)
       .pipe(uploadStream)
       .on("error", reject)
       .on("finish", resolve);
       });
+
       return { _id: uploadStream.id, filename, mimetype, encoding }
     },
   }
