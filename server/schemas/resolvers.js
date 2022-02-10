@@ -222,17 +222,16 @@ const resolvers = {
     },
 
     uploadFile: async (parent, { file }) => {
-      const { createReadStream, filename, mimetype, encoding } = await file;
-
-      // Invoking the `createReadStream` will return a Readable Stream.
-      // See https://nodejs.org/api/stream.html#stream_readable_streams
-      const stream = createReadStream();
-      const pathName = path.join(__dirname, `../public/images/${filename}`)
-      console.log(pathName);
-      await stream.pipe(fs.createWriteStream(pathName));
-      return {
-        url: `http://localhost:3001/images/${filename}`,
-      }
+      const { stream, filename, mimetype, encoding } = await file;
+      const bucket = new mongodb.GridFSBucket(db._db);
+      const uploadStream = bucket.openUploadStream(filename);
+      await new Promise((resolve, reject) => {
+      stream
+      .pipe(uploadStream)
+      .on("error", reject)
+      .on("finish", resolve);
+      });
+      return { _id: uploadStream.id, filename, mimetype, encoding }
     },
   }
 }

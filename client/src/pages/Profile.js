@@ -7,6 +7,7 @@ import profile from "../assets/images/profile/profile.jpg";
 
 import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
+import axios from 'axios';
 
 
 import Auth from '../utils/auth';
@@ -57,6 +58,10 @@ const Profile = () => {
         steam: user?.steamName || "",
         xbox: user?.xboxName || "",
         playstation: user?.playstationName || ""
+      })
+      axios.get('http://localhost:3001/').then(
+        data => {
+        console.log(data)
       })
     }
     else{

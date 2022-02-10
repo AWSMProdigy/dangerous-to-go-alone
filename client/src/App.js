@@ -26,6 +26,7 @@ import './styles.css';
 // Construct our main GraphQL API endpoint
 const httpLink = createUploadLink({
   uri: 'http://localhost:3001/graphql',
+  credentials: "same-origin"
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
@@ -41,15 +42,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    console.log('graphQLErrors', graphQLErrors);
-  }
-  if (networkError) {
-    console.log('networkError', networkError);
-  }
-});
 
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API

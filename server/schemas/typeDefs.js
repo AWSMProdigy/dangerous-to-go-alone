@@ -42,7 +42,11 @@ const typeDefs = gql`
   }
 
   type File {
-    url: String!
+    _id: ID!
+    path: String!
+    filename: String!
+    mimetype: String!
+    encoding: String!
   }
 
   type Query {
