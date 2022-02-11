@@ -61,7 +61,7 @@ const Profile = () => {
         playstation: user?.playstationName || "",
         profPic: user?.profPic || "",
       })
-      axios.get('/3rd Permu pic.jpg').then((response) => {
+      axios.get('http://localhost:3001/3rd Permu pic.jpg').then((response) => {
         console.log(response);
       }, (error) => {
         console.log(error);

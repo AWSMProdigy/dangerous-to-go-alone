@@ -14,7 +14,7 @@ const app = express();
 app.use(express.static('public'));
 
 const Grid = require('gridfs-stream');
-Grid.mongo = mongo;
+// Grid.mongo = mongo;
 
 
 
@@ -29,6 +29,11 @@ const server = new ApolloServer({
   },
   uploads: false,
 
+});
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 10 }));
 app.use(express.urlencoded({ extended: false }));
@@ -46,11 +51,11 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-app.get("/:filename", function(req, res){ 
+app.get("/hello", function(req, res){ 
   gfs = Grid(db);
   var readstream = gfs.createReadStream({filename: req.params.filename}); 
   readstream.on("error", function(err){
