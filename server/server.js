@@ -12,9 +12,10 @@ const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(express.static('public'));
+const mongodb = require('mongodb');
+const fs = require('fs');
 
-const Grid = require('gridfs-stream');
-// Grid.mongo = mongo;
+
 
 
 
@@ -55,13 +56,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-app.get("/hello", function(req, res){ 
-  gfs = Grid(db);
-  var readstream = gfs.createReadStream({filename: req.params.filename}); 
-  readstream.on("error", function(err){
-      res.send("No image found with that title"); 
-  });
-  readstream.pipe(res);
+app.get("/:filename", function(req, res){ 
+  const bucket = new mongodb.GridFSBucket(db.db, {bucketName: "images"})
+  bucket.openDownloadStreamByName(req.params.filename)
+            .pipe(res)
 });
 
 db.once('open', () => {
