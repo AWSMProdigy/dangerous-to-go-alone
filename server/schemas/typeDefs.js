@@ -57,6 +57,7 @@ const typeDefs = gql`
     game(title: String!): gameAndUser
     me: User
     gameUsers(gamers: [String]!): [User]
+    files: String
   }
 
   type Mutation {
@@ -75,6 +76,7 @@ const typeDefs = gql`
     updateXbox(xboxName: String!): User
     updateSteam(steamName: String!): User
     updatePlaystation(playstationName: String!): User
+    updateProfPic(profPic: String!): User
     uploadFile(file: Upload!): File!
   }
 `;

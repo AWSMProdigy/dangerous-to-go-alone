@@ -41,6 +41,11 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+
+    files: async(parent, args, context) => {
+      console.log(db);
+      return "Hello";
+    }
   },
 
   Mutation: {
