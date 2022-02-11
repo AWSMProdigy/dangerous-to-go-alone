@@ -45,7 +45,7 @@ const resolvers = {
     files: async(parent, args, context) => {
       console.log(db);
       return "Hello";
-    }
+    },
   },
 
   Mutation: {

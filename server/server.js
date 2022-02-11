@@ -13,6 +13,10 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(express.static('public'));
 
+const Grid = require('gridfs-stream');
+Grid.mongo = mongo;
+
+
 
 
 const server = new ApolloServer({
@@ -44,6 +48,15 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+app.get("/:filename", function(req, res){ 
+  gfs = Grid(db);
+  var readstream = gfs.createReadStream({filename: req.params.filename}); 
+  readstream.on("error", function(err){
+      res.send("No image found with that title"); 
+  });
+  readstream.pipe(res);
 });
 
 db.once('open', () => {
