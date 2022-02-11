@@ -218,6 +218,19 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
+    updateProfPic: async (parent, { profPic }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { profPic: profPic } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+
+
     createGame: async (parent, { title, developer, releaseYear, src }) => {
       const game = await Game.create({title, developer, releaseYear, src});
       return game;

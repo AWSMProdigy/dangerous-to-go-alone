@@ -5,7 +5,7 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import "../../src/styles.css";
 import profile from "../assets/images/profile/profile.jpg";
 
-import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE } from '../utils/mutations';
+import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE, UPDATE_PROFPIC } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 import axios from 'axios';
 
@@ -40,7 +40,8 @@ const Profile = () => {
     discord: "",
     steam: "",
     xbox: "",
-    playstation: ""
+    playstation: "",
+    profPic: "",
   })
 
   useEffect(() => {
@@ -57,7 +58,8 @@ const Profile = () => {
         discord: user?.discord || "",
         steam: user?.steamName || "",
         xbox: user?.xboxName || "",
-        playstation: user?.playstationName || ""
+        playstation: user?.playstationName || "",
+        profPic: user?.profPic || "",
       })
     }
     else{

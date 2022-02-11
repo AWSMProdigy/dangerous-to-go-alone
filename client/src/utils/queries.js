@@ -16,6 +16,7 @@ export const QUERY_USER = gql`
       xboxName
       steamName
       playstationName
+      profPic
     }
   }
 `;

@@ -56,6 +56,9 @@ const userSchema = new Schema({
   playstationName:{
     type: String
   },
+  profPic: {
+    type: String
+  }
 
   // blockedUsers: [
   //   {

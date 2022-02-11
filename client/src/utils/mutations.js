@@ -127,6 +127,14 @@ export const UPDATE_PLAYSTATION = gql`
   }
 `;
 
+export const UPDATE_PROFPIC = gql`
+  mutation updateProfPic($profPic: String!) {
+    updateProfPic(profPic: $profPic) {
+      profPic
+    }
+  }
+`;
+
 export const UPLOAD_FILE = gql`
   mutation uploadFile($file: Upload!) {
     uploadFile(file: $file) {

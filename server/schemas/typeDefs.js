@@ -19,6 +19,7 @@ const typeDefs = gql`
     xboxName: String
     steamName: String
     playstationName: String
+    profPic: String
   }
 
   type Game {
