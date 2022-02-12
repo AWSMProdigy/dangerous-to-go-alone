@@ -230,7 +230,6 @@ const resolvers = {
 
     uploadFile: async (parent, { file }, context) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
-      console.log(file);
       const bucket = new mongodb.GridFSBucket(db.db, {bucketName:"images"});
       const uploadStream = bucket.openUploadStream(filename);
       await User.findOneAndUpdate(

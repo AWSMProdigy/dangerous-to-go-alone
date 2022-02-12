@@ -71,6 +71,7 @@ export const QUERY_ME = gql`
       xboxName
       steamName
       playstationName
+      profPic
     }
   }
 `;
