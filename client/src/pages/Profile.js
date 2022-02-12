@@ -491,7 +491,7 @@ const Profile = () => {
 
         <div className="col col-md-9" id="main">
           <div className="row">
-            <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
+            <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src="http://localhost:3001/3rd Permu pic.jpg" alt=""></img>
             <input type="file" onChange={handleFileUpload}></input>
             <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
