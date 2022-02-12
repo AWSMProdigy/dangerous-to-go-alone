@@ -223,30 +223,20 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    updateProfPic: async (parent, { profPic }, context) => {
-      if (context.user) {
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $set: { profPic: profPic } }
-        );
-        return User.findOne({ _id: context.user._id });
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-
-
-
     createGame: async (parent, { title, developer, releaseYear, src }) => {
       const game = await Game.create({title, developer, releaseYear, src});
       return game;
     },
 
-    uploadFile: async (parent, { file }) => {
+    uploadFile: async (parent, { file }, context) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
       console.log(file);
       const bucket = new mongodb.GridFSBucket(db.db, {bucketName:"images"});
       const uploadStream = bucket.openUploadStream(filename);
-
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $set: { profPic: filename } }
+      );
       await new Promise((resolve, reject) => {
       createReadStream(`./${filename}`)
       .pipe(uploadStream)

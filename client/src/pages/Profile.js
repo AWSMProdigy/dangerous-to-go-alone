@@ -61,11 +61,6 @@ const Profile = () => {
         playstation: user?.playstationName || "",
         profPic: user?.profPic || "",
       })
-      axios.get('http://localhost:3001/3rd Permu pic.jpg').then((response) => {
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      })
     }
     else{
       return (<h1>loading</h1>)
@@ -298,6 +293,16 @@ const Profile = () => {
     return(<></>)
   }
 
+  function ProfilePicture(){
+    console.log(user.profPic);
+    if(user.profPic === undefined){
+      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
+    }else{
+      // 
+      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`http://localhost:3001/${user.profPic}`} alt=""></img>
+    }
+  }
+
   function TimeOptions(){
     const n = 12;
     const AMarray = [...Array(n)].map((e, i) => <option value={`${i+1} AM`}>{`${i+1} AM`}</option>)
@@ -491,7 +496,7 @@ const Profile = () => {
 
         <div className="col col-md-9" id="main">
           <div className="row">
-            <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src="http://localhost:3001/3rd Permu pic.jpg" alt=""></img>
+            <ProfilePicture/>
             <input type="file" onChange={handleFileUpload}></input>
             <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
