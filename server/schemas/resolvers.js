@@ -232,11 +232,14 @@ const resolvers = {
       const { createReadStream, filename, mimetype, encoding } = await file;
       const bucket = new mongodb.GridFSBucket(db.db, {bucketName:"images"});
       const uploadStream = bucket.openUploadStream(filename);
-      console.log("hello");
-      for (x in fs.find({'filename': `${toDelete}`})){
-        bucket.delete(x._id);
-      }
-      console.log("hello");
+      const cursor = bucket.find({});
+      if(toDelete != undefined || toDelete != null){
+      cursor.forEach(doc => {
+        if(doc.filename === toDelete){
+          bucket.delete(doc._id);
+        }
+      })
+    }
       await User.findOneAndUpdate(
         { _id: context.user._id },
         { $set: { profPic: filename } }
