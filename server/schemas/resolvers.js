@@ -228,14 +228,20 @@ const resolvers = {
       return game;
     },
 
-    uploadFile: async (parent, { file }, context) => {
+    uploadFile: async (parent, { file, toDelete }, context) => {
       const { createReadStream, filename, mimetype, encoding } = await file;
       const bucket = new mongodb.GridFSBucket(db.db, {bucketName:"images"});
       const uploadStream = bucket.openUploadStream(filename);
+      console.log("hello");
+      for (x in fs.find({'filename': `${toDelete}`})){
+        bucket.delete(x._id);
+      }
+      console.log("hello");
       await User.findOneAndUpdate(
         { _id: context.user._id },
         { $set: { profPic: filename } }
       );
+      
       await new Promise((resolve, reject) => {
       createReadStream(`./${filename}`)
       .pipe(uploadStream)

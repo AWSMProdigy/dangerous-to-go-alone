@@ -212,13 +212,15 @@ const Profile = () => {
   const handleFileUpload = async (e) => {
     try{
       const file = e.target.files[0];
+      const toDelete = user.profPic;
       console.log(file);
       if(!file){
         return;
       }
       const {data} = await uploadFile({
-        variables: {
-          file
+        variables:{
+          file: file,
+          toDelete: toDelete
         }
       })
     }
