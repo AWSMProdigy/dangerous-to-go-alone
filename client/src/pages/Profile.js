@@ -223,10 +223,26 @@ const Profile = () => {
           toDelete: toDelete
         }
       })
+      setUserText({
+        username: userText.username,
+        descText: userText.descText,
+        fromTime: userText.fromTime,
+        toTime: userText.toTime,
+        platformText: userText.platformText,
+        allowEdit: userText.allowEdit,
+        friends: userText.friends,
+        games: userText.games,
+        discord: userText.discord,
+        steam: userText.steam,
+        xbox: userText.xbox,
+        playstation: userText.playstation,
+        profPic: file.name
+      });
     }
     catch(err){
       console.error(err);
     }
+    
   }
   
 
@@ -260,7 +276,8 @@ const Profile = () => {
       discord: event.target.discordInput.value.trim(),
       steam: event.target.steamInput.value.trim(),
       xbox: event.target.xboxInput.value.trim(),
-      playstation: event.target.playstationInput.value.trim()
+      playstation: event.target.playstationInput.value.trim(),
+      profPic: userText.profPic
     });
   }
 
@@ -302,6 +319,7 @@ const Profile = () => {
       // 
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`http://localhost:3001/${user.profPic}`} alt=""></img>
     }
+    
   }
 
   function TimeOptions(){
