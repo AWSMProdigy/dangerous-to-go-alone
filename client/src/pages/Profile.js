@@ -223,6 +223,7 @@ const Profile = () => {
           toDelete: toDelete
         }
       })
+      console.log(file.name);
       setUserText({
         username: userText.username,
         descText: userText.descText,
@@ -238,6 +239,8 @@ const Profile = () => {
         playstation: userText.playstation,
         profPic: file.name
       });
+      console.log(userText.profPic);
+      console.log("setUserText finished");
     }
     catch(err){
       console.error(err);
@@ -313,6 +316,7 @@ const Profile = () => {
   }
 
   function ProfilePicture(){
+    console.log(user.profPic);
     if(user.profPic === undefined){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
@@ -443,8 +447,6 @@ const Profile = () => {
       <EditPage/>
     )
   }
-
-  console.log(loading);
 
   if(loading){
     return(<h1>Loading...</h1>);
