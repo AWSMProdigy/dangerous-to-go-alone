@@ -46,6 +46,7 @@ const Profile = () => {
 
   useEffect(() => {
     if(!loading){
+      console.log("loading finished");
       setUserText({
         username: user?.username,
         descText: user?.description || "",
@@ -81,7 +82,25 @@ const Profile = () => {
   const [updateSteam] = useMutation(UPDATE_STEAM);
   const [updatePlaystation] = useMutation(UPDATE_PLAYSTATION);
   const [uploadFile] = useMutation(UPLOAD_FILE, {
-    onCompleted: data => console.log(data)
+    onCompleted: data => {
+      console.log(data.uploadFile.filename);
+      console.log(userText);
+      setUserText({
+        username: userText.username,
+        descText: userText.descText,
+        fromTime: userText.fromTime,
+        toTime: userText.toTime,
+        platformText: userText.platformText,
+        allowEdit: userText.allowEdit,
+        friends: userText.friends,
+        games: userText.games,
+        discord: userText.discord,
+        steam: userText.steam,
+        xbox: userText.xbox,
+        playstation: userText.playstation,
+        profPic: data.uploadFile.filename
+      });
+    }
   });
 
 
@@ -209,11 +228,9 @@ const Profile = () => {
     }
   }
 
-  const handleFileUpload = async (e) => {
+  const handleFileUpload = async (file) => {
     try{
-      const file = e.target.files[0];
       const toDelete = user.profPic;
-      console.log(file);
       if(!file){
         return;
       }
@@ -223,29 +240,16 @@ const Profile = () => {
           toDelete: toDelete
         }
       })
-      console.log(file.name);
-      setUserText({
-        username: userText.username,
-        descText: userText.descText,
-        fromTime: userText.fromTime,
-        toTime: userText.toTime,
-        platformText: userText.platformText,
-        allowEdit: userText.allowEdit,
-        friends: userText.friends,
-        games: userText.games,
-        discord: userText.discord,
-        steam: userText.steam,
-        xbox: userText.xbox,
-        playstation: userText.playstation,
-        profPic: file.name
-      });
-      console.log(userText.profPic);
-      console.log("setUserText finished");
     }
     catch(err){
       console.error(err);
     }
     
+  }
+
+  const handleUpload = async (event) => {
+    const file = event.target.files[0];
+    handleFileUpload(file);
   }
   
 
@@ -448,9 +452,7 @@ const Profile = () => {
     )
   }
 
-  if(loading){
-    return(<h1>Loading...</h1>);
-  }
+  console.log("Page refresh");
 
   return (
     <div className="container">
@@ -518,7 +520,7 @@ const Profile = () => {
         <div className="col col-md-9" id="main">
           <div className="row">
             <ProfilePicture/>
-            <input type="file" onChange={handleFileUpload}></input>
+            <input type="file" onChange={handleUpload}></input>
             <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
