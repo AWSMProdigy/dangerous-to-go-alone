@@ -27,7 +27,7 @@ const Profile = () => {
   const [showSteam, setSteam] = useState(false);
   const [showXbox, setXbox] = useState(false);
   const [showPlaystation, setPlaystation] = useState(false);
-
+  const [refresh, useRefresh] = useState(false);
   const [userText, setUserText] = useState({
     username: "",
     descText: "",
@@ -44,9 +44,11 @@ const Profile = () => {
     profPic: "",
   })
 
+  
+
   useEffect(() => {
     if(!loading){
-      console.log("loading finished");
+      console.log("After loading userText");
       setUserText({
         username: user?.username,
         descText: user?.description || "",
@@ -68,7 +70,6 @@ const Profile = () => {
     }
   }, [loading]);
   
-
   const [addFriend] = useMutation(ADD_FRIEND);
   const [removeFriend] = useMutation(REMOVE_FRIEND);
   const [addGame] = useMutation(ADD_GAME);
@@ -83,23 +84,7 @@ const Profile = () => {
   const [updatePlaystation] = useMutation(UPDATE_PLAYSTATION);
   const [uploadFile] = useMutation(UPLOAD_FILE, {
     onCompleted: data => {
-      console.log(data.uploadFile.filename);
-      console.log(userText);
-      setUserText({
-        username: userText.username,
-        descText: userText.descText,
-        fromTime: userText.fromTime,
-        toTime: userText.toTime,
-        platformText: userText.platformText,
-        allowEdit: userText.allowEdit,
-        friends: userText.friends,
-        games: userText.games,
-        discord: userText.discord,
-        steam: userText.steam,
-        xbox: userText.xbox,
-        playstation: userText.playstation,
-        profPic: data.uploadFile.filename
-      });
+      console.log("Upload finished");
     }
   });
 
@@ -247,9 +232,26 @@ const Profile = () => {
     
   }
 
-  const handleUpload = async (event) => {
+  const handleUpload = (event) => {
     const file = event.target.files[0];
+    console.log(file);
+    setUserText({
+      username: userText.username,
+      descText: userText.descText,
+      fromTime: userText.fromTime,
+      toTime: userText.toTime,
+      platformText: userText.platformText,
+      allowEdit: userText.allowEdit,
+      friends: userText.friends,
+      games: userText.games,
+      discord: userText.discord,
+      steam: userText.steam,
+      xbox: userText.xbox,
+      playstation: userText.playstation,
+      profPic: file.name
+    });
     handleFileUpload(file);
+    
   }
   
 
@@ -320,12 +322,12 @@ const Profile = () => {
   }
 
   function ProfilePicture(){
-    console.log(user.profPic);
+    console.log(userText.profPic);
     if(user.profPic === undefined){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
       // 
-      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`http://localhost:3001/${user.profPic}`} alt=""></img>
+      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`http://localhost:3001/${userText.profPic}`} alt=""></img>
     }
     
   }
@@ -452,7 +454,6 @@ const Profile = () => {
     )
   }
 
-  console.log("Page refresh");
 
   return (
     <div className="container">
