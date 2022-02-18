@@ -225,6 +225,21 @@ const Profile = () => {
           toDelete: toDelete
         }
       })
+      setUserText({
+        username: userText.username,
+        descText: userText.descText,
+        fromTime: userText.fromTime,
+        toTime: userText.toTime,
+        platformText: userText.platformText,
+        allowEdit: userText.allowEdit,
+        friends: userText.friends,
+        games: userText.games,
+        discord: userText.discord,
+        steam: userText.steam,
+        xbox: userText.xbox,
+        playstation: userText.playstation,
+        profPic: file.name
+      });
     }
     catch(err){
       console.error(err);
@@ -235,22 +250,9 @@ const Profile = () => {
   const handleUpload = (event) => {
     const file = event.target.files[0];
     console.log(file);
-    setUserText({
-      username: userText.username,
-      descText: userText.descText,
-      fromTime: userText.fromTime,
-      toTime: userText.toTime,
-      platformText: userText.platformText,
-      allowEdit: userText.allowEdit,
-      friends: userText.friends,
-      games: userText.games,
-      discord: userText.discord,
-      steam: userText.steam,
-      xbox: userText.xbox,
-      playstation: userText.playstation,
-      profPic: file.name
-    });
+    
     handleFileUpload(file);
+    
     
   }
   
