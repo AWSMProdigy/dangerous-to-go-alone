@@ -1,22 +1,30 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Game } = require('../models');
+const { User, Game, gameAndUser } = require('../models');
 const { signToken } = require('../utils/auth');
+const {
+  GraphQLUpload,
+  graphqlUploadExpress, // A Koa implementation is also exported.
+} = require('graphql-upload');
+const path = require('path');
+const fs = require('fs');
+const mongodb = require("mongodb");
+const db = require('../config/connection');
+
 
 const resolvers = {
+  Upload: GraphQLUpload,
+
   Query: {
     // May not need this, only going to find users with certain params
-    users: async (parent, {useGames, useAvailability, usePlatform}, context) => {
-      let games = context.user.games;
-      let availability = context.user.availability;
-      let platform = context.user.platform;
-      const gameParam = useGames ? { games } : {};
-      const availabilityParam = useAvailability ? { availability } : {};
-      const platformParam = usePlatform ? { platform } : {};
-      return User.find({ gameParam, availabilityParam, availabilityParam });
+    users: async (parent) => {
+      return User.find();
     },
     // THis one can stay
     user: async (parent, { username }) => {
       return User.findOne({ username });
+    },
+    gameUsers: async (parent, {gamers}) => {
+      return User.find({ username: {"$in": gamers}})
     },
 
     games: async (parent, { title }) => {
@@ -24,13 +32,19 @@ const resolvers = {
       return Game.find(params).sort({ createdAt: -1 });
     },
     game: async (parent, { title }) => {
-      return Game.findOne({ title });
+      let myGame = await Game.findOne({title});
+      return {game: myGame, players: await User.find({ username: {"$in": myGame.players}})}
     },
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
+    },
+
+    files: async(parent, args, context) => {
+      console.log(db);
+      return "Hello";
     },
   },
 
@@ -212,7 +226,34 @@ const resolvers = {
     createGame: async (parent, { title, developer, releaseYear, src }) => {
       const game = await Game.create({title, developer, releaseYear, src});
       return game;
+    },
+
+    uploadFile: async (parent, { file, toDelete }, context) => {
+      const { createReadStream, filename, mimetype, encoding } = await file;
+      const bucket = new mongodb.GridFSBucket(db.db, {bucketName:"images"});
+      const uploadStream = bucket.openUploadStream(filename);
+      const cursor = bucket.find({});
+      if(toDelete != undefined || toDelete != null){
+      cursor.forEach(doc => {
+        if(doc.filename === toDelete){
+          bucket.delete(doc._id);
+        }
+      })
     }
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $set: { profPic: filename } }
+      );
+      
+      await new Promise((resolve, reject) => {
+      createReadStream(`./${filename}`)
+      .pipe(uploadStream)
+      .on("error", reject)
+      .on("finish", resolve);
+      });
+
+      return { _id: uploadStream.id, filename, mimetype, encoding }
+    },
   }
 }
 

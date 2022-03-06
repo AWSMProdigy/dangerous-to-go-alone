@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import logo from '../../assets/Dangerous-Logo-White.png';
 import '../../styles.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 import Auth from '../../utils/auth';
 
@@ -30,6 +32,7 @@ const Header = () => {
                   <Link className="navItem" onClick={logout}>
                   <h6>Logout</h6>
                   </Link>
+                  <FontAwesomeIcon icon={faBell}>kekw</FontAwesomeIcon>
                 </>
               ) : (
                 <>

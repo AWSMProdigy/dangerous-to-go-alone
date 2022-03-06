@@ -320,6 +320,18 @@ form > .btn:hover {
     height: 21px;
 }
 
+.playerContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.player-entry {
+    flex: 1;
+}
+
 
 /* Mobile Screens */
 @media screen and (max-width: 400px){

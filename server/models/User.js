@@ -41,7 +41,8 @@ const userSchema = new Schema({
     }
   ],
   platform: {
-    type: String
+    type: String,
+    default: ""
   },
   discord:{
     type: String
@@ -55,6 +56,9 @@ const userSchema = new Schema({
   playstationName:{
     type: String
   },
+  profPic: {
+    type: String
+  }
 
   // blockedUsers: [
   //   {

@@ -127,4 +127,13 @@ export const UPDATE_PLAYSTATION = gql`
   }
 `;
 
+export const UPLOAD_FILE = gql`
+  mutation uploadFile($file: Upload!, $toDelete: String) {
+    uploadFile(file: $file, toDelete: $toDelete) {
+      _id
+      filename
+    }
+  }
+`;
+
 

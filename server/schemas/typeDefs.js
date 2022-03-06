@@ -1,6 +1,9 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+
+  scalar Upload
+
   type User {
     _id: ID!
     username: String
@@ -16,6 +19,7 @@ const typeDefs = gql`
     xboxName: String
     steamName: String
     playstationName: String
+    profPic: String
   }
 
   type Game {
@@ -28,17 +32,32 @@ const typeDefs = gql`
     platforms: String
   }
 
+  type gameAndUser {
+    game: Game
+    players: [User]
+  }
+
   type Auth {
     token: ID!
     user: User
   }
 
+  type File {
+    _id: ID!
+    path: String!
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   type Query {
-    users(useGames: Boolean!, useAvailability: Boolean!, usePlatform: Boolean!): [User]
+    users: [User]
     user(username: String!): User
     games: [Game]
-    game(title: String!): Game
+    game(title: String!): gameAndUser
     me: User
+    gameUsers(gamers: [String]!): [User]
+    files: String
   }
 
   type Mutation {
@@ -57,6 +76,7 @@ const typeDefs = gql`
     updateXbox(xboxName: String!): User
     updateSteam(steamName: String!): User
     updatePlaystation(playstationName: String!): User
+    uploadFile(file: Upload!, toDelete: String): File!
   }
 `;
 

@@ -5,12 +5,7 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import "../../src/styles.css";
 import profile from "../assets/images/profile/profile.jpg";
 
-import stardew from "../assets/images/profile/stardew.jpg";
-import mario from "../assets/images/profile/mariokart.jpg";
-import itTakes2 from "../assets/images/profile/ittakes2.jpg";
-import ac from "../assets/images/profile/ac.jpg";
-
-import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION } from '../utils/mutations';
+import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE, UPDATE_PROFPIC } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 
@@ -31,7 +26,7 @@ const Profile = () => {
   const [showSteam, setSteam] = useState(false);
   const [showXbox, setXbox] = useState(false);
   const [showPlaystation, setPlaystation] = useState(false);
-
+  const [refresh, useRefresh] = useState(false);
   const [userText, setUserText] = useState({
     username: "",
     descText: "",
@@ -44,11 +39,15 @@ const Profile = () => {
     discord: "",
     steam: "",
     xbox: "",
-    playstation: ""
+    playstation: "",
+    profPic: "",
   })
+
+  
 
   useEffect(() => {
     if(!loading){
+      console.log("After loading userText");
       setUserText({
         username: user?.username,
         descText: user?.description || "",
@@ -61,7 +60,8 @@ const Profile = () => {
         discord: user?.discord || "",
         steam: user?.steamName || "",
         xbox: user?.xboxName || "",
-        playstation: user?.playstationName || ""
+        playstation: user?.playstationName || "",
+        profPic: user?.profPic || "",
       })
     }
     else{
@@ -69,7 +69,6 @@ const Profile = () => {
     }
   }, [loading]);
   
-
   const [addFriend] = useMutation(ADD_FRIEND);
   const [removeFriend] = useMutation(REMOVE_FRIEND);
   const [addGame] = useMutation(ADD_GAME);
@@ -82,8 +81,15 @@ const Profile = () => {
   const [updateXbox] = useMutation(UPDATE_XBOX);
   const [updateSteam] = useMutation(UPDATE_STEAM);
   const [updatePlaystation] = useMutation(UPDATE_PLAYSTATION);
+  const [uploadFile] = useMutation(UPLOAD_FILE, {
+    onCompleted: data => {
+      console.log("Upload finished");
+    }
+  });
 
 
+
+  
   const handleFriendSubmit = async (event) => {
     event.preventDefault();
     console.log(event.target.searchInput.value);
@@ -205,6 +211,45 @@ const Profile = () => {
       console.error(err);
     }
   }
+
+  const handleFileUpload = async (file) => {
+    try{
+      const toDelete = user.profPic;
+      if(!file){
+        return;
+      }
+      const {data} = await uploadFile({
+        variables:{
+          file: file,
+          toDelete: toDelete
+        }
+      })
+      setUserText({
+        username: userText.username,
+        descText: userText.descText,
+        fromTime: userText.fromTime,
+        toTime: userText.toTime,
+        platformText: userText.platformText,
+        allowEdit: userText.allowEdit,
+        friends: userText.friends,
+        games: userText.games,
+        discord: userText.discord,
+        steam: userText.steam,
+        xbox: userText.xbox,
+        playstation: userText.playstation,
+        profPic: file.name
+      });
+    }
+    catch(err){
+      console.error(err);
+    }
+    
+  }
+
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    handleFileUpload(file);
+  }
   
 
   const handleProfileEdit = async (event) => {
@@ -237,7 +282,8 @@ const Profile = () => {
       discord: event.target.discordInput.value.trim(),
       steam: event.target.steamInput.value.trim(),
       xbox: event.target.xboxInput.value.trim(),
-      playstation: event.target.playstationInput.value.trim()
+      playstation: event.target.playstationInput.value.trim(),
+      profPic: userText.profPic
     });
   }
 
@@ -270,6 +316,16 @@ const Profile = () => {
       )
     }
     return(<></>)
+  }
+
+  function ProfilePicture(){
+    console.log(userText.profPic);
+    if(user.profPic === undefined){
+      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
+    }else{
+      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`http://localhost:3001/${userText.profPic}`} alt=""></img>
+    }
+    
   }
 
   function TimeOptions(){
@@ -394,11 +450,6 @@ const Profile = () => {
     )
   }
 
-  console.log(loading);
-
-  if(loading){
-    return(<h1>Loading...</h1>);
-  }
 
   return (
     <div className="container">
@@ -415,15 +466,19 @@ const Profile = () => {
                 </div>
                 <div className="navbar-collapse sidebar-medium" id="sidebarNav">
                   <div className="friends-search-bar">
-                      <Link className="navItem" to="/search">
+                      {myProfile ? (
                         <form className="form-inline input-group" id="searchFriend" onSubmit={handleFriendSubmit}>
-                          <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-p="Search" id="searchInput"></input>
-                          <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                </svg>
-                          </button>
-                        </form>
-                      </Link>
+                        <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-p="Search" id="searchInput"></input>
+                        <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                              </svg>
+                        </button>
+                      </form>
+                      ) : (
+                        <></>
+                      )
+                    }
+                      
                   </div>
                   <div className="sidebar">
                       <h4><b>Games</b> <span className="red-text">{userText.games.length}</span></h4>
@@ -461,7 +516,8 @@ const Profile = () => {
 
         <div className="col col-md-9" id="main">
           <div className="row">
-            <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
+            <ProfilePicture/>
+            <input type="file" onChange={handleUpload}></input>
             <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">
@@ -476,41 +532,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="row mt-5 mb-4 d-flex flex-wrap">
-            <h2 className="play-sm ml-2">Wanna Play With Me?</h2>
-            <div className="col-md-12">
-              <div className="mt-2 d-flex flex-wrap ml-2">
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/Stardew Valley">
-                    <img className="scheduled-game mt-3" src={stardew} alt="Pixel house in front of mountains"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Sat, Dec 11</b></h6>
-                    <p className="small"> 7:00pm - 9:00pm EST</p>
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/Mariokart">
-                    <img className="scheduled-game mt-3" src={mario} alt="Mario characters riding go kart's on a rainbow track"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Sun, Dec 12</b></h6>
-                    <p className="small"> 6:00pm - 10:00pm EST</p>
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/It Takes Two">
-                    <img className="scheduled-game mt-3" src={itTakes2} alt="Two small people flying on a dandelion"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Wed, Dec 15</b></h6>
-                    <p className="small"> 9:00pm - 11:00pm EST</p>
-                </div>
-                <div className="col-sm-12 col-md-6 col-lg-3 prof-games-sm play-sm">
-                  <Link to="/game/Animal Crossing">
-                    <img className="scheduled-game mt-3" src={ac} alt="Animated human and animal characters in a campsite"></img>
-                  </Link>
-                    <h6 className="mt-3 red-text"><b>Fri, Dec 17</b></h6>
-                    <p className="small"> 10:00pm - 1:00pm EST</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
     </div>
   </div>

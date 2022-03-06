@@ -22,13 +22,19 @@ const Library = () => {
   const { loading, data } = useQuery(QUERY_LIBRARY);
   const [addUserGame] = useMutation(ADD_GAME);
   const [selectedGame, setGame] = useState("");
-  const [userGames, setUserG] = useState([]);
+  const [newGame, setNew] = useState("");
+
+  useEffect(() => {
+    setNew("")
+  }, [newGame]);
 
   const handleChange = (event) => {
     if(event){
       setGame(event.value);
     }
   }
+
+
 
   const addGame = async () => {
     console.log(selectedGame);
@@ -38,8 +44,8 @@ const Library = () => {
           title: selectedGame
         }
       })
-      userGames.push(selectedGame);
-      setUserG(userGames);
+      console.log(selectedGame);
+      setNew('Hi');
     }
     catch(err){
       console.error(err);
@@ -78,7 +84,6 @@ const Library = () => {
     return(<h1>Loading...</h1>)
   }
   else {
-    console.log(userGames);
     console.log(data.me.games);
     const gameTitles = data.games.map(a =>({label: a.title, value: a.title}));
     return (
