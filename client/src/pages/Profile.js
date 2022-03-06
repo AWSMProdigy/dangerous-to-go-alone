@@ -7,7 +7,6 @@ import profile from "../assets/images/profile/profile.jpg";
 
 import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE, UPDATE_PROFPIC } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
-import axios from 'axios';
 
 
 import Auth from '../utils/auth';
@@ -249,11 +248,7 @@ const Profile = () => {
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
-    console.log(file);
-    
     handleFileUpload(file);
-    
-    
   }
   
 
@@ -328,7 +323,6 @@ const Profile = () => {
     if(user.profPic === undefined){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
-      // 
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`http://localhost:3001/${userText.profPic}`} alt=""></img>
     }
     
