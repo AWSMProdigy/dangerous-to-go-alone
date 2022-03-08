@@ -32,7 +32,7 @@ const Header = () => {
                   <Link className="navItem" onClick={logout}>
                   <h6>Logout</h6>
                   </Link>
-                  <FontAwesomeIcon icon={faBell}>kekw</FontAwesomeIcon>
+                  <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
                 </>
               ) : (
                 <>
