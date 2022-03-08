@@ -320,7 +320,7 @@ const Profile = () => {
 
   function ProfilePicture(){
     console.log(userText.profPic);
-    if(user.profPic === undefined){
+    if(user.profPic === undefined || user.profPic === null){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`http://localhost:3001/${userText.profPic}`} alt=""></img>
