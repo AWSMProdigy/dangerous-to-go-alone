@@ -34,6 +34,11 @@ const Browse = () => {
     if(loading){
         return(<h1>Loading...</h1>)
     }
+    else {
+      {data.games.map((game) => (
+        <h1>{game}</h1>
+      ))}
+    }
     
 
 }

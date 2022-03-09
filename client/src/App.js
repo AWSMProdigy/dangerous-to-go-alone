@@ -20,6 +20,7 @@ import Footer from './components/Footer';
 import Library from './pages/Library';
 import Wishlist from './pages/Wishlist';
 import Game from './pages/Game';
+import Browse from './pages/Browse'
 
 import './styles.css';
 
@@ -89,6 +90,9 @@ function App() {
             </Route>
             <Route exact path="/game/:title">
               <Game />
+            </Route>
+            <Route exact path="/browse">
+              <Browse />
             </Route>
           </div>
           <Footer />

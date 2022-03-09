@@ -27,7 +27,10 @@ const Header = () => {
                   <h6>Profile</h6>
                   </Link>
                   <Link className="navItem" to="/Library">
-                  <h6>Games</h6>
+                  <h6>My Library</h6>
+                  </Link>
+                  <Link className="navItem" to="/Browse">
+                  <h6>Browse Games</h6>
                   </Link>
                   <Link className="navItem" onClick={logout}>
                   <h6>Logout</h6>
