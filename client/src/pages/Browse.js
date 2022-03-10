@@ -4,6 +4,8 @@ import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { QUERY_LIBRARY } from '../utils/queries';
 import { ADD_GAME } from '../utils/mutations';
+import { Link } from 'react-router-dom';
+
 
 const Browse = () => {
   const { loading, data } = useQuery(QUERY_LIBRARY);
@@ -65,7 +67,7 @@ const Browse = () => {
         <input className="form-control mr-sm-2" type="search" placeholder="Search game" aria-p="Search" id="searchInput" onInput={(e) => handleSearchChange(e)}></input>
       </div>
       {listedGames.map((game, index) => (
-        <h1>{game.title}</h1>
+        <Link to={`/game/${game.title}`}><img src={require(`../assets/images/gameImages/${game.title}`)}></img></Link>
       ))}
       </main>
     )

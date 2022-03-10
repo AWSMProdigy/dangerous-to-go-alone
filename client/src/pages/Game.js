@@ -4,12 +4,12 @@ import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../utils/queries';
 import "../../src/styles.css";
 
-import battle from "../assets/images/libraryImages/battlefield.jpg"
-import halo from "../assets/images/libraryImages/haloinfinite.jpg"
-import league from "../assets/images/libraryImages/LoL.jpg"
-import cod from "../assets/images/libraryImages/blackops.jpg"
-import forza from "../assets/images/libraryImages/forza.jpg"
-import stardew from "../assets/images/libraryImages/stardew.jpg"
+import battle from "../assets/images/gameImages/Battlefield 2042.jpg"
+import halo from "../assets/images/gameImages/haloinfinite.jpg"
+import league from "../assets/images/gameImages/LoL.jpg"
+import cod from "../assets/images/gameImages/blackops.jpg"
+import forza from "../assets/images/gameImages/forza.jpg"
+import stardew from "../assets/images/gameImages/stardew.jpg"
 
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
