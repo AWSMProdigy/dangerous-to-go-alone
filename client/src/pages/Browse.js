@@ -67,12 +67,11 @@ const Browse = () => {
         <input className="form-control mr-sm-2" type="search" placeholder="Search game" aria-p="Search" id="searchInput" onInput={(e) => handleSearchChange(e)}></input>
       </div>
       {listedGames.map((game, index) => (
-        <Link to={`/game/${game.title}`}><img src={require(`../assets/images/gameImages/${game.title}`)}></img></Link>
+        <Link to={`/game/${game.title}`}><img alt={`${game.title}`}src={require(`../assets/images/gameImages/${game.title}.jpg`).default}></img></Link>
       ))}
       </main>
     )
   }
-    
 }
 
 export default Browse;

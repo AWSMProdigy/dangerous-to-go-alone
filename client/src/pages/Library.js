@@ -3,7 +3,7 @@ import "../../src/styles.css";
 import Select from 'react-select';
 
 import battle from "../assets/images/gameImages/Battlefield 2042.jpg"
-import halo from "../assets/images/gameImages/haloinfinite.jpg"
+import halo from "../assets/images/gameImages/Halo Infinite.jpg"
 import league from "../assets/images/gameImages/LoL.jpg"
 import cod from "../assets/images/gameImages/blackops.jpg"
 import forza from "../assets/images/gameImages/forza.jpg"
