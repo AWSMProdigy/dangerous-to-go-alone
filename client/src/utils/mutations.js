@@ -148,4 +148,14 @@ mutation addLfg($gameTitle: String!,$title: String!, $capacity:String!, $creator
 }
 `;
 
+export const UPDATE_LFG =  gql`
+mutation updateLfg($gameTitle: String!, $_id: ID!,$add: Boolean!, $player: String!){
+  updateLfg(gameTitle: $gameTitle, _id: $_id, add: $add, player: $player){
+    lfgList{
+      players
+    }
+  }
+}
+`
+
 

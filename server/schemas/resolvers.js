@@ -264,6 +264,16 @@ const resolvers = {
         return Game.findOne({title: title});
       // }
       // throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateLfg: async (parent, {gameTitle, _id, add, player}, context) =>{
+      // if (context.user){
+        await Game.findOneAndUpdate(
+          {title: gameTitle}
+        )
+        return Game.findOne({title: title});
+      // }
+      // throw new AuthenticationError('You need to be logged in!');
     }
   }
 }
