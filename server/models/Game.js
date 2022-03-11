@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { User } = require('./User');
 const dateFormat = require('../utils/dateFormat');
+const {lfg} = require('./lfg');
 
 const gameSchema = new Schema({
   title: {
@@ -28,7 +29,12 @@ const gameSchema = new Schema({
   },
   platforms: {
     type: String
-  }
+  },
+  lfgList: [
+    {
+      type: lfg
+    }
+  ]
 });
 
 const Game = model('Game', gameSchema);

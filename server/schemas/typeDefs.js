@@ -30,11 +30,19 @@ const typeDefs = gql`
     players: [String]
     src: String
     platforms: String
+    lfgList: [lfg]
   }
 
   type gameAndUser {
     game: Game
     players: [User]
+  }
+
+  type lfg {
+    _id: ID!
+    title: String!
+    capaity: Int
+    players: [String]
   }
 
   type Auth {
@@ -77,6 +85,8 @@ const typeDefs = gql`
     updateSteam(steamName: String!): User
     updatePlaystation(playstationName: String!): User
     uploadFile(file: Upload!, toDelete: String): File!
+    addLfg(gameTitle: String!, title: String!, player: String!, capacity: String!)
+
   }
 `;
 
