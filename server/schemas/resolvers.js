@@ -272,7 +272,7 @@ const resolvers = {
           {title: gameTitle, "lfgList.title" : _id},
           { $push: {"lfgList.$.players" : player}}
         )
-        return Game.findOne({title: title});
+        return Game.findOne({title: gameTitle});
       // }
       // throw new AuthenticationError('You need to be logged in!');
     }
