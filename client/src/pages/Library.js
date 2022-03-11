@@ -4,10 +4,10 @@ import Select from 'react-select';
 
 import battle from "../assets/images/gameImages/Battlefield 2042.jpg"
 import halo from "../assets/images/gameImages/Halo Infinite.jpg"
-import league from "../assets/images/gameImages/LoL.jpg"
-import cod from "../assets/images/gameImages/blackops.jpg"
-import forza from "../assets/images/gameImages/forza.jpg"
-import stardew from "../assets/images/gameImages/stardew.jpg"
+import league from "../assets/images/gameImages/League of Legends.jpg"
+import cod from "../assets/images/gameImages/Black Ops 2.jpg"
+import forza from "../assets/images/gameImages/Forza Horizon 5.jpg"
+import stardew from "../assets/images/gameImages/Stardew Valley.jpg"
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
