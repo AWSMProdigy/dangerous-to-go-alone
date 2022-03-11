@@ -255,15 +255,15 @@ const resolvers = {
       return { _id: uploadStream.id, filename, mimetype, encoding }
     },
 
-    addLfg: async (parent, {gameTitle, title, capacity}, context) =>{
-      if (context.user){
+    addLfg: async (parent, {gameTitle, title, capacity, creator}, context) =>{
+      // if (context.user){
         await Game.findOneAndUpdate(
-          {title: title},
-          { $push: {lfgList: {title: title, players: [context.user.username], capacity: capacity}}}
+          {title: gameTitle},
+          { $push: {lfgList: {title: title, players: [creator], capacity: capacity}}}
         )
         return Game.findOne({title: title});
-      }
-      throw new AuthenticationError('You need to be logged in!');
+      // }
+      // throw new AuthenticationError('You need to be logged in!');
     }
   }
 }

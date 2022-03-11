@@ -21,6 +21,12 @@ const typeDefs = gql`
     playstationName: String
     profPic: String
   }
+  type lfg {
+    _id: ID!
+    title: String!
+    capacity: Int
+    players: [String]
+  }
 
   type Game {
     _id: ID!
@@ -38,12 +44,7 @@ const typeDefs = gql`
     players: [User]
   }
 
-  type lfg {
-    _id: ID!
-    title: String!
-    capaity: Int
-    players: [String]
-  }
+  
 
   type Auth {
     token: ID!
@@ -85,7 +86,7 @@ const typeDefs = gql`
     updateSteam(steamName: String!): User
     updatePlaystation(playstationName: String!): User
     uploadFile(file: Upload!, toDelete: String): File!
-    addLfg(gameTitle: String!, title: String!, capacity: String!)
+    addLfg(gameTitle: String!, title: String!, capacity: String!, creator: String!): Game
 
   }
 `;

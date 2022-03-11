@@ -136,4 +136,16 @@ export const UPLOAD_FILE = gql`
   }
 `;
 
+export const ADD_LFG = gql`
+mutation addLfg($gameTitle: String!,$title: String!, $capacity:String!, $creator: String!){
+  addLfg(gameTitle: $gameTitle, title: $title, capacity: $capacity, creator: $creator){
+    lfgList{
+      title
+      capacity
+      players
+    }
+  }
+}
+`;
+
 
