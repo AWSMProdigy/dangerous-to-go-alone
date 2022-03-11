@@ -44,7 +44,10 @@ export const QUERY_GAME = gql`
         src
         players
         platforms
-        lfgList
+        lfgList{
+          _id
+          title
+        }
       }
       players{
         username

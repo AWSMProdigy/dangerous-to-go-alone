@@ -269,7 +269,8 @@ const resolvers = {
     updateLfg: async (parent, {gameTitle, _id, add, player}, context) =>{
       // if (context.user){
         await Game.findOneAndUpdate(
-          {title: gameTitle}
+          {title: gameTitle, "lfgList.title" : _id},
+          { $push: {"lfgList.$.players" : player}}
         )
         return Game.findOne({title: title});
       // }
