@@ -66,10 +66,18 @@ const Browse = () => {
         </div>
         <input className="form-control mr-sm-2" type="search" placeholder="Search game" aria-p="Search" id="searchInput" onInput={(e) => handleSearchChange(e)}></input>
       </div>
-      {listedGames.map((game, index) => (
-        <Link to={`/game/${game.title}`}><img alt={`${game.title}`}src={require(`../assets/images/gameImages/${game.title}.jpg`).default}></img></Link>
-      ))}
+      <div className='d-flex flex-row align-items-stretch flex-wrap'>
+        {listedGames.map((game, index) => (
+          <div className="col-sm-6 col-md-4 col-lg-2 align-top">
+            <div className="p-3">  
+              <Link to={`/game/${game.title}`}><img className="img-fluid pop-games" alt={`${game.title}`}src={require(`../assets/images/gameImages/${game.title}.jpg`).default}></img></Link>
+              <h2>{game.title}</h2>
+            </div>
+          </div>
+        ))}
+      </div>
       </main>
+      
     )
   }
 }
