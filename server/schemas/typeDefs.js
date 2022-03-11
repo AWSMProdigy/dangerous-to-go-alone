@@ -85,7 +85,7 @@ const typeDefs = gql`
     updateSteam(steamName: String!): User
     updatePlaystation(playstationName: String!): User
     uploadFile(file: Upload!, toDelete: String): File!
-    addLfg(gameTitle: String!, title: String!, player: String!, capacity: String!)
+    addLfg(gameTitle: String!, title: String!, capacity: String!)
 
   }
 `;

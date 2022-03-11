@@ -32,7 +32,9 @@ const gameSchema = new Schema({
   },
   lfgList: [
     {
-      type: lfg
+      type: lfg,
+      required: "Needs lfg",
+      default: null
     }
   ]
 });
