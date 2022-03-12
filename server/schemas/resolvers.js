@@ -271,7 +271,7 @@ const resolvers = {
         if(add){
           console.log("Finding game");
           console.log(await Game.findOneAndUpdate(
-            {title: gameTitle, "lfgList.title": _id},
+            {title: gameTitle, "lfgList.title": _id, $where: "this.players.length == this.capacity"},
             {$push: {"lfgList.$.players" : player}}
           ))
           console.log("Updated game");
