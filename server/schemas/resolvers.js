@@ -268,11 +268,20 @@ const resolvers = {
 
     updateLfg: async (parent, {gameTitle, _id, add, player}, context) =>{
       // if (context.user){
-        await Game.findOneAndUpdate(
-          {title: gameTitle, "lfgList.title" : _id},
-          { $push: {"lfgList.$.players" : player}}
-        )
-        return Game.findOne({title: gameTitle});
+        if(add){
+          await Game.findOneAndUpdate(
+            {title: gameTitle, "lfgList.title" : _id},
+            { $push: {"lfgList.$.players" : player}}
+          )
+          return Game.findOne({title: gameTitle});
+        }
+        else{
+          await Game.findOneAndUpdate(
+            {title: gameTitle, "lfgList.title" : _id},
+            { $pull: {"lfgList.$.players" : player}}
+          )
+          return Game.findOne({title: gameTitle});
+        }
       // }
       // throw new AuthenticationError('You need to be logged in!');
     }
