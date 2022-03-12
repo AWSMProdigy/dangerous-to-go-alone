@@ -271,7 +271,7 @@ const resolvers = {
         if(add){
           await Game.findOneAndUpdate(
             {title: gameTitle, "lfgList.title" : _id},
-            { $push: {"lfgList.$.players" : player}}
+            {if: { $gte: ["lfgList.$.capacity", "lfgList.$.players.length"]}, then: {$push: {"lfgList.$.players" : player}}}
           )
           return Game.findOne({title: gameTitle});
         }
