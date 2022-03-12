@@ -87,7 +87,7 @@ const typeDefs = gql`
     updatePlaystation(playstationName: String!): User
     uploadFile(file: Upload!, toDelete: String): File!
     addLfg(gameTitle: String!, title: String!, capacity: Int!, creator: String!): Game
-    updateLfg(gameTitle: String! ,_id: String!, add: Boolean!, player: String!): Game
+    updateLfg(gameTitle: String! ,_id: String!, add: Boolean!, player: String!, capacity: String!): Game
   }
 `;
 

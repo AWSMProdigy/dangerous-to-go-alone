@@ -266,13 +266,13 @@ const resolvers = {
       // throw new AuthenticationError('You need to be logged in!');
     },
 
-    updateLfg: async (parent, {gameTitle, _id, add, player}, context) =>{
+    updateLfg: async (parent, {gameTitle, _id, add, player, capacity}, context) =>{
       // if (context.user){
         if(add){
           console.log("Finding game");
           console.log(await Game.findOneAndUpdate(
-            {title: gameTitle, "lfgList.title": _id, $where: "this.players.length == this.capacity"},
-            {$push: {"lfgList.$.players" : player}}
+            {title: gameTitle, "lfgList.title": _id, string: {$exists: false}},
+            {$push: {"lfgList.$.players": {$each: [player], $slice: capacity}}}
           ))
           console.log("Updated game");
           return Game.findOne({title: gameTitle});
