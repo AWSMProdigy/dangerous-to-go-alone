@@ -269,10 +269,12 @@ const resolvers = {
     updateLfg: async (parent, {gameTitle, _id, add, player}, context) =>{
       // if (context.user){
         if(add){
-          await Game.findOneAndUpdate(
-            {title: gameTitle, "lfgList.title" : _id},
-            {if: { $gte: ["lfgList.$.capacity", "lfgList.$.players.length"]}, then: {$push: {"lfgList.$.players" : player}}}
-          )
+          console.log("Finding game");
+          console.log(await Game.findOneAndUpdate(
+            {title: gameTitle, "lfgList.title": _id},
+            {$push: {"lfgList.$.players" : player}}
+          ))
+          console.log("Updated game");
           return Game.findOne({title: gameTitle});
         }
         else{

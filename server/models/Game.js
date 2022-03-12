@@ -44,7 +44,7 @@ const gameSchema = new Schema({
         },
       ],
       capacity: {
-        type: String,
+        type: Number,
         required: "Needs capacity",
         default: 1
       }
