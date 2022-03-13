@@ -35,8 +35,8 @@ export const QUERY_GAMES = gql`
 `;
 
 export const QUERY_GAME = gql`
-  query game($title: String!){
-    game(title: $title){
+  query game($gameTitle: String!){
+    game(gameTitle: $gameTitle){
       game{
         title
         developer

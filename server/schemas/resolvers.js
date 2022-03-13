@@ -31,8 +31,8 @@ const resolvers = {
       const params = title ? { title } : {};
       return Game.find(params).sort({ createdAt: -1 });
     },
-    game: async (parent, { title }) => {
-      let myGame = await Game.findOne({title});
+    game: async (parent, { gameTitle }) => {
+      let myGame = await Game.findOne({title: gameTitle});
       return {game: myGame, players: await User.find({ username: {"$in": myGame.players}})}
     },
     me: async (parent, args, context) => {
@@ -259,9 +259,13 @@ const resolvers = {
       // if (context.user){
         await Game.findOneAndUpdate(
           {title: gameTitle},
-          { $push: {lfgList: {title: title, creator: [creator], capacity: capacity}}}
+          { $pull: {lfgList: {creator: creator}}}
         )
-        return Game.findOne({title: title});
+        let myGame = await Game.findOneAndUpdate(
+          {title: gameTitle},
+          { $push: {lfgList: {title: title, creator: creator, capacity: capacity}}}
+        )
+        return myGame;
       // }
       // throw new AuthenticationError('You need to be logged in!');
     },
@@ -272,7 +276,7 @@ const resolvers = {
           console.log("Finding game");
           console.log(await Game.findOneAndUpdate(
             {title: gameTitle, "lfgList.title": _id, string: {$exists: false}},
-            {$push: {"lfgList.$.players": {$each: [player], $slice: capacity}}}
+            {$addToSet: {$each: {"lfgList.$.players": {$each: [player], $slice: capacity}}}}
           ))
           console.log("Updated game");
           return Game.findOne({title: gameTitle});
@@ -289,10 +293,11 @@ const resolvers = {
     },
     closeLfg: async (parent, {gameTitle, _id}, context) => {
       //if(context.user){
-        await Game.findOneAndUpdate(
+        let myGame = await Game.findOneAndUpdate(
           {title: gameTitle},
           { $pull: {lfgList: {title: _id}}}
         )
+        return myGame;
       //}
       //throw new AuthenticationError('You need to be logged in!');
     }
