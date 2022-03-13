@@ -37,7 +37,8 @@ const gameSchema = new Schema({
         default: " "
       },
       date: {
-        type: Date
+        type: Date,
+        default: new Date.now()
       },
       title:{
         type: String,
