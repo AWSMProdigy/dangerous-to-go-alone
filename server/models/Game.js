@@ -31,6 +31,14 @@ const gameSchema = new Schema({
   },
   lfgList: [
     {
+      creator: {
+        type: String,
+        required: "Creator necessary",
+        default: " "
+      },
+      date: {
+        type: Date
+      },
       title:{
         type: String,
         required: "Title necessary",
@@ -39,8 +47,6 @@ const gameSchema = new Schema({
       players: [
         {
           type: String,
-          required: "Needs creator",
-          default: "Nothing"
         },
       ],
       capacity: {

@@ -23,6 +23,8 @@ const typeDefs = gql`
   }
   type lfg {
     _id: ID!
+    creator: String!
+    date: Date!
     title: String!
     capacity: Int!
     players: [String]
