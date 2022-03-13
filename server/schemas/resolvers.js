@@ -286,18 +286,17 @@ const resolvers = {
         }
       // }
       // throw new AuthenticationError('You need to be logged in!');
+    },
+    closeLfg: async (parent, {gameTitle, _id}, context) => {
+      //if(context.user){
+        await Game.findOneAndUpdate(
+          {title: gameTitle},
+          { $pull: {lfgList: {title: _id}}}
+        )
+      //}
+      //throw new AuthenticationError('You need to be logged in!');
     }
   },
-
-  closeLfg: async (parent, {gameTitle, _id}, context) => {
-    //if(context.user){
-      await Game.findOneAndDelete(
-        {title: gameTitle},
-        { $pull: {lfgList: {title: _id}}}
-      )
-    //}
-    //throw new AuthenticationError('You need to be logged in!');
-  }
 }
 
 module.exports = resolvers;
