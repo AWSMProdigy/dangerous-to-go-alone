@@ -58,6 +58,9 @@ const userSchema = new Schema({
   },
   profPic: {
     type: String
+  },
+  canLfg: {
+    type: Boolean
   }
 
   // blockedUsers: [

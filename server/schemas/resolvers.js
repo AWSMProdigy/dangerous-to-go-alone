@@ -256,7 +256,7 @@ const resolvers = {
     },
 
     addLfg: async (parent, {gameTitle, title, capacity, creator}, context) =>{
-      // if (context.user){
+      // if (context.user && context.user.hasLfg){
         await Game.findOneAndUpdate(
           {title: gameTitle},
           { $pull: {lfgList: {creator: creator}}}
@@ -265,6 +265,10 @@ const resolvers = {
           {title: gameTitle},
           { $push: {lfgList: {title: title, creator: creator, capacity: capacity}}}
         )
+        // User.findOneAndUpdate(
+        //   {id: context.user._id},
+        //   {$set: {canLfg: false}}
+        // )
         return myGame;
       // }
       // throw new AuthenticationError('You need to be logged in!');
@@ -297,6 +301,10 @@ const resolvers = {
           {title: gameTitle},
           { $pull: {lfgList: {title: _id}}}
         )
+        // User.findOneAndUpdate(
+        //   {id: context.user._id},
+        //   {$set: {canLfg: true}}
+        // )
         return myGame;
       //}
       //throw new AuthenticationError('You need to be logged in!');
