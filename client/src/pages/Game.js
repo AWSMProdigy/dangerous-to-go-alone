@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 const Game = () => {
   const { title: titleParam } = useParams();
   const [playerArray, setPlayers] = useState([]);
+  const [lfgArray, setLfg] = useState([])
   // const [from, setFrom] = useState();
   // const [to, setTo] = useState()
   const [state, setState] = useState({
@@ -25,6 +26,7 @@ const Game = () => {
     from: "any",
     platform: "Any"
   })
+  const [tab, setTab] = useState();
 
   let to;
   let from;
@@ -47,6 +49,8 @@ const Game = () => {
         from: state.from,
         platform: state.platform
       });
+    setTab("players");
+    setLfg(data.game.lfgList);
     }
     else{
       return (<div>Loading...</div>)
@@ -150,6 +154,32 @@ const Game = () => {
     });
   }
 
+  function tabs(){
+    if(tab === "players"){
+      return(
+          Object.keys(state.playerArray).map((player, index) => (
+          <div className="playerContainer">
+            <Link className="player-entry profile-sidebar-link" to={`/profiles/${state.playerArray[player].username}`}>
+              <p>{state.playerArray[player].username}</p>
+            </Link>
+            <p className='player-entry'>{state.playerArray[player].fromTime}-{state.playerArray[player].toTime}</p>
+            <p className='player-entry'>{state.playerArray[player].platform}</p>
+            <p className='player-entry'>Casual</p>
+          </div>
+        ))
+      )
+    }
+    else{
+      return(
+        lfgArray.map((lfg, index) => (
+        <div className="playerContainer">
+        
+        
+        </div>
+      ))
+  }
+}
+
   if(loading){
     return (<div>Loading...</div>);
   }
@@ -209,16 +239,7 @@ const Game = () => {
               <p className='player-entry'>Playstyle</p>
             </div>
             <hr></hr>
-              {Object.keys(state.playerArray).map((player, index) => (
-                <div className="playerContainer">
-                  <Link className="player-entry profile-sidebar-link" to={`/profiles/${state.playerArray[player].username}`}>
-                    <p>{state.playerArray[player].username}</p>
-                  </Link>
-                  <p className='player-entry'>{state.playerArray[player].fromTime}-{state.playerArray[player].toTime}</p>
-                  <p className='player-entry'>{state.playerArray[player].platform}</p>
-                  <p className='player-entry'>Casual</p>
-                </div>
-              ))}
+              
             
           </div>
         </div>
