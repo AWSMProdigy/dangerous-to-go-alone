@@ -35,28 +35,31 @@ export const QUERY_GAMES = gql`
 `;
 
 export const QUERY_GAME = gql`
-  query game($gameTitle: String!){
-    game(gameTitle: $gameTitle){
-      game{
+query game($gameTitle: String!){
+  game(gameTitle: $gameTitle){
+    game{
+      title
+      developer
+      releaseYear
+      src
+      players
+      platforms
+      lfgList{
+        _id
         title
-        developer
-        releaseYear
-        src
+        creator
         players
-        platforms
-        lfgList{
-          _id
-          title
-        }
-      }
-      players{
-        username
-        fromTime
-        toTime
-        platform
+        capacity
       }
     }
+    players{
+      username
+      fromTime
+      toTime
+      platform
+    }
   }
+}
 `;
 
 export const QUERY_ME = gql`

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../utils/queries';
+import { ADD_LFG, UPDATE_LFG } from '../utils/mutations';
 import "../../src/styles.css";
 
 import battle from "../assets/images/gameImages/Battlefield 2042.jpg"
@@ -31,13 +32,11 @@ const Game = () => {
   let to;
   let from;
   let platform;
-  console.log(state);
-
 
   const { loading, data } = useQuery(QUERY_GAME, {
     variables: { 
-      title: titleParam 
-    },
+      gameTitle: titleParam 
+    }
   });
 
   useEffect(() => {
@@ -49,8 +48,8 @@ const Game = () => {
         from: state.from,
         platform: state.platform
       });
-    setTab("players");
-    setLfg(data.game.lfgList);
+    setTab("lfg");
+    setLfg(data.game.game.lfgList);
     }
     else{
       return (<div>Loading...</div>)
@@ -86,6 +85,15 @@ const Game = () => {
     to=state.to;
     from = state.from;
     filterPlayers();
+  }
+
+  function handleCreateLFG(e){
+    e.preventDefault();
+    console.log(e);
+  }
+
+  function handleUpdateLFG(e){
+
   }
 
   function TimeOptions(){
@@ -154,7 +162,7 @@ const Game = () => {
     });
   }
 
-  function tabs(){
+  function Tabs(){
     if(tab === "players"){
       return(
           Object.keys(state.playerArray).map((player, index) => (
@@ -170,13 +178,20 @@ const Game = () => {
       )
     }
     else{
+      console.log(lfgArray);
       return(
-        lfgArray.map((lfg, index) => (
-        <div className="playerContainer">
-        
-        
-        </div>
-      ))
+        <form onSubmit={handleCreateLFG}>
+          <input name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>
+          <input name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
+          <button type='submit'></button>
+        </form>
+      //   Object.keys(lfgArray).map((lfg, index) => (
+      //   <div className="playerContainer">
+      //     {lfgArray[lfg].title}
+      //     <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
+      //   </div>
+      // ))
+    )  
   }
 }
 
@@ -215,7 +230,7 @@ const Game = () => {
             <img id="game" className="img-fluid col-lg-5 col-md-12 col-sm-10" src={pic} alt=""></img>
             <div className="col-md-12 col-lg-7 game-sm-spacing">
             <h2 className="ml-4 mb-3 d-flex justify-content-start">
-              <b>{data.game.title}</b>
+              <b>{data.game.game.title}</b>
             </h2>
             <h6 className="ml-4"><b>Platforms:</b> <span className="red-text">{data.game.platforms}</span></h6>
             <h6 className="mt-2 ml-4"><b>Current Player Count:</b> <span className="red-text">{data.game.players.length}</span></h6>
@@ -234,12 +249,10 @@ const Game = () => {
                 <option value="PS4">PS4</option>
                 <option value="PS5">PS5</option>
               </select>
-              
-
               <p className='player-entry'>Playstyle</p>
             </div>
             <hr></hr>
-              
+            <Tabs></Tabs>
             
           </div>
         </div>
