@@ -98,7 +98,7 @@ const Game = () => {
         variables: {
           gameTitle: titleParam,
           title: e.target[0].value,
-          capacity: e.target[1].value,
+          capacity: parseInt(e.target[1].value),
           creator: "Boutta Be Banned"
         }
       })
