@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_GAME } from '../utils/queries';
+import { useMutation } from '@apollo/client';
 import { ADD_LFG, UPDATE_LFG } from '../utils/mutations';
 import "../../src/styles.css";
 
@@ -18,7 +19,9 @@ import { Link } from 'react-router-dom';
 const Game = () => {
   const { title: titleParam } = useParams();
   const [playerArray, setPlayers] = useState([]);
-  const [lfgArray, setLfg] = useState([])
+  const [lfgArray, setLfg] = useState([]);
+  const [addLfg] = useMutation(ADD_LFG);
+  const [updateLfg] = useMutation(UPDATE_LFG);
   // const [from, setFrom] = useState();
   // const [to, setTo] = useState()
   const [state, setState] = useState({
@@ -87,9 +90,22 @@ const Game = () => {
     filterPlayers();
   }
 
-  function handleCreateLFG(e){
+  const handleCreateLFG = async(e) => {
     e.preventDefault();
     console.log(e);
+    try{
+      const {data} = await addLfg({
+        variables: {
+          gameTitle: titleParam,
+          title: e.target[0].value,
+          capacity: e.target[1].value,
+          creator: "Boutta Be Banned"
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
   }
 
   function handleUpdateLFG(e){
