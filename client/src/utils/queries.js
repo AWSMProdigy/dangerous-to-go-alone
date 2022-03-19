@@ -98,3 +98,34 @@ export const QUERY_LIBRARY = gql`
     }
   }
 `
+
+export const QUERY_ME_GAME = gql`
+  query me_game(gameTitle: $gameTitle) {
+    game(gameTitle: $gameTitle){
+      game{
+        title
+        developer
+        releaseYear
+        src
+        players
+        platforms
+        lfgList{
+          _id
+          title
+          creator
+          players
+          capacity
+        }
+      }
+      players{
+        username
+        fromTime
+        toTime
+        platform
+      }
+    }
+    me{
+      games
+    }
+  }
+`

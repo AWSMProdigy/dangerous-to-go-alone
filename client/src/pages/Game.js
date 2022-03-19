@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { QUERY_GAME } from '../utils/queries';
+import { QUERY_ME_GAME } from '../utils/queries';
 import { useMutation } from '@apollo/client';
 import { ADD_LFG, UPDATE_LFG } from '../utils/mutations';
 import "../../src/styles.css";
@@ -36,7 +36,7 @@ const Game = () => {
   let from;
   let platform;
 
-  const { loading, data } = useQuery(QUERY_GAME, {
+  const { loading, data } = useQuery(QUERY_ME_GAME, {
     variables: { 
       gameTitle: titleParam 
     }
@@ -46,7 +46,7 @@ const Game = () => {
     if(!loading){
       console.log("initial load");
       setState({
-        playerArray: data.game.players,
+        playerArray: data.game.game.players,
         to: state.to,
         from: state.from,
         platform: state.platform
