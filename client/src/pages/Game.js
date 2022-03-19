@@ -51,7 +51,7 @@ const Game = () => {
         from: state.from,
         platform: state.platform
       });
-    setTab("lfg");
+    setTab("players");
     setLfg(data.game.game.lfgList);
     console.log(data);
     }
@@ -205,7 +205,11 @@ const Game = () => {
         Object.keys(lfgArray).map((lfg, index) => (
         <div className="playerContainer">
           {lfgArray[lfg].title}
-          <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
+          {Auth.loggedIn() ? (
+            <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
+          ) : (
+            <></>
+          )}
         </div>
       ))
     )  
