@@ -51,7 +51,7 @@ const Game = () => {
         from: state.from,
         platform: state.platform
       });
-    setTab("players");
+    setTab("lfg");
     setLfg(data.game.game.lfgList);
     console.log(data);
     }
@@ -197,21 +197,31 @@ const Game = () => {
     else{
       console.log(lfgArray);
       return(
-        // <form onSubmit={handleCreateLFG}>
-        //   <input name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>
-        //   <input name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
-        //   <button type='submit'></button>
-        // </form>
+        <>
+        {(Auth.loggedIn() && data.me.canLfg) ? (
+        <form onSubmit={handleCreateLFG}>
+          <input name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>
+          <input name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
+          <button type='submit'></button>
+        </form>
+        ) : (
+          <></>
+        )}
+        <>
+        {
         Object.keys(lfgArray).map((lfg, index) => (
         <div className="playerContainer">
           {lfgArray[lfg].title}
-          {Auth.loggedIn() ? (
+          {(Auth.loggedIn()) ? (
             <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
           ) : (
             <></>
           )}
         </div>
       ))
+      }
+      </>
+      </>
     )  
   }
 }

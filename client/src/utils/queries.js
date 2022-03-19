@@ -125,7 +125,7 @@ export const QUERY_ME_GAME = gql`
       }
     }
     me{
-      games
+      canLfg
     }
   }
 `
