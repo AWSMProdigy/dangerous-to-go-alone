@@ -100,7 +100,7 @@ export const QUERY_LIBRARY = gql`
 `
 
 export const QUERY_ME_GAME = gql`
-  query me_game(gameTitle: $gameTitle) {
+  query me_game($gameTitle: String!) {
     game(gameTitle: $gameTitle){
       game{
         title

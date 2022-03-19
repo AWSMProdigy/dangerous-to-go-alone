@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { QUERY_ME_GAME } from '../utils/queries';
+import { QUERY_ME_GAME, QUERY_GAME } from '../utils/queries';
 import { useMutation } from '@apollo/client';
 import { ADD_LFG, UPDATE_LFG } from '../utils/mutations';
 import "../../src/styles.css";
@@ -36,7 +36,7 @@ const Game = () => {
   let from;
   let platform;
 
-  const { loading, data } = useQuery(QUERY_ME_GAME, {
+  const { loading, data } = useQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
     variables: { 
       gameTitle: titleParam 
     }
@@ -53,6 +53,7 @@ const Game = () => {
       });
     setTab("lfg");
     setLfg(data.game.game.lfgList);
+    console.log(data);
     }
     else{
       return (<div>Loading...</div>)
@@ -196,17 +197,17 @@ const Game = () => {
     else{
       console.log(lfgArray);
       return(
-        <form onSubmit={handleCreateLFG}>
-          <input name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>
-          <input name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
-          <button type='submit'></button>
-        </form>
-      //   Object.keys(lfgArray).map((lfg, index) => (
-      //   <div className="playerContainer">
-      //     {lfgArray[lfg].title}
-      //     <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
-      //   </div>
-      // ))
+        // <form onSubmit={handleCreateLFG}>
+        //   <input name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>
+        //   <input name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
+        //   <button type='submit'></button>
+        // </form>
+        Object.keys(lfgArray).map((lfg, index) => (
+        <div className="playerContainer">
+          {lfgArray[lfg].title}
+          <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
+        </div>
+      ))
     )  
   }
 }
