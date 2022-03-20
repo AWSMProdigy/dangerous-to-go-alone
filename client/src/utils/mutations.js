@@ -158,4 +158,16 @@ mutation updateLfg($gameTitle: String!, $_id: ID!,$add: Boolean!, $player: Strin
 }
 `
 
+export const CLOSE_LFG = gql`
+mutation closeLfg($gameTitle:String!, $_id: String!){
+  closeLfg(gameTitle: $gameTitle, _id: $_id){
+    lfgList{
+      title
+      capacity
+      players
+    }
+  }
+}
+`
+
 

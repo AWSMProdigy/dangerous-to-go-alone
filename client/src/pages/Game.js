@@ -3,7 +3,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME_GAME, QUERY_GAME } from '../utils/queries';
 import { useMutation } from '@apollo/client';
-import { ADD_LFG, UPDATE_LFG } from '../utils/mutations';
+import { ADD_LFG, UPDATE_LFG, CLOSE_LFG } from '../utils/mutations';
 import "../../src/styles.css";
 
 import battle from "../assets/images/gameImages/Battlefield 2042.jpg"
@@ -22,6 +22,7 @@ const Game = () => {
   const [lfgArray, setLfg] = useState([]);
   const [addLfg] = useMutation(ADD_LFG);
   const [updateLfg] = useMutation(UPDATE_LFG);
+  const [closeLfg] = useMutation(CLOSE_LFG);
   // const [from, setFrom] = useState();
   // const [to, setTo] = useState()
   const [state, setState] = useState({
@@ -109,9 +110,25 @@ const Game = () => {
     }
   }
 
-  function handleUpdateLFG(e){
+  const handleUpdateLFG = async(e) => {
 
   }
+
+  const handleCloseLFG = async(_id) => {
+    console.log(_id)
+    try{
+      const {data} = await closeLfg({
+        variables: {
+          gameTitle: titleParam,
+          _id: _id
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
 
   function TimeOptions(){
     const n = 12;
@@ -212,10 +229,10 @@ const Game = () => {
         Object.keys(lfgArray).map((lfg, index) => (
         <div className="playerContainer">
           {lfgArray[lfg].title}
-          {(Auth.loggedIn()) ? (
+          {(Auth.loggedIn() && data.me.username !== lfgArray[lfg].creator) ? (
             <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
           ) : (
-            <></>
+            <button onClick={() => handleCloseLFG(lfgArray[lfg]._id)}>Delete LFG</button> 
           )}
         </div>
       ))

@@ -297,7 +297,7 @@ const resolvers = {
       //if(context.user){
         let myGame = await Game.findOneAndUpdate(
           {title: gameTitle},
-          { $pull: {lfgList: {title: _id}}}
+          { $pull: {lfgList: {_id: _id}}}
         )
         // User.findOneAndUpdate(
         //   {id: context.user._id},

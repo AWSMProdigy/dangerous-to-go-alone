@@ -125,6 +125,9 @@ export const QUERY_ME_GAME = gql`
       }
     }
     me{
+      fromTime
+      toTime
+      username
       canLfg
     }
   }
