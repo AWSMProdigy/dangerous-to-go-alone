@@ -141,7 +141,6 @@ const Game = () => {
     }
   }
 
-
   function TimeOptions(){
     const n = 12;
     const AMarray = [...Array(n)].map((e, i) => <option value={i+1}>{`${i+1} AM`}</option>)
@@ -317,6 +316,8 @@ const Game = () => {
               </select>
               <p className='player-entry'>Playstyle</p>
             </div>
+            <button onClick={() => setTab("players")}>Players</button>
+            <button onClick={() => setTab("lfg")}>LFG</button>
             <hr></hr>
             <Tabs></Tabs>
             
