@@ -230,11 +230,13 @@ const Game = () => {
         <div className="playerContainer">
           {lfgArray[lfg].title}
           {(Auth.loggedIn() && data.me.username !== lfgArray[lfg].creator) ? (
-            {lfgArray[lfg].players.find(player => player === data.me.username) ? (
+            <>
+            {lfgArray[lfg].players.find(player => player === data.me.username) !== undefined ? (
               <button onClick={() => handleUpdateLFG()}>Leave LFG</button> 
             ) : (
               <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
             )}
+            </>
           ) : (
             <button onClick={() => handleCloseLFG(lfgArray[lfg]._id)}>Delete LFG</button> 
           )}
