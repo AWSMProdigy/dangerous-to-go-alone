@@ -110,8 +110,20 @@ const Game = () => {
     }
   }
 
-  const handleUpdateLFG = async(e) => {
-
+  const handleUpdateLFG = async(add, _id, username) => {
+    try{
+      const {data} = await updateLfg({
+        variables: {
+          gameTitle: titleParam,
+          _id: _id, 
+          add: add,
+          player: username
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
   }
 
   const handleCloseLFG = async(_id) => {
@@ -231,10 +243,10 @@ const Game = () => {
           {lfgArray[lfg].title}
           {(Auth.loggedIn() && data.me.username !== lfgArray[lfg].creator) ? (
             <>
-            {lfgArray[lfg].players.find(player => player === data.me.username) !== undefined ? (
-              <button onClick={() => handleUpdateLFG()}>Leave LFG</button> 
+            {(lfgArray[lfg].players.find(player => player === data.me.username) !== undefined && lfgArray[lfg].players.length < lfgArray[lfg].capacity) ? (
+              <button onClick={() => handleUpdateLFG(false, lfgArray[lfg]._id, data.me.username)}>Leave LFG</button> 
             ) : (
-              <button onClick={() => handleUpdateLFG()}>Join LFG</button> 
+              <button onClick={() => handleUpdateLFG(true, lfgArray[lfg]._id, data.me.username)}>Join LFG</button> 
             )}
             </>
           ) : (

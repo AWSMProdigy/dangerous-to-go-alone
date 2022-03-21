@@ -278,7 +278,7 @@ const resolvers = {
       // if (context.user){
         if(add){
           console.log(await Game.findOneAndUpdate(
-            {title: gameTitle, "lfgList.title": _id, string: {$exists: false}},
+            {title: gameTitle, "lfgList._id": _id, string: {$exists: false}},
             {$addToSet: {$each: {"lfgList.$.players": {$each: [player], $slice: capacity}}}}
           ))
           return Game.findOne({title: gameTitle});
