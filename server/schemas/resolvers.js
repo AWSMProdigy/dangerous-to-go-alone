@@ -265,10 +265,10 @@ const resolvers = {
           {title: gameTitle},
           { $push: {lfgList: {title: title, creator: creator, capacity: capacity}}}
         )
-        // User.findOneAndUpdate(
-        //   {id: context.user._id},
-        //   {$set: {canLfg: false}}
-        // )
+        User.findOneAndUpdate(
+          {id: context.user._id},
+          {$set: {canLfg: false}}
+        )
         return myGame;
       // }
       // throw new AuthenticationError('You need to be logged in!');
@@ -299,10 +299,10 @@ const resolvers = {
           {title: gameTitle},
           { $pull: {lfgList: {_id: _id}}}
         )
-        // User.findOneAndUpdate(
-        //   {id: context.user._id},
-        //   {$set: {canLfg: true}}
-        // )
+        User.findOneAndUpdate(
+          {id: context.user._id},
+          {$set: {canLfg: true}}
+        )
         return myGame;
       //}
       //throw new AuthenticationError('You need to be logged in!');

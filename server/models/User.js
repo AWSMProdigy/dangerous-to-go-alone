@@ -60,7 +60,8 @@ const userSchema = new Schema({
     type: String
   },
   canLfg: {
-    type: Boolean
+    type: Boolean,
+    default: true
   }
 
   // blockedUsers: [
