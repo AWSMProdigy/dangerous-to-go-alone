@@ -323,13 +323,15 @@ form > .btn:hover {
 .playerContainer {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
     justify-content: space-between;
     text-align: center;
 }
 
 .player-entry {
-    flex: 1;
+    flex-basis: 1;
+    text-align: center;
 }
 
 
