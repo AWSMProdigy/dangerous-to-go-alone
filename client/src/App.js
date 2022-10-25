@@ -24,9 +24,10 @@ import Browse from './pages/Browse'
 
 import './styles.css';
 
+
 // Construct our main GraphQL API endpoint
 const httpLink = createUploadLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: process.env.PORT + '/graphql' || 'http://localhost:3001/graphql',
   credentials: "same-origin"
 });
 
