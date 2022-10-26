@@ -14,7 +14,7 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
-const port = process.env.PORT || 'http://localhost:3001';
+const port = process.env.PORT || 'https://localhost:3001';
 
 const Profile = () => {
   const { username: userParam } = useParams();
