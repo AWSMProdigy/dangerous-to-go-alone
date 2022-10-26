@@ -23,11 +23,15 @@ import Game from './pages/Game';
 import Browse from './pages/Browse'
 
 import './styles.css';
-
-
+let port;
+if(!process.env.PORT){
+  port = "http://localhost:3001/graphql";
+}else{
+  port = process.env.PORT + '/graphql';
+}
 // Construct our main GraphQL API endpoint
 const httpLink = createUploadLink({
-  uri: process.env.PORT + '/graphql' || 'http://localhost:3001/graphql',
+  uri: port,
   credentials: "same-origin"
 });
 
