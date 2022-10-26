@@ -30,8 +30,7 @@ const httpLink = createUploadLink({
   uri: process.env.PORT + '/graphql' || 'http://localhost:3001/graphql',
   credentials: "same-origin"
 });
-
-console.log(process.env.PORT);
+console.log(process);
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
