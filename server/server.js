@@ -18,7 +18,7 @@ const fs = require('fs');
 
 
 
-
+console.log("Server-side: " + process.env.PORT);
 
 const server = new ApolloServer({
   typeDefs,
