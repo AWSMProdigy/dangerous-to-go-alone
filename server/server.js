@@ -11,7 +11,7 @@ const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-app.use(express.static('public'));
+
 const mongodb = require('mongodb');
 const fs = require('fs');
 
@@ -48,12 +48,13 @@ server.applyMiddleware({ app,
 });
 
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-}
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.use(express.static('public'));
+
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "..", "client/build", "index.html"));
 });
 
 app.get("/:filename", function(req, res){ 
