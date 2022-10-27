@@ -14,8 +14,6 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { Link } from 'react-router-dom';
 
-const port = process.env.PORT || 'http://localhost:3001';
-
 const Profile = () => {
   const { username: userParam } = useParams();
   
@@ -327,7 +325,7 @@ const Profile = () => {
     if(user.profPic === undefined || user.profPic === null){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
-      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={port + `/file/${userText.profPic}`} alt=""></img>
+      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`/file/${userText.profPic}`} alt=""></img>
     }
     
   }
