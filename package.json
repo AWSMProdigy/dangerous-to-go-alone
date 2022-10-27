@@ -4,8 +4,8 @@
     "description": "Website dedicated to bringing gamers together to meet new people and enjoy their favorite games together",
     "main": "server/server.js",
     "scripts": {
-        "dev": "cd server && npm start",
-        "start": "cd client && npm run build && cd ../server && npm start",
+        "start": "cd server && npm start",
+        "dev": "cd client && npm run build && cd ../server && npm start",
         "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
         "install": "cd server && npm i && cd ../client && npm i",
         "seed": "cd server && npm run seed",
