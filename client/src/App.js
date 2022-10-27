@@ -24,6 +24,8 @@ import Browse from './pages/Browse'
 
 import './styles.css';
 let port;
+
+console.log(process.env.PORT);
 if(process.env.PORT == null){
   port = "http://localhost:3001/graphql";
 }else{
