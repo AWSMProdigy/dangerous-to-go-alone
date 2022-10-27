@@ -15,11 +15,6 @@ const app = express();
 const mongodb = require('mongodb');
 const fs = require('fs');
 
-
-
-
-console.log("Server-side: " + process.env.PORT);
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
