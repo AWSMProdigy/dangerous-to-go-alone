@@ -53,15 +53,16 @@ server.applyMiddleware({ app,
 
 app.use(express.static('public'));
 
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "..", "client/build", "index.html"));
-});
-
-app.get("/:filename", function(req, res){ 
+app.get("/file/:filename", function(req, res){ 
   const bucket = new mongodb.GridFSBucket(db.db, {bucketName: "images"})
   bucket.openDownloadStreamByName(req.params.filename)
             .pipe(res)
 });
+
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "..", "client/build", "index.html"));
+});
+
 
 db.once('open', () => {
   app.listen(PORT, () => {
