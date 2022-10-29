@@ -5,7 +5,7 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import "../../src/styles.css";
 import profile from "../assets/images/profile/profile.jpg";
 
-import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE, UPDATE_PROFPIC } from '../utils/mutations';
+import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE, UPDATE_PROFPIC, UPDATE_ME } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 
@@ -29,13 +29,13 @@ const Profile = () => {
   const [showXbox, setXbox] = useState(false);
   const [showPlaystation, setPlaystation] = useState(false);
   const [refresh, useRefresh] = useState(false);
+  const [allowEdit, setAllowEdit] = useState(false);
   const [userText, setUserText] = useState({
     username: "",
     descText: "",
     fromTime: "",
     toTime: "",
     platformText: "",
-    allowEdit: false,
     friends: [],
     games: [],
     discord: "",
@@ -48,15 +48,14 @@ const Profile = () => {
   
 
   useEffect(() => {
+    console.log("useEffect firing");
     if(!loading){
-      console.log("After loading userText");
       setUserText({
         username: user?.username,
         descText: user?.description || "",
         fromTime: user?.fromTime || "",
         toTime: user?.toTime || "",
         platformText: user?.platform || "",
-        allowEdit: userText.allowEdit,
         friends: user?.friends || [],
         games: user?.games || [],
         discord: user?.discord || "",
@@ -83,6 +82,7 @@ const Profile = () => {
   const [updateXbox] = useMutation(UPDATE_XBOX);
   const [updateSteam] = useMutation(UPDATE_STEAM);
   const [updatePlaystation] = useMutation(UPDATE_PLAYSTATION);
+  const [updateMe] = useMutation(UPDATE_ME);
   const [uploadFile] = useMutation(UPLOAD_FILE, {
     onCompleted: data => {
       console.log("Upload finished");
@@ -214,6 +214,26 @@ const Profile = () => {
     }
   }
 
+  const handleMeChange = async(description, platform, fromTime, toTime, discord, xboxName, steamName, playstationName) => {
+    try{
+      const { data } = await updateMe({
+        variables: {
+          description: description,
+          platform: platform,
+          steamName: steamName,
+          fromTime: fromTime,
+          toTime: toTime,
+          discord: discord,
+          xboxName: xboxName,
+          playstationName: playstationName
+        }
+      })
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
   const handleFileUpload = async (file) => {
     try{
       const toDelete = user.profPic;
@@ -232,7 +252,6 @@ const Profile = () => {
         fromTime: userText.fromTime,
         toTime: userText.toTime,
         platformText: userText.platformText,
-        allowEdit: userText.allowEdit,
         friends: userText.friends,
         games: userText.games,
         discord: userText.discord,
@@ -255,30 +274,27 @@ const Profile = () => {
   
 
   const handleProfileEdit = async (event) => {
-    console.log(userText.discord);
     event.preventDefault();
-    handleDescChange(event.target.descInput.value.trim());
-    console.log(event.target.toTime.value);
-    console.log(event.target.fromTime.value);
+    // handleDescChange(event.target.descInput.value.trim());
     const pcString = event.target.pcInput.checked ? "PC " : "";
     const playstationString = event.target.playstationCheck.checked ? "Playstation " : "";
     const xboxString = event.target.xboxCheck.checked ? "Xbox " : "";
     const switchString = event.target.switchInput.checked ? "Switch " : "";
     const mobileString = event.target.mobileInput.checked ? "Mobile" : "";
     const platforms = pcString + playstationString + xboxString + switchString + mobileString
-    handlePlatformChange(platforms);
-    handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
-    handleDiscordChange(event.target.discordInput.value.trim());
-    handleXboxChange(event.target.xboxInput.value.trim());
-    handleSteamChange(event.target.steamInput.value.trim());
-    handlePlaystationChange(event.target.playstationInput.value.trim());
+    // handlePlatformChange(platforms);
+    // handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
+    // handleDiscordChange(event.target.discordInput.value.trim());
+    // handleXboxChange(event.target.xboxInput.value.trim());
+    // handleSteamChange(event.target.steamInput.value.trim());
+    // handlePlaystationChange(event.target.playstationInput.value.trim());
+    handleMeChange(event.target.descInput.value.trim(), platforms, event.target.fromTime.value, event.target.toTime.value, event.target.discordInput.value.trim(), event.target.xboxInput.value.trim(), event.target.steamInput.value.trim(), event.target.playstationInput.value.trim());
     setUserText({
       username: userText.username,
       descText: event.target.descInput.value.trim(),
       fromTime: event.target.fromTime.value,
       toTime: event.target.toTime.value,
       platformText: platforms,
-      allowEdit: false,
       friends: userText.friends,
       games: userText.games,
       discord: event.target.discordInput.value.trim(),
@@ -287,6 +303,7 @@ const Profile = () => {
       playstation: event.target.playstationInput.value.trim(),
       profPic: userText.profPic
     });
+    setAllowEdit(false);
   }
 
   const myProfile = userParam === undefined;
@@ -321,8 +338,8 @@ const Profile = () => {
   }
 
   function ProfilePicture(){
-    console.log(userText.profPic);
-    if(user.profPic === undefined || user.profPic === null){
+    console.log("userText.profPic: " + userText.profPic);
+    if(userText.profPic === undefined || userText.profPic === null){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`/file/${userText.profPic}`} alt=""></img>
@@ -341,7 +358,6 @@ const Profile = () => {
   }
 
   function NameChanges(props){
-    console.log(props.showXbox);
     const xboxVis = props.showXbox ? "visible" : "hidden";
     const steamVis = props.showSteam ? "visible" : "hidden";
     const playstationVis = props.showPlaystation ? "visible" : "hidden";
@@ -375,9 +391,13 @@ const Profile = () => {
       setPlaystation(playstationChecked);
     
   }, [pcChecked, xboxChecked, playstationChecked]);
-    if(userText.allowEdit){
+    if(allowEdit){
       return(
         <form className="ml-2" onSubmit={handleProfileEdit}>
+          <label class="custom-file-upload">
+            <input type="file" onChange={handleUpload}></input>
+            Upload Profile Picture
+          </label>
           <p htmlFor="Description"><b>Edit Description</b></p>
           <input className="description-input" name="Description" type="text" id="descInput" defaultValue={userText.descText}/>
           <p className="mt-2"><b>My Platforms</b></p>
@@ -427,23 +447,10 @@ const Profile = () => {
     }
   }
 
-  function ShowEditBtn(props){
-    if(myProfile && !userText.allowEdit){
+  function ShowEditBtn(){
+    if(myProfile && !allowEdit){
       return(
-        <button className="custom-btn ml-2" onClick={() => setUserText({
-          username: userText.username,
-          descText: userText.descText,
-          fromTime: userText.fromTime,
-          toTime: userText.toTime,
-          platformText: userText.platformText,
-          allowEdit: true,
-          friends: userText.friends,
-          games: userText.games,
-          discord: userText.discord,
-          steam: userText.steam,
-          xbox: userText.xbox,
-          playstation: userText.playstation
-        })}
+        <button className="custom-btn ml-2" onClick={() => setAllowEdit(true)}
         >Edit Profile</button>
       )
     }  
@@ -519,7 +526,6 @@ const Profile = () => {
         <div className="col col-md-9" id="main">
           <div className="row">
             <ProfilePicture/>
-            <input type="file" onChange={handleUpload}></input>
             <div className="col-md-12 col-lg-6">
               <h2 className="mb-3 mt-4 d-flex justify-content-start">
               <svg id="online-icon" className="mr-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#2aeb3d" class="bi bi-circle-fill" viewBox="0 0 16 16">

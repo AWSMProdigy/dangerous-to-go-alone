@@ -170,4 +170,19 @@ mutation closeLfg($gameTitle:String!, $_id: String!){
 }
 `
 
+export const UPDATE_ME = gql`
+  mutation updateMe($description: String!, $platform: String!, $fromTime: String!, $toTime: String!, $discord: String!, $xboxName: String!, $steamName: String!, $playstationName: String!) {
+    updateMe(description: $description, platform: $platform, fromTime: $fromTime, toTime: $toTime, discord: $discord, xboxName: $xboxName, steamName: $steamName, playstationName: $playstationName) {
+      description
+      platform
+      fromTime
+      toTime
+      discord
+      xboxName
+      steamName
+      playstationName
+    }
+  }
+`;
+
 

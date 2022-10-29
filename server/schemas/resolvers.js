@@ -306,7 +306,25 @@ const resolvers = {
         return myGame;
       //}
       //throw new AuthenticationError('You need to be logged in!');
-    }
+    },
+    updateMe: async (parent, { description, platform, fromTime, toTime, discord, xboxName, steamName, playstationName }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { description: description,
+                    platform: platform,
+                    fromTime: fromTime,
+                    toTime: toTime,
+                    discord: discord,
+                    xboxName: xboxName,
+                    steamName: steamName,
+                    playstationName: playstationName
+           } }
+        );
+        return User.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
 }
 
