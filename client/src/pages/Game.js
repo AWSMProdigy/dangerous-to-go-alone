@@ -217,7 +217,6 @@ const Game = () => {
             </Link>
             <p className='player-entry'>{state.playerArray[player].fromTime}-{state.playerArray[player].toTime}</p>
             <p className='player-entry'>{state.playerArray[player].platform}</p>
-            <p className='player-entry'>Casual</p>
           </div>
         ))
       )
