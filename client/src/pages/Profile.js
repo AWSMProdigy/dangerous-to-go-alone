@@ -543,7 +543,15 @@ const Profile = () => {
           
         </div>
     </div>
-  </div>
+    <div className="row py-3">
+      {userText.games.map((game, index) => (
+        <Link className="profile-sidebar-link" to={`/game/${game}`}>
+          <p key={index} className="mt-1">{game}</p>
+        </Link>
+      ))}
+    </div>
+
+    </div>
   );
 };
 
