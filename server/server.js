@@ -48,10 +48,22 @@ server.applyMiddleware({ app,
 
 app.use(express.static('public'));
 
-app.get("/file/:filename", function(req, res){ 
-  const bucket = new mongodb.GridFSBucket(db.db, {bucketName: "images"})
-  bucket.openDownloadStreamByName(req.params.filename)
-            .pipe(res)
+app.get("/profileImage/:filename", function(req, res){ 
+  const bucket = new mongodb.GridFSBucket(db.db, {bucketName: "profImages"})
+  const readStream = bucket.openDownloadStreamByName(req.params.filename);
+  readStream.pipe(res);
+  readStream.on('error', () => {
+    console.log('error');
+  });
+});
+
+app.get("/gameImage/:filename", function(req, res){ 
+  const bucket = new mongodb.GridFSBucket(db.db, {bucketName: "gameImages"})
+  const readStream = bucket.openDownloadStreamByName(req.params.filename);
+  readStream.pipe(res);
+  readStream.on('error', () => {
+    console.log('error');
+  });
 });
 
 app.use((req, res, next) => {

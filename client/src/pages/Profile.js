@@ -342,7 +342,7 @@ const Profile = () => {
     if(userText.profPic === undefined || userText.profPic === null){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
-      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`/file/${userText.profPic}`} alt=""></img>
+      return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`/profileImage/${userText.profPic}`} alt=""></img>
     }
     
   }
