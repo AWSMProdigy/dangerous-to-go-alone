@@ -231,7 +231,7 @@ const Game = () => {
             <label>Title of LFG:</label>
             <label>Capacity of LFG:</label>
           </div>
-          <div>
+          <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
             <input className="lfgInput" name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>  
             <input className="lfgInput" name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
           </div>          

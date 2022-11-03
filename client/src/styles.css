@@ -325,8 +325,9 @@ form > .btn:hover {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
     text-align: center;
+
 }
 
 .player-entry {
