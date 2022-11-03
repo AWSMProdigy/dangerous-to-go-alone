@@ -30,6 +30,7 @@ const typeDefs = gql`
     title: String!
     capacity: Int!
     players: [String]
+    playstyle: String
   }
 
   type Game {
@@ -94,7 +95,7 @@ const typeDefs = gql`
     addLfg(gameTitle: String!, title: String!, capacity: Int!, creator: String!): Game
     updateLfg(gameTitle: String! ,_id: String!, add: Boolean!, player: String!, capacity: String!): Game
     closeLfg(gameTitle: String!, _id: String!): Game
-    updateMe(description: String!, platform: String!, fromTime: String!, toTime: String!, discord: String!, xboxName: String!, steamName: String!, playstationName: String!): User
+    updateMe(description: String!, platform: String!, fromTime: String!, toTime: String!, discord: String!, xboxName: String!, steamName: String!, playstationName: String!, playstyle: String!): User
   }
 `;
 

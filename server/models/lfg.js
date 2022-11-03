@@ -15,6 +15,10 @@ const lfgSchema = new Schema({
   ],
   capacity: {
     type: String
+  },
+  playstyle: {
+    type: String,
+    default: "Casual"
   }
 });
 
