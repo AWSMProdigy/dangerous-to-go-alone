@@ -21,6 +21,7 @@ const typeDefs = gql`
     playstationName: String
     profPic: String
     canLfg: Boolean
+    playstyle: String
   }
   type lfg {
     _id: ID!

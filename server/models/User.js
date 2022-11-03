@@ -62,6 +62,10 @@ const userSchema = new Schema({
   canLfg: {
     type: Boolean,
     default: true
+  },
+  playstyle: {
+    type: String,
+    default: "Casual"
   }
 
   // blockedUsers: [

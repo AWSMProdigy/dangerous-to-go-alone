@@ -226,10 +226,18 @@ const Game = () => {
       return(
         <>
         {(Auth.loggedIn() && data.me.canLfg) ? (
-        <form onSubmit={handleCreateLFG}>
-          <input name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>
-          <input name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
-          <button type='submit'></button>
+        <form className="lfgForm" onSubmit={handleCreateLFG}>
+          <div>
+            <div>
+              <label>Title of LFG:</label>
+              <label>Capacity of LFG:</label>
+            </div>
+            <div>
+              <input className="lfgInput" name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>  
+              <input className="lfgInput" name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
+            </div>          
+          </div>
+          <button style={{width: "50%", border: "2px solid red"}}type='submit'>Create LFG</button>
         </form>
         ) : (
           <></>
@@ -320,10 +328,15 @@ const Game = () => {
                 <option value="PS4">PS4</option>
                 <option value="PS5">PS5</option>
               </select>
-              <p className='player-entry'>Playstyle</p>
+              <select className='player-entry' name="plats" defaultValue="Any Platform" onChange={handlePlatform}>
+                <option value="Casual">Casual</option>
+                <option value="Serious">Serious</option>    
+              </select>
             </div>
-            <button onClick={() => setTab("players")}>Players</button>
-            <button onClick={() => setTab("lfg")}>LFG</button>
+            <div className="gameTabs">
+              <button className={tab === "players" ? "selected" : "notSelected"} onClick={() => setTab("players")}>Players</button>
+              <button className={tab === "players" ? "notSelected" : "selected"} onClick={() => setTab("lfg")}>LFG</button>
+            </div>
             <hr></hr>
             <Tabs></Tabs>
             

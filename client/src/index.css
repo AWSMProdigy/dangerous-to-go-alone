@@ -1339,6 +1339,36 @@ input[type="file"] {
   display: none;
 }
 
+.lfgInput{
+  border: 1px solid red;
+}
+
+.tabButtons{
+  border: 2px solid red;
+}
+
+.lfgForm{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  background-image: linear-gradient(to bottom right, red, black);
+  margin: 10px;
+}
+
+.gameTabs{
+  margin: 5px;
+}
+
+.gameTabs button{
+  width: 50%;
+  border: 2px solid red;
+}
+
+.selected{
+  color: red;
+  background-color: black;
+}
+
 /* col-sm */
 @media screen and (min-width: 640px) {
   .col-sm-auto {
