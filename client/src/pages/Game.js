@@ -228,15 +228,13 @@ const Game = () => {
         {(Auth.loggedIn() && data.me.canLfg) ? (
         <form className="lfgForm" onSubmit={handleCreateLFG}>
           <div>
-            <div>
-              <label>Title of LFG:</label>
-              <label>Capacity of LFG:</label>
-            </div>
-            <div>
-              <input className="lfgInput" name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>  
-              <input className="lfgInput" name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
-            </div>          
+            <label>Title of LFG:</label>
+            <label>Capacity of LFG:</label>
           </div>
+          <div>
+            <input className="lfgInput" name="lfgTitle" type="text" id="lfgTitle" default="Title for your LFG..."></input>  
+            <input className="lfgInput" name="lfgCapacity" type="text" id="lfgCapacity" default="Capacity for your LFG..."></input>
+          </div>          
           <button style={{width: "50%", border: "2px solid red"}}type='submit'>Create LFG</button>
         </form>
         ) : (
