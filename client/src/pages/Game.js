@@ -44,7 +44,7 @@ const Game = () => {
     if(!loading){
       console.log("initial load");
       setState({
-        playerArray: data.game.game.players,
+        playerArray: data.game.players,
         to: state.to,
         from: state.from,
         platform: state.platform
@@ -66,6 +66,7 @@ const Game = () => {
         platform: state.platform,
         playstyle: state.playstyle
       })
+      console.log(state);
     }
     else{
       setState({
@@ -183,6 +184,7 @@ const Game = () => {
   }
 
   function SelectTime(){
+    console.log(state);
     return (
       <>
       <p>Availability</p>
