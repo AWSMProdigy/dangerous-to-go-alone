@@ -29,13 +29,10 @@ const Game = () => {
     playerArray: [],
     to: "any",
     from: "any",
-    platform: "Any"
+    platform: "Any",
+    playstyle: "Any"
   })
-  const [tab, setTab] = useState();
-
-  let to;
-  let from;
-  let platform;
+  const [tab, setTab] = useState("players");
 
   const { loading, data } = useQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
     variables: { 
@@ -52,9 +49,8 @@ const Game = () => {
         from: state.from,
         platform: state.platform
       });
-    setTab("lfg");
-    setLfg(data.game.game.lfgList);
-    console.log(data);
+      setLfg(data.game.game.lfgList);
+      console.log(data);
     }
     else{
       return (<div>Loading...</div>)
@@ -63,32 +59,67 @@ const Game = () => {
 
   function handleTo(e){
     if(e.target.value === "any"){
-      to = e.target.value;
+      setState({
+        playerArray: state.playerArray,
+        to: e.target.value,
+        from: state.from,
+        platform: state.platform,
+        playstyle: state.playstyle
+      })
     }
     else{
-      to=parseInt(e.target.value);
+      setState({
+        playerArray: state.playerArray,
+        to: parseInt(e.target.value),
+        from: state.from,
+        platform: state.platform,
+        playstyle: state.playstyle
+      })
     }
-    from=state.from;
-    platform = state.platform;
     filterPlayers();
   }
 
   function handleFrom(e){
     if(e.target.value === "any"){
-      from = e.target.value;
+      setState({
+        playerArray: state.playerArray,
+        to: state.to,
+        from: e.target.value,
+        platform: state.platform,
+        playstyle: state.playstyle
+      })
     }
     else{
-      from=parseInt(e.target.value);
+      setState({
+        playerArray: state.playerArray,
+        to: state.to,
+        from: parseInt(e.target.value),
+        platform: state.platform,
+        playstyle: state.playstyle
+      })
     }
-    to=state.to;
-    platform = state.platform;
     filterPlayers();
   }
 
   function handlePlatform(e){
-    platform = e.target.value;
-    to=state.to;
-    from = state.from;
+    setState({
+      playerArray: state.playerArray,
+      to: state.to,
+      from: state.from,
+      platform: e.target.value,
+      playstyle: state.playstyle
+    })
+    filterPlayers();
+  }
+
+  function handlePlaystyle(e){
+    setState({
+      playerArray: state.playerArray,
+      to: state.to,
+      from: state.from,
+      platform: state.platform,
+      playstyle: e.target.value
+    })
     filterPlayers();
   }
 
@@ -168,13 +199,19 @@ const Game = () => {
   }
 
   function filterPlayers(){
+    console.log(state);
     let newPlayerArray = data.game.players;
-    if(platform !== "Any"){
-      newPlayerArray = data.game.players.filter(player => {
-        return player.platform != null && player.platform.includes(platform);
+    if(state.playstyle!="Any"){
+      newPlayerArray = newPlayerArray.filter(player =>{
+        return player.playstyle === state.playstyle;
       })
     }
-    if(from !== "any" || to !== "any")
+    if(state.platform !== "Any"){
+      newPlayerArray = data.game.players.filter(player => {
+        return player.platform != null && player.platform.includes(state.platform);
+      })
+    }
+    if(state.from !== "any" || state.to !== "any")
       newPlayerArray = newPlayerArray.filter(player => {
         console.log(!player.fromTime || !player.toTime);
         if(!player.fromTime || !player.toTime){
@@ -188,22 +225,19 @@ const Game = () => {
         if(player.toTime.split(" ")[1] == "PM"){
           end += 12;
         }
-        if(to === "any"){
-          console.log("hello")
-          return from >= start && from < end;
+        if(state.to === "any"){
+          return state.from >= start && state.from < end;
         }
-        if(from === "any"){
-          return to > start && to <= end;
+        if(state.from === "any"){
+          return state.to > start && state.to <= end;
         }
-        console.log(((start >= from && start < to) && end >= to));
-        return (start <= from && (end <= to && end > from)) || (start >= from && end <= to) || ((start >= from && start < to) && end >= to);
+        return (start <= state.from && (end <= state.to && end > state.from)) || (start >= state.from && end <= state.to) || ((start >= state.from && start < state.to) && end >= state.to);
       })
-    console.log(from, to);
     setState({
       playerArray: newPlayerArray,
-      from: from,
-      to: to,
-      platform: platform
+      from: state.from,
+      to: state.to,
+      platform: state.platform
     });
   }
 
@@ -222,7 +256,6 @@ const Game = () => {
       )
     }
     else{
-      console.log(lfgArray);
       return(
         <>
         {(Auth.loggedIn() && data.me.canLfg) ? (
@@ -326,7 +359,8 @@ const Game = () => {
                 <option value="PS4">PS4</option>
                 <option value="PS5">PS5</option>
               </select>
-              <select className='player-entry' name="plats" defaultValue="Any Platform" onChange={handlePlatform}>
+              <select className='player-entry' name="playstyle" defaultValue="Any" onChange={handlePlaystyle}>
+                <option value="Any">Any</option>
                 <option value="Casual">Casual</option>
                 <option value="Serious">Serious</option>    
               </select>
