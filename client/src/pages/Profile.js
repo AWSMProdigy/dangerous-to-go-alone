@@ -43,12 +43,12 @@ const Profile = () => {
     xbox: "",
     playstation: "",
     profPic: "",
+    playstyle: ""
   })
 
   
 
   useEffect(() => {
-    console.log("useEffect firing");
     if(!loading){
       setUserText({
         username: user?.username,
@@ -63,7 +63,9 @@ const Profile = () => {
         xbox: user?.xboxName || "",
         playstation: user?.playstationName || "",
         profPic: user?.profPic || "",
+        playstyle: user?.playstyle || ""
       })
+      console.log(userText);
     }
     else{
       return (<h1>loading</h1>)
@@ -214,7 +216,7 @@ const Profile = () => {
     }
   }
 
-  const handleMeChange = async(description, platform, fromTime, toTime, discord, xboxName, steamName, playstationName) => {
+  const handleMeChange = async(description, platform, fromTime, toTime, discord, xboxName, steamName, playstationName, playstyle) => {
     try{
       const { data } = await updateMe({
         variables: {
@@ -225,7 +227,8 @@ const Profile = () => {
           toTime: toTime,
           discord: discord,
           xboxName: xboxName,
-          playstationName: playstationName
+          playstationName: playstationName,
+          playstyle: playstyle
         }
       })
     }
@@ -258,7 +261,8 @@ const Profile = () => {
         steam: userText.steam,
         xbox: userText.xbox,
         playstation: userText.playstation,
-        profPic: file.name
+        profPic: file.name,
+        playstyle: userText.playstyle
       });
     }
     catch(err){
@@ -282,13 +286,14 @@ const Profile = () => {
     const switchString = event.target.switchInput.checked ? "Switch " : "";
     const mobileString = event.target.mobileInput.checked ? "Mobile" : "";
     const platforms = pcString + playstationString + xboxString + switchString + mobileString
+    const playstyle = event.target.Playstyle.value;
     // handlePlatformChange(platforms);
     // handleAvailabilityChange(event.target.fromTime.value, event.target.toTime.value);
     // handleDiscordChange(event.target.discordInput.value.trim());
     // handleXboxChange(event.target.xboxInput.value.trim());
     // handleSteamChange(event.target.steamInput.value.trim());
     // handlePlaystationChange(event.target.playstationInput.value.trim());
-    handleMeChange(event.target.descInput.value.trim(), platforms, event.target.fromTime.value, event.target.toTime.value, event.target.discordInput.value.trim(), event.target.xboxInput.value.trim(), event.target.steamInput.value.trim(), event.target.playstationInput.value.trim());
+    handleMeChange(event.target.descInput.value.trim(), platforms, event.target.fromTime.value, event.target.toTime.value, event.target.discordInput.value.trim(), event.target.xboxInput.value.trim(), event.target.steamInput.value.trim(), event.target.playstationInput.value.trim(), playstyle);
     setUserText({
       username: userText.username,
       descText: event.target.descInput.value.trim(),
@@ -301,7 +306,8 @@ const Profile = () => {
       steam: event.target.steamInput.value.trim(),
       xbox: event.target.xboxInput.value.trim(),
       playstation: event.target.playstationInput.value.trim(),
-      profPic: userText.profPic
+      profPic: userText.profPic,
+      playstyle: playstyle
     });
     setAllowEdit(false);
   }
@@ -435,6 +441,11 @@ const Profile = () => {
           <select className="time-select" name="Availability" type="text" id="toTime" defaultValue={userText.toTime}>
             <TimeOptions/>
           </select>
+          <p className="mt-2" htmlFor="Playstyle"><b>Choose Playstyle</b></p>
+          <select className="time-select"name="Playstyle" type="text" id="Playstyle" defaultValue={userText.playstyle}>
+            <option value="Casual">Casual</option>
+            <option value="Serious">Serious</option>
+          </select>
           <br></br>
           <button className="custom-btn" type="submit" value="Submit">Save</button>
         </form>
@@ -535,6 +546,7 @@ const Profile = () => {
               <h6 className="ml-2"><b>Platforms:</b>{`${userText.platformText}`}</h6>
               <h6 className="mt-2 ml-2"><b>Availability:</b>{`${userText.fromTime}`} to {`${userText.toTime}`}</h6>
               <h6 className="mt-2 ml-2"><b>Discord:</b>{`${userText.discord}`}</h6>
+              <h6 className="mt-2 ml-2"><b>Playstyle:</b>{`${userText.playstyle}`}</h6>
               <p className="mt-2 ml-2 mt-4">{`${userText.descText}`}</p>
               <ShowEditBtn/>
             </div>

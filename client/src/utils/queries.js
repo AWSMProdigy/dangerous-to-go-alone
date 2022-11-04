@@ -17,6 +17,7 @@ export const QUERY_USER = gql`
       steamName
       playstationName
       profPic
+      playstyle
     }
   }
 `;
@@ -79,6 +80,7 @@ export const QUERY_ME = gql`
       steamName
       playstationName
       profPic
+      playstyle
     }
   }
 `;

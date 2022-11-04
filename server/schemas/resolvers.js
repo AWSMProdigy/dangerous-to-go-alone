@@ -282,7 +282,7 @@ const resolvers = {
       return { _id: uploadStream.id, filename, mimetype, encoding }
     },
 
-    addLfg: async (parent, {gameTitle, title, capacity, creator}, context) =>{
+    addLfg: async (parent, {gameTitle, title, capacity, creator, playstyle}, context) =>{
       // if (context.user && context.user.hasLfg){
         await Game.findOneAndUpdate(
           {title: gameTitle},
@@ -290,7 +290,7 @@ const resolvers = {
         )
         let myGame = await Game.findOneAndUpdate(
           {title: gameTitle},
-          { $push: {lfgList: {title: title, creator: creator, capacity: capacity}}}
+          { $push: {lfgList: {title: title, creator: creator, capacity: capacity, playstyle: playstyle}}}
         )
         User.findOneAndUpdate(
           {id: context.user._id},
