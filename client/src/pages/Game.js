@@ -32,6 +32,8 @@ const Game = () => {
     playstyle: "Any"
   })
 
+  const didMount = useRef(false);
+
   const [tab, setTab] = useState("players");
 
   const { loading, data } = useQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
@@ -42,15 +44,15 @@ const Game = () => {
 
   useEffect(() => {
     if(!loading){
-      console.log("initial load");
       setPlayers(data.game.players);
       setState({
         to: state.to,
         from: state.from,
-        platform: state.platform
+        platform: state.platform,
+        playstyle: state.playstyle
       });
       setLfg(data.game.game.lfgList);
-      console.log(data);
+      didMount.current = true;
     }
     else{
       return (<div>Loading...</div>)
@@ -58,8 +60,9 @@ const Game = () => {
   }, [loading]);
 
   useEffect(()=> {
-    console.log("filtering players");
-    filterPlayers();
+    if(didMount.current){
+      filterPlayers();
+    }
   }, [state]);
 
   function handleTo(e){
@@ -69,8 +72,7 @@ const Game = () => {
         from: state.from,
         platform: state.platform,
         playstyle: state.playstyle
-      },
-      filterPlayers());
+      });
     }
     else{
       setState({
@@ -78,8 +80,7 @@ const Game = () => {
         from: state.from,
         platform: state.platform,
         playstyle: state.playstyle
-      },
-      filterPlayers());
+      });
     }
   }
 
@@ -90,10 +91,6 @@ const Game = () => {
         from: e.target.value,
         platform: state.platform,
         playstyle: state.playstyle
-      },
-      () => {
-        console.log(this.state);
-        filterPlayers();
       })
     }
     else{
@@ -102,10 +99,6 @@ const Game = () => {
         from: parseInt(e.target.value),
         platform: state.platform,
         playstyle: state.playstyle
-      },
-      () => {
-        console.log(this.state);
-        filterPlayers();
       })
     }
   }
@@ -117,7 +110,6 @@ const Game = () => {
       platform: e.target.value,
       playstyle: state.playstyle
     })
-    filterPlayers();
   }
 
   function handlePlaystyle(e){
@@ -127,12 +119,10 @@ const Game = () => {
       platform: state.platform,
       playstyle: e.target.value
     })
-    filterPlayers();
   }
 
   const handleCreateLFG = async(e) => {
     e.preventDefault();
-    console.log(e);
     try{
       const {data} = await addLfg({
         variables: {
@@ -165,7 +155,6 @@ const Game = () => {
   }
 
   const handleCloseLFG = async(_id) => {
-    console.log(_id)
     try{
       const {data} = await closeLfg({
         variables: {
@@ -190,7 +179,6 @@ const Game = () => {
   }
 
   function SelectTime(){
-    console.log(state);
     return (
       <>
       <p>Availability</p>
@@ -207,8 +195,7 @@ const Game = () => {
   }
 
   function filterPlayers(){
-    console.log(state);
-    let newPlayerArray = playerArray;
+    let newPlayerArray = data.game.players;
     if(state.playstyle!="Any"){
       newPlayerArray = newPlayerArray.filter(player =>{
         return player.playstyle === state.playstyle;
@@ -221,7 +208,6 @@ const Game = () => {
     }
     if(state.from !== "any" || state.to !== "any")
       newPlayerArray = newPlayerArray.filter(player => {
-        console.log(!player.fromTime || !player.toTime);
         if(!player.fromTime || !player.toTime){
           return true;
         }
