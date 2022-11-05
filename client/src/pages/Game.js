@@ -26,12 +26,12 @@ const Game = () => {
   // const [from, setFrom] = useState();
   // const [to, setTo] = useState()
   const [state, setState] = useState({
-    playerArray: [],
     to: "any",
     from: "any",
     platform: "Any",
     playstyle: "Any"
   })
+
   const [tab, setTab] = useState("players");
 
   const { loading, data } = useQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
@@ -43,8 +43,8 @@ const Game = () => {
   useEffect(() => {
     if(!loading){
       console.log("initial load");
+      setPlayers(data.game.players);
       setState({
-        playerArray: data.game.players,
         to: state.to,
         from: state.from,
         platform: state.platform
@@ -57,54 +57,61 @@ const Game = () => {
     }
   }, [loading]);
 
+  useEffect(()=> {
+    console.log("filtering players");
+    filterPlayers();
+  }, [state]);
+
   function handleTo(e){
     if(e.target.value === "any"){
       setState({
-        playerArray: state.playerArray,
         to: e.target.value,
         from: state.from,
         platform: state.platform,
         playstyle: state.playstyle
-      })
-      console.log(state);
+      },
+      filterPlayers());
     }
     else{
       setState({
-        playerArray: state.playerArray,
         to: parseInt(e.target.value),
         from: state.from,
         platform: state.platform,
         playstyle: state.playstyle
-      })
+      },
+      filterPlayers());
     }
-    filterPlayers();
   }
 
   function handleFrom(e){
     if(e.target.value === "any"){
       setState({
-        playerArray: state.playerArray,
         to: state.to,
         from: e.target.value,
         platform: state.platform,
         playstyle: state.playstyle
+      },
+      () => {
+        console.log(this.state);
+        filterPlayers();
       })
     }
     else{
       setState({
-        playerArray: state.playerArray,
         to: state.to,
         from: parseInt(e.target.value),
         platform: state.platform,
         playstyle: state.playstyle
+      },
+      () => {
+        console.log(this.state);
+        filterPlayers();
       })
     }
-    filterPlayers();
   }
 
   function handlePlatform(e){
     setState({
-      playerArray: state.playerArray,
       to: state.to,
       from: state.from,
       platform: e.target.value,
@@ -115,7 +122,6 @@ const Game = () => {
 
   function handlePlaystyle(e){
     setState({
-      playerArray: state.playerArray,
       to: state.to,
       from: state.from,
       platform: state.platform,
@@ -202,7 +208,7 @@ const Game = () => {
 
   function filterPlayers(){
     console.log(state);
-    let newPlayerArray = data.game.players;
+    let newPlayerArray = playerArray;
     if(state.playstyle!="Any"){
       newPlayerArray = newPlayerArray.filter(player =>{
         return player.playstyle === state.playstyle;
@@ -235,24 +241,19 @@ const Game = () => {
         }
         return (start <= state.from && (end <= state.to && end > state.from)) || (start >= state.from && end <= state.to) || ((start >= state.from && start < state.to) && end >= state.to);
       })
-    setState({
-      playerArray: newPlayerArray,
-      from: state.from,
-      to: state.to,
-      platform: state.platform
-    });
+    setPlayers(newPlayerArray);
   }
 
   function Tabs(){
     if(tab === "players"){
       return(
-          Object.keys(state.playerArray).map((player, index) => (
+          Object.keys(playerArray).map((player, index) => (
           <div className="playerContainer">
-            <Link className="player-entry profile-sidebar-link" to={`/profiles/${state.playerArray[player].username}`}>
-              <p>{state.playerArray[player].username}</p>
+            <Link className="player-entry profile-sidebar-link" to={`/profiles/${playerArray[player].username}`}>
+              <p>{playerArray[player].username}</p>
             </Link>
-            <p className='player-entry'>{state.playerArray[player].fromTime}-{state.playerArray[player].toTime}</p>
-            <p className='player-entry'>{state.playerArray[player].platform}</p>
+            <p className='player-entry'>{playerArray[player].fromTime}-{playerArray[player].toTime}</p>
+            <p className='player-entry'>{playerArray[player].platform}</p>
           </div>
         ))
       )
