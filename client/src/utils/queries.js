@@ -131,6 +131,7 @@ export const QUERY_ME_GAME = gql`
       toTime
       username
       canLfg
+      playstyle
     }
   }
 `

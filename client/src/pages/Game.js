@@ -124,12 +124,13 @@ const Game = () => {
   const handleCreateLFG = async(e) => {
     e.preventDefault();
     try{
-      const {data} = await addLfg({
+      const {} = await addLfg({
         variables: {
           gameTitle: titleParam,
           title: e.target[0].value,
           capacity: parseInt(e.target[1].value),
-          creator: "Boutta Be Banned"
+          creator: data.me.username,
+          playstyle: "Casual"
         }
       })
     }
@@ -196,7 +197,7 @@ const Game = () => {
 
   function filterPlayers(){
     let newPlayerArray = data.game.players;
-    if(state.playstyle!="Any"){
+    if(state.playstyle!=="Any"){
       newPlayerArray = newPlayerArray.filter(player =>{
         return player.playstyle === state.playstyle;
       })
