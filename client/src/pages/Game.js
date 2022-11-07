@@ -133,7 +133,7 @@ const Game = () => {
           playstyle: "Casual"
         }
       }).then(response=> {
-        
+        setLfg(response.data.addLfg.lfgList);
       })
     }
     catch(err){
