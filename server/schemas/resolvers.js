@@ -1,4 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
+const { GraphQLError } = require('graphql');
 const { User, Game, gameAndUser } = require('../models');
 const { signToken } = require('../utils/auth');
 const {
@@ -74,19 +75,26 @@ const resolvers = {
     },
 
     addFriend: async (parent, { friendName }, context) => {
+      let me;
       if (context.user) {
         const friend = await User.findOne({
           username: friendName,
         });
         //Make sure character exists
         if(friend){
-          await User.findOneAndUpdate(
+          me = await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $addToSet: { friends: friendName } }
+            { $addToSet: { friends: friendName } },
+            {new: true}
           );
         }
+        else{
+          throw new GraphQLError("That friend does not exist", {
+            extensions: { code: '404' },
+          });
+        }
 
-        return context.user;
+        return me;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

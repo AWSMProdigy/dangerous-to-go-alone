@@ -98,14 +98,32 @@ const Profile = () => {
     event.preventDefault();
     console.log(event.target.searchInput.value);
     try {
-      const { data } = await addFriend({
+      await addFriend({
         variables: {
           friendName: event.target.searchInput.value.trim()
         }
+      }).then(response=> {
+        console.log(response);
+        setUserText({
+          username: userText.username,
+          descText: userText.descText,
+          fromTime: userText.fromTime,
+          toTime: userText.toTime,
+          platformText: userText.platformText,
+          friends: response.data.addFriend.friends,
+          games: userText.games,
+          discord: userText.discord,
+          steam: userText.steam,
+          xbox: userText.xbox,
+          playstation: userText.playstation,
+          profPic: userText.profPic,
+          playstyle: userText.playstyle
+        });
       })
     }
     catch(err){
       console.error(err);
+      alert(err);
     }
   }
 
@@ -488,7 +506,7 @@ const Profile = () => {
                   <div className="friends-search-bar">
                       {myProfile ? (
                         <form className="form-inline input-group" id="searchFriend" onSubmit={handleFriendSubmit}>
-                        <input className="form-control mr-sm-2" type="search" placeholder="Find a friend" aria-p="Search" id="searchInput"></input>
+                        <input className="form-control mr-sm-2" type="search" placeholder="Add friend" aria-p="Search" id="searchInput"></input>
                         <button className="friends-btn my-5 my-sm-0" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                               </svg>

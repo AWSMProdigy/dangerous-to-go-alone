@@ -33,6 +33,7 @@ export const ADD_FRIEND = gql`
   mutation addFriend($friendName: String!) {
     addFriend(friendName: $friendName) {
       username
+      friends
     }
   }
 `;
