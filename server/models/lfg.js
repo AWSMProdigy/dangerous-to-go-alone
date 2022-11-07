@@ -1,23 +1,33 @@
 const { Schema, model } = require('mongoose');
 
 const lfgSchema = new Schema({
-  title: {
+  creator: {
     type: String,
-    required: 'lfg needs a title',
-    minlength: 1,
-    maxlength: 280,
-    unique: true
+    required: "Creator necessary",
+    default: " "
+  },
+  date: {
+    type: Number,
+    default: Date.now
+  },
+  title:{
+    type: String,
+    required: "Title necessary",
+    default: "Title here"
   },
   players: [
     {
-      type: String
-    }
+      type: String,
+    },
   ],
   capacity: {
-    type: String
+    type: Number,
+    required: "Needs capacity",
+    default: 1
   },
-  playstyle: {
+  playstyle:{
     type: String,
+    required: "Needs playstyle",
     default: "Casual"
   }
 });

@@ -54,6 +54,11 @@ const gameSchema = new Schema({
         type: Number,
         required: "Needs capacity",
         default: 1
+      },
+      playstyle:{
+        type: String,
+        required: "Needs playstyle",
+        default: "Casual"
       }
     }
   ]

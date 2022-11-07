@@ -51,6 +51,7 @@ query game($gameTitle: String!){
         creator
         players
         capacity
+        playstyle
       }
     }
     players{
@@ -117,6 +118,7 @@ export const QUERY_ME_GAME = gql`
           creator
           players
           capacity
+          playstyle
         }
       }
       players{
