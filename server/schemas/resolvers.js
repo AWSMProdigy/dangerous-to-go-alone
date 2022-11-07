@@ -283,8 +283,7 @@ const resolvers = {
     },
 
     addLfg: async (parent, {gameTitle, title, capacity, creator, playstyle}, context) =>{
-      if (context.user && context.user.hasLfg){
-        console.log("Do we get here")
+      // if (context.user && context.user.hasLfg){
         await Game.findOneAndUpdate(
           {title: gameTitle},
           { $pull: {lfgList: {creator: creator}}}
@@ -298,8 +297,8 @@ const resolvers = {
           {$set: {canLfg: false}}
         )
         return myGame;
-      }
-      throw new AuthenticationError('You need to be logged in!');
+      //}
+      // throw new AuthenticationError('You need to be logged in!');
     },
 
     updateLfg: async (parent, {gameTitle, _id, add, player, capacity}, context) =>{

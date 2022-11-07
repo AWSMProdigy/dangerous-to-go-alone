@@ -30,7 +30,7 @@ const typeDefs = gql`
     title: String!
     capacity: Int!
     players: [String]
-    playstyle: String
+    playstyle: String!
   }
 
   type Game {

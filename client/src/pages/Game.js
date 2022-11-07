@@ -124,7 +124,7 @@ const Game = () => {
   const handleCreateLFG = async(e) => {
     e.preventDefault();
     try{
-      const {} = await addLfg({
+      await addLfg({
         variables: {
           gameTitle: titleParam,
           title: e.target[0].value,
@@ -132,6 +132,8 @@ const Game = () => {
           creator: data.me.username,
           playstyle: "Casual"
         }
+      }).then(response=> {
+        console.log(response);
       })
     }
     catch(err){
