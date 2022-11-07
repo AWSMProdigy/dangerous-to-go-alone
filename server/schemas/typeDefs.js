@@ -23,6 +23,7 @@ const typeDefs = gql`
     canLfg: Boolean
     playstyle: String
   }
+
   type lfg {
     _id: ID!
     creator: String!

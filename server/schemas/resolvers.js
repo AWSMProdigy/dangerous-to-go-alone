@@ -290,12 +290,13 @@ const resolvers = {
         )
         let myGame = await Game.findOneAndUpdate(
           {title: gameTitle},
-          { $push: {lfgList: {title: title, creator: creator, capacity: capacity, playstyle: playstyle}}}
+          { $push: {lfgList: {title: title, creator: creator, capacity: capacity, playstyle: playstyle}}},
+          {new: true}
         )
-        User.findOneAndUpdate(
-          {id: context.user._id},
-          {$set: {canLfg: false}}
-        )
+        // User.findOneAndUpdate(
+        //   {id: context.user._id},
+        //   {$set: {canLfg: false}}
+        // )
         return myGame;
       //}
       // throw new AuthenticationError('You need to be logged in!');

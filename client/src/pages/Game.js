@@ -133,7 +133,7 @@ const Game = () => {
           playstyle: "Casual"
         }
       }).then(response=> {
-        console.log(response);
+        
       })
     }
     catch(err){

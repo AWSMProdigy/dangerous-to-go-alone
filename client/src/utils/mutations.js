@@ -139,13 +139,11 @@ export const UPLOAD_FILE = gql`
 export const ADD_LFG = gql`
 mutation addLfg($gameTitle: String!,$title: String!, $capacity:Int!, $creator: String!, $playstyle: String!){
   addLfg(gameTitle: $gameTitle, title: $title, capacity: $capacity, creator: $creator, playstyle: $playstyle){
-    lfgList{
-      title
-      capacity
-      players
-      creator
-      playstyle
-    }
+    title
+    capacity
+    players
+    creator
+    playstyle
   }
 }
 `;
