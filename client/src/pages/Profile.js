@@ -1,12 +1,11 @@
 import React, { useState, useEffect }  from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import "../../src/styles.css";
 import profile from "../assets/images/profile/profile.jpg";
 
 import { ADD_FRIEND, REMOVE_FRIEND, ADD_GAME, REMOVE_GAME, UPDATE_GAMES, UPDATE_AVAILABILITY, UPDATE_PLATFORM, UPDATE_DESC, UPDATE_DISCORD, UPDATE_XBOX, UPDATE_STEAM, UPDATE_PLAYSTATION, UPLOAD_FILE, UPDATE_PROFPIC, UPDATE_ME } from '../utils/mutations';
-import { useMutation } from '@apollo/client';
 
 
 
@@ -16,14 +15,10 @@ import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { username: userParam } = useParams();
-  
-
-  
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  const[search, { loading, data }] = useLazyQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
-  });
-
-  const user = data?.me || data?.user || {};
+    fetchPolicy: "network-only"
+  })
 
   const [showSteam, setSteam] = useState(false);
   const [showXbox, setXbox] = useState(false);
@@ -46,31 +41,10 @@ const Profile = () => {
     playstyle: ""
   })
 
-  
 
   useEffect(() => {
-    if(!loading){
-      setUserText({
-        username: user?.username,
-        descText: user?.description || "",
-        fromTime: user?.fromTime || "",
-        toTime: user?.toTime || "",
-        platformText: user?.platform || "",
-        friends: user?.friends || [],
-        games: user?.games || [],
-        discord: user?.discord || "",
-        steam: user?.steamName || "",
-        xbox: user?.xboxName || "",
-        playstation: user?.playstationName || "",
-        profPic: user?.profPic || "",
-        playstyle: user?.playstyle || ""
-      })
-      console.log(userText);
-    }
-    else{
-      return (<h1>loading</h1>)
-    }
-  }, [loading]);
+    retrieveInfo();
+  }, []);
   
   const [addFriend] = useMutation(ADD_FRIEND);
   const [removeFriend] = useMutation(REMOVE_FRIEND);
@@ -92,7 +66,27 @@ const Profile = () => {
   });
 
 
-
+  const retrieveInfo = async() => {
+    search().then(response=> {
+      console.log(response);
+      const user = response.data?.me || response.data?.user || {};
+      setUserText({
+        username: user?.username,
+        descText: user?.description || "",
+        fromTime: user?.fromTime || "",
+        toTime: user?.toTime || "",
+        platformText: user?.platform || "",
+        friends: user?.friends || [],
+        games: user?.games || [],
+        discord: user?.discord || "",
+        steam: user?.steamName || "",
+        xbox: user?.xboxName || "",
+        playstation: user?.playstationName || "",
+        profPic: user?.profPic || "",
+        playstyle: user?.playstyle || ""
+      });
+    })
+  }
   
   const handleFriendSubmit = async (event) => {
     event.preventDefault();
@@ -103,7 +97,6 @@ const Profile = () => {
           friendName: event.target.searchInput.value.trim()
         }
       }).then(response=> {
-        console.log(response);
         setUserText({
           username: userText.username,
           descText: userText.descText,
@@ -134,7 +127,6 @@ const Profile = () => {
           friendName: friend
         }
       }).then(response=> {
-        console.log(response);
         setUserText({
           username: userText.username,
           descText: userText.descText,
@@ -273,7 +265,7 @@ const Profile = () => {
 
   const handleFileUpload = async (file) => {
     try{
-      const toDelete = user.profPic;
+      const toDelete = userText.profPic;
       if(!file){
         return;
       }
@@ -378,7 +370,6 @@ const Profile = () => {
   }
 
   function ProfilePicture(){
-    console.log("userText.profPic: " + userText.profPic);
     if(userText.profPic === undefined || userText.profPic === null || userText.profPic === ""){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{

@@ -37,6 +37,7 @@ const resolvers = {
       return {game: myGame, players: await User.find({ username: {"$in": myGame.players}})}
     },
     me: async (parent, args, context) => {
+      console.log("Grabbing me");
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
