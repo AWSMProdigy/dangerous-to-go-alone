@@ -32,7 +32,6 @@ export const CREATE_GAME = gql`
 export const ADD_FRIEND = gql`
   mutation addFriend($friendName: String!) {
     addFriend(friendName: $friendName) {
-      username
       friends
     }
   }
@@ -41,7 +40,7 @@ export const ADD_FRIEND = gql`
 export const REMOVE_FRIEND = gql`
   mutation removeFriend($friendName: String!) {
     removeFriend(friendName: $friendName) {
-      username
+      friends
     }
   }
 `;

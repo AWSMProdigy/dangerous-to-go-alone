@@ -119,13 +119,27 @@ const resolvers = {
     }
     },
 
-    removeFriend: async (parent, { userName }, context) => {
+    removeFriend: async (parent, { friendName }, context) => {
+      let me;
       if (context.user) {
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { friends: userName } }
-        );
-        return User.findOne({ _id: context.user._id });
+        const friend = await User.findOne({
+          username: friendName,
+        });
+        //Make sure character exists
+        if(friend){
+          me = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $pull: { friends: friendName } },
+            {new: true}
+          );
+        }
+        else{
+          throw new GraphQLError("That friend does not exist", {
+            extensions: { code: '404' },
+          });
+        }
+
+        return me;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

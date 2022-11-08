@@ -127,13 +127,29 @@ const Profile = () => {
     }
   }
 
-  const handleFriendDelete = async (event) => {
-    event.preventDefault();
+  const handleFriendDelete = async (friend) => {
     try {
-      const { data } = await removeFriend({
+      await removeFriend({
         variables: {
-          friendName: event.target.searchInput.value.trim()
+          friendName: friend
         }
+      }).then(response=> {
+        console.log(response);
+        setUserText({
+          username: userText.username,
+          descText: userText.descText,
+          fromTime: userText.fromTime,
+          toTime: userText.toTime,
+          platformText: userText.platformText,
+          friends: response.data.removeFriend.friends,
+          games: userText.games,
+          discord: userText.discord,
+          steam: userText.steam,
+          xbox: userText.xbox,
+          playstation: userText.playstation,
+          profPic: userText.profPic,
+          playstyle: userText.playstyle
+        });
       })
     }
     catch(err){
@@ -528,9 +544,12 @@ const Profile = () => {
                       {/* <h4 className="mt-2"><b>Groups</b> <span className="red-text">3</span></h4> */}
                       <h4 className="mt-2"><b>Friends</b> <span className="red-text">{userText.friends.length}</span></h4>
                       {userText.friends.map((friend, index) => ( 
-                        <Link className="profile-sidebar-link" to={`/profiles/${friend}`}>
-                          <p key={index} className="mt-1">{friend}</p>
-                        </Link>
+                        <>
+                          <Link className="profile-sidebar-link" to={`/profiles/${friend}`}>
+                            <p key={index} className="mt-1">{friend}</p>
+                          </Link>
+                          <button onClick={() => {handleFriendDelete(friend)}}>Remove Friend</button>
+                        </>
                       ))}
                       {myProfile ? (
                         <>
