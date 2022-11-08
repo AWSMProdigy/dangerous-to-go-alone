@@ -379,7 +379,7 @@ const Profile = () => {
 
   function ProfilePicture(){
     console.log("userText.profPic: " + userText.profPic);
-    if(userText.profPic === undefined || userText.profPic === null){
+    if(userText.profPic === undefined || userText.profPic === null || userText.profPic === ""){
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={profile} alt=""></img>
     }else{
       return <img id="profile-img" className="img-fluid col-lg-6 col-md-12 col-sm-10" src={`/profileImage/${userText.profPic}`} alt=""></img>
@@ -548,7 +548,12 @@ const Profile = () => {
                           <Link className="profile-sidebar-link" to={`/profiles/${friend}`}>
                             <p key={index} className="mt-1">{friend}</p>
                           </Link>
-                          <button onClick={() => {handleFriendDelete(friend)}}>Remove Friend</button>
+                          {myProfile ? (
+                            <button onClick={() => {handleFriendDelete(friend)}}>Remove Friend</button>
+                          ) : (
+                          <></>
+                          )
+                       }      
                         </>
                       ))}
                       {myProfile ? (

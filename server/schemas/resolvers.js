@@ -134,7 +134,7 @@ const resolvers = {
           );
         }
         else{
-          throw new GraphQLError("That friend does not exist", {
+          throw new GraphQLError("That user does not exist", {
             extensions: { code: '404' },
           });
         }
