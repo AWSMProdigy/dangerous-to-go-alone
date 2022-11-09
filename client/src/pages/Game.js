@@ -47,7 +47,7 @@ const Game = () => {
 
   useEffect(() => {
     retrieveInfo();
-  }, [lfgArray]);
+  }, []);
 
   useEffect(()=> {
     if(didMount.current){
@@ -56,22 +56,20 @@ const Game = () => {
   }, [state]);
 
   const retrieveInfo = async() => {
-    console.log("retrieve info")
     search().then(response => {
+      console.log("Response: ");
       console.log(response);
-      setPlayers(response.data.game.players);
-      setState({
-        to: state.to,
-        from: state.from,
-        platform: state.platform,
-        playstyle: state.playstyle
-      });
-      setData({
-        me: response.data.me,
-        game: response.data.game
-      })
-      setLfg(response.data.game.game.lfgList);
-      console.log("end retrieve")
+      if(response){
+        setPlayers(response.data.game.players);
+        setData({
+          me: response.data.me,
+          game: response.data.game
+        })
+        setLfg(response.data.game.game.lfgList, () => {
+          console.log("LfgArray: ");
+          console.log(lfgArray);
+        })
+      }
     })
   }
 
@@ -143,7 +141,7 @@ const Game = () => {
           playstyle: "Casual"
         }
       }).then(response=> {
-        setLfg(response.data.addLfg.lfgList);
+        retrieveInfo()
       })
     }
     catch(err){
@@ -161,6 +159,7 @@ const Game = () => {
           player: username
         }
       }).then(response=> {
+        console.log(response);
         setLfg(response.data.updateLfg.lfgList);
       })
     }
@@ -176,6 +175,8 @@ const Game = () => {
           gameTitle: titleParam,
           _id: _id
         }
+      }).then(response => {
+        retrieveInfo();
       })
     }
     catch(err){
