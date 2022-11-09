@@ -45,15 +45,17 @@ const Game = () => {
     fetchPolicy: "network-only"
   });
 
-  useEffect(() => {
-    retrieveInfo();
-  }, []);
-
   useEffect(()=> {
     if(didMount.current){
       filterPlayers();
     }
   }, [state]);
+
+  useEffect(() => {
+    console.log("UseEffect");
+    didMount.current = true;
+    retrieveInfo();
+  }, []);
 
   const retrieveInfo = async() => {
     search().then(response => {
@@ -141,7 +143,8 @@ const Game = () => {
           playstyle: "Casual"
         }
       }).then(response=> {
-        retrieveInfo()
+        console.log(response);
+        setLfg(response.data.updateLfg.lfgList);
       })
     }
     catch(err){
@@ -236,6 +239,7 @@ const Game = () => {
         if(player.toTime.split(" ")[1] == "PM"){
           end += 12;
         }
+        console.log("State.from:" + state.from + "start: " + start + "State.to: " + state.to + "end: " + end);
         if(state.to === "any"){
           return state.from >= start && state.from < end;
         }

@@ -140,6 +140,7 @@ export const ADD_LFG = gql`
 mutation addLfg($gameTitle: String!,$title: String!, $capacity:Int!, $creator: String!, $playstyle: String!){
   addLfg(gameTitle: $gameTitle, title: $title, capacity: $capacity, creator: $creator, playstyle: $playstyle){
     lfgList{
+      _id
       title
       players
       creator
