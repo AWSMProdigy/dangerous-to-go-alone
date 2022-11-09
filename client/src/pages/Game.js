@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import { QUERY_ME_GAME, QUERY_GAME } from '../utils/queries';
 import { useMutation } from '@apollo/client';
 import { ADD_LFG, UPDATE_LFG, CLOSE_LFG } from '../utils/mutations';
@@ -36,34 +36,34 @@ const Game = () => {
 
   const [tab, setTab] = useState("players");
 
-  const { loading, data } = useQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
-    variables: { 
-      gameTitle: titleParam 
-    }
+  const [search, { loading, data }] = useLazyQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
+    variables: { gameTitle: titleParam },
+    fetchPolicy: "network-only"
   });
 
   useEffect(() => {
-    if(!loading){
-      setPlayers(data.game.players);
-      setState({
-        to: state.to,
-        from: state.from,
-        platform: state.platform,
-        playstyle: state.playstyle
-      });
-      setLfg(data.game.game.lfgList);
-      didMount.current = true;
-    }
-    else{
-      return (<div>Loading...</div>)
-    }
-  }, [loading]);
+    retrieveInfo();
+  }, []);
 
   useEffect(()=> {
     if(didMount.current){
       filterPlayers();
     }
   }, [state]);
+
+  const retrieveInfo = async() => {
+    search().then(response => {
+      console.log(response);
+      setPlayers(response.data.game.players);
+      setState({
+        to: state.to,
+        from: state.from,
+        platform: state.platform,
+        playstyle: state.playstyle
+      });
+      setLfg(response.data.game.game.lfgList);
+    })
+  }
 
   function handleTo(e){
     if(e.target.value === "any"){
@@ -151,7 +151,7 @@ const Game = () => {
           player: username
         }
       }).then(response=> {
-        console.log(response);
+        setLfg(response.data.updateLfg.lfgList);
       })
     }
     catch(err){

@@ -141,6 +141,7 @@ mutation addLfg($gameTitle: String!,$title: String!, $capacity:Int!, $creator: S
   addLfg(gameTitle: $gameTitle, title: $title, capacity: $capacity, creator: $creator, playstyle: $playstyle){
     lfgList{
       title
+      players
       creator
       capacity
       playstyle
@@ -153,7 +154,11 @@ export const UPDATE_LFG =  gql`
 mutation updateLfg($gameTitle: String!, $_id: ID!,$add: Boolean!, $player: String!){
   updateLfg(gameTitle: $gameTitle, _id: $_id, add: $add, player: $player){
     lfgList{
+      title
       players
+      creator
+      capacity
+      playstyle
     }
   }
 }
