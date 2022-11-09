@@ -19,6 +19,10 @@ import { Link } from 'react-router-dom';
 const Game = () => {
   const { title: titleParam } = useParams();
   const [playerArray, setPlayers] = useState([]);
+  const [data, setData] = useState({
+    me: null,
+    game: null
+  });
   const [lfgArray, setLfg] = useState([]);
   const [addLfg] = useMutation(ADD_LFG);
   const [updateLfg] = useMutation(UPDATE_LFG);
@@ -36,14 +40,14 @@ const Game = () => {
 
   const [tab, setTab] = useState("players");
 
-  const [search, { loading, data }] = useLazyQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
+  const [search] = useLazyQuery(Auth.loggedIn() ? QUERY_ME_GAME : QUERY_GAME, {
     variables: { gameTitle: titleParam },
     fetchPolicy: "network-only"
   });
 
   useEffect(() => {
     retrieveInfo();
-  }, []);
+  }, [lfgArray]);
 
   useEffect(()=> {
     if(didMount.current){
@@ -52,6 +56,7 @@ const Game = () => {
   }, [state]);
 
   const retrieveInfo = async() => {
+    console.log("retrieve info")
     search().then(response => {
       console.log(response);
       setPlayers(response.data.game.players);
@@ -61,7 +66,12 @@ const Game = () => {
         platform: state.platform,
         playstyle: state.playstyle
       });
+      setData({
+        me: response.data.me,
+        game: response.data.game
+      })
       setLfg(response.data.game.game.lfgList);
+      console.log("end retrieve")
     })
   }
 
@@ -200,6 +210,7 @@ const Game = () => {
   }
 
   function filterPlayers(){
+    console.log("Filter players");
     let newPlayerArray = data.game.players;
     if(state.playstyle!=="Any"){
       newPlayerArray = newPlayerArray.filter(player =>{
@@ -300,11 +311,11 @@ const Game = () => {
   }
 }
 
-  if(loading){
-    return (<div>Loading...</div>);
+  if(data.me === null || data.game === null){
+    return <h1>Loading...</h1>
   }
-
   let pic;
+  console.log("Switch")
   switch(data.game.game.title){
     case "Battlefield 2042":
       pic=battle;
@@ -328,6 +339,8 @@ const Game = () => {
       pic = halo;
       break;
   }
+
+  console.log("html")
   return (
     <div className="container mt-5">
         <div className="col col-md-12" id="main">
