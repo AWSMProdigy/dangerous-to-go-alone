@@ -150,6 +150,8 @@ const Game = () => {
           add: add,
           player: username
         }
+      }).then(response=> {
+        console.log(response);
       })
     }
     catch(err){
@@ -276,6 +278,7 @@ const Game = () => {
         <div className="playerContainer">
           <p className='player-entry'>{lfgArray[lfg].title}</p>
           <p className='player-entry'>{lfgArray[lfg].creator}</p>
+          <p className='player-entry'>{lfgArray[lfg].players}</p>
           
           {(Auth.loggedIn() && data.me.username !== lfgArray[lfg].creator) ? (
             <>

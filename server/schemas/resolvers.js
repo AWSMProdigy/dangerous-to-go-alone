@@ -78,6 +78,11 @@ const resolvers = {
     addFriend: async (parent, { friendName }, context) => {
       let me;
       if (context.user) {
+        if(friendName = context.user.username){
+          throw new GraphQLError("Loneliness is tough, but you can't be friends with yourself! Use Dangerous To Go Alone to find new friends!", {
+            extensions: { code: '404' },
+          });
+        }
         const friend = await User.findOne({
           username: friendName,
         });
@@ -325,24 +330,26 @@ const resolvers = {
       // throw new AuthenticationError('You need to be logged in!');
     },
 
-    updateLfg: async (parent, {gameTitle, _id, add, player, capacity}, context) =>{
-      // if (context.user){
+    updateLfg: async (parent, {gameTitle, _id, add, player}, context) =>{
+      if (context.user){
         if(add){
-          console.log(await Game.findOneAndUpdate(
-            {title: gameTitle, "lfgList._id": _id, string: {$exists: false}},
-            {$addToSet: {$each: {"lfgList.$.players": {$each: [player], $slice: capacity}}}}
-          ))
-          return Game.findOne({title: gameTitle});
+          const game = await Game.findOneAndUpdate(
+            {title: gameTitle, "lfgList._id": _id},
+            {$addToSet: {"lfgList.$.players": player}},
+            {new: true}
+          );
+          return game;
         }
         else{
-          await Game.findOneAndUpdate(
-            {title: gameTitle, "lfgList.title" : _id},
-            { $pull: {"lfgList.$.players" : player}}
-          )
-          return Game.findOne({title: gameTitle});
+          const game = await Game.findOneAndUpdate(
+            {title: gameTitle, "lfgList._id": _id},
+            {$pull: {"lfgList.$.players": player}},
+            {new: true}
+          );
+          return game;
         }
-      // }
-      // throw new AuthenticationError('You need to be logged in!');
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
     closeLfg: async (parent, {gameTitle, _id}, context) => {
       //if(context.user){
