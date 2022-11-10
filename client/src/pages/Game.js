@@ -149,6 +149,7 @@ const Game = () => {
     }
     catch(err){
       console.error(err);
+      alert(err);
     }
   }
 
@@ -314,15 +315,16 @@ const Game = () => {
         <>
         <div className="playerContainer">
           <p className='player-entry'>LFG Title</p>
-          <p className='player-entry'>LFG Creator</p>
+          <p className='player-entry'>LFG Playstyle</p>
+          <p className='player-entry'>LFG Player Count</p>
           <button className='player-entry' style={{visibility: "hidden"}}>Join LFG</button>
         </div>
         {
         Object.keys(lfgArray).map((lfg, index) => (
         <div className="playerContainer">
           <p className='player-entry'>{lfgArray[lfg].title}</p>
-          <p className='player-entry'>{lfgArray[lfg].creator}</p>
-          <p className='player-entry'>{lfgArray[lfg].players}</p>
+          <p className='player-entry'>{lfgArray[lfg].playstyle}</p>
+          <p className='player-entry'>{lfgArray[lfg].players.length}/{lfgArray[lfg].capacity}</p>
           
           {(Auth.loggedIn() && data.me.username !== lfgArray[lfg].creator) ? (
             <>
