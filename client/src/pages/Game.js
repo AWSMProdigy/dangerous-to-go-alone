@@ -5,6 +5,7 @@ import { QUERY_ME_GAME, QUERY_GAME } from '../utils/queries';
 import { useMutation } from '@apollo/client';
 import { ADD_LFG, UPDATE_LFG, CLOSE_LFG } from '../utils/mutations';
 import "../../src/styles.css";
+import Popup from '../components/Popup'
 
 import battle from "../assets/images/gameImages/Battlefield 2042.jpg"
 import halo from "../assets/images/gameImages/Halo Infinite.jpg"
@@ -23,6 +24,14 @@ const Game = () => {
     me: null,
     game: null
   });
+  const [popupState, setPopup] = useState({
+    creator: "",
+    title: "",
+    capacity: "",
+    players: [],
+    playstyle: "",
+    trigger: false
+  })
   const [lfgArray, setLfg] = useState([]);
   const [addLfg] = useMutation(ADD_LFG);
   const [updateLfg] = useMutation(UPDATE_LFG);
@@ -325,7 +334,10 @@ const Game = () => {
           <p className='player-entry'>{lfgArray[lfg].title}</p>
           <p className='player-entry'>{lfgArray[lfg].playstyle}</p>
           <p className='player-entry'>{lfgArray[lfg].players.length}/{lfgArray[lfg].capacity}</p>
-          
+          <button onClick={() => setPopup({creator: lfgArray[lfg].creator, title: lfgArray[lfg].title, capacity: lfgArray[lfg].capacity, players: lfgArray[lfg].players, playstyle: lfgArray[lfg].playstyle, trigger: true})}>Details</button>
+          <Popup state={popupState} setPopup={setPopup}>
+            <h3>My Popup</h3>
+          </Popup>
           {(Auth.loggedIn() && data.me.username !== lfgArray[lfg].creator) ? (
             <>
             {(lfgArray[lfg].players.find(player => player === data.me.username) !== undefined && lfgArray[lfg].players.length < lfgArray[lfg].capacity) ? (
