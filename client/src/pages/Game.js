@@ -188,10 +188,12 @@ const Game = () => {
   }
 
   function TimeOptions(){
-    const n = 12;
+    const n = 11;
+    const twelveAM = <option value={0}>{`12 AM`}</option>
     const AMarray = [...Array(n)].map((e, i) => <option value={i+1}>{`${i+1} AM`}</option>)
+    const twelvePM = <option value={12}>{`12 PM`}</option>
     const PMarray = [...Array(n)].map((e, i) => <option value={i+13}>{`${i+1} PM`}</option>)
-    const fullArray = [...AMarray, ...PMarray];
+    const fullArray = [twelveAM, ...AMarray, twelvePM, ...PMarray];
     return(
       fullArray
     )
@@ -231,22 +233,47 @@ const Game = () => {
         if(!player.fromTime || !player.toTime){
           return true;
         }
+        //12AM must = 0 and 12PM must = 12
         let start = parseInt(player.fromTime.split(" ")[0]);
-        if(player.fromTime.split(" ")[1] == "PM"){
-          start += 12;
+        if(start != 12){
+          if(player.fromTime.split(" ")[1] === "PM"){
+            start += 12;
+          }
         }
         let end = parseInt(player.toTime.split(" ")[0]);
-        if(player.toTime.split(" ")[1] == "PM"){
-          end += 12;
+        if(end != 12){
+          if(player.toTime.split(" ")[1] === "PM"){
+            end += 12;
+          }
         }
-        console.log("State.from:" + state.from + "start: " + start + "State.to: " + state.to + "end: " + end);
+        if(player.fromTime === "12 AM"){
+          start = 0;
+        }
+        if(player.toTime === "12 AM"){
+          end = 0;
+        }
+        //Handle the situations where a from or to time are not provided
         if(state.to === "any"){
           return state.from >= start && state.from < end;
         }
         if(state.from === "any"){
           return state.to > start && state.to <= end;
         }
-        return (start <= state.from && (end <= state.to && end > state.from)) || (start >= state.from && end <= state.to) || ((start >= state.from && start < state.to) && end >= state.to);
+        console.log("State.from:" + state.from + "start: " + start + "State.to: " + state.to + "end: " + end);
+        //Both go over midnight
+        if((state.from >= state.to && start > end)||(state.from > state.to && start >= end)){
+          return (state.from >= end && state.to < start) || (state.from > end && state.to <= start);
+        }
+        //Only desired availability goes over midnight
+        else if((state.from >= state.to && start < end) || (state.from > state.to && start <= end)){
+          return (state.from <= end && state.to < start) || (state.from < end && state.to <= start)
+        }
+        //Only player availability goes over midnight
+        else if((state.from <= state.to && start > end) || (state.from < state.to && start >= end)){
+          return (state.from >= end && state.to > start) || (state.from > end && state.to >= start)
+        }
+        //Nothing goes over midnight
+        return (state.from <= end && state.to > start) || (state.from < end && state.to >= start);
       })
     setPlayers(newPlayerArray);
   }
