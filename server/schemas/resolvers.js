@@ -310,8 +310,15 @@ const resolvers = {
       return { _id: uploadStream.id, filename, mimetype, encoding }
     },
 
-    addLfg: async (parent, {gameTitle, title, capacity, creator, playstyle}, context) =>{
-      // if (context.user && context.user.hasLfg){
+    addLfg: async (parent, {gameTitle, title, capacity, creator, playstyle}, context) => {
+      if (context.user){
+        let me = User.findOne({ _id: context.user._id, canLfg: true });
+        console.log(me);
+        if(!me){
+          throw new GraphQLError("Cannot create new LFG with an LFG already", {
+            extensions: { code: '404' },
+          });
+        }
         await Game.findOneAndUpdate(
           {title: gameTitle},
           { $pull: {lfgList: {creator: creator}}}
@@ -321,13 +328,15 @@ const resolvers = {
           { $push: {lfgList: {title: title, creator: creator, capacity: capacity, playstyle: playstyle}}},
           {new: true}
         )
-        // User.findOneAndUpdate(
-        //   {id: context.user._id},
-        //   {$set: {canLfg: false}}
-        // )
+        //Might be able to find a way to modify me object and not have to use this call
+        User.findOneAndUpdate(
+          {id: context.user._id},
+          {$set: {canLfg: false}}
+        )
         return myGame;
-      //}
-      // throw new AuthenticationError('You need to be logged in!');
+      }
+      
+      throw new AuthenticationError('You need to be logged in!');
     },
 
     updateLfg: async (parent, {gameTitle, _id, add, player}, context) =>{
@@ -352,7 +361,7 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     closeLfg: async (parent, {gameTitle, _id}, context) => {
-      //if(context.user){
+      if(context.user){
         let myGame = await Game.findOneAndUpdate(
           {title: gameTitle},
           { $pull: {lfgList: {_id: _id}}},
@@ -363,8 +372,8 @@ const resolvers = {
           {$set: {canLfg: true}}
         )
         return myGame;
-      //}
-      //throw new AuthenticationError('You need to be logged in!');
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
     updateMe: async (parent, { description, platform, fromTime, toTime, discord, xboxName, steamName, playstationName, playstyle }, context) => {
       if (context.user) {

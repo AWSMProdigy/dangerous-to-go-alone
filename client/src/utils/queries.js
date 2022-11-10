@@ -18,6 +18,7 @@ export const QUERY_USER = gql`
       playstationName
       profPic
       playstyle
+      canLfg
     }
   }
 `;
