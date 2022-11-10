@@ -144,7 +144,7 @@ const Game = () => {
         }
       }).then(response=> {
         console.log(response);
-        setLfg(response.data.updateLfg.lfgList);
+        setLfg(response.data.addLfg.lfgList);
       })
     }
     catch(err){
@@ -179,7 +179,8 @@ const Game = () => {
           _id: _id
         }
       }).then(response => {
-        retrieveInfo();
+        console.log(response);
+        setLfg(response.data.closeLfg.lfgList);
       })
     }
     catch(err){
