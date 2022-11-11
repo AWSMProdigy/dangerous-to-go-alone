@@ -1,7 +1,17 @@
 import React from 'react';
 import './Popup.css';
+import Auth from '../utils/auth';
 
 function Popup(props){
+
+    const handleUpdate = async(add, _id, username) => {
+        console.log(add, _id, username);
+        await props.updateLfg(add, _id, username)
+        .then(response => {
+            console.log(response);
+            props.setPopup({trigger: false})
+        })
+    }
     return ( props.state.trigger) ? (
         <div className='popup'>
             <div className='popupInner'>
@@ -15,8 +25,17 @@ function Popup(props){
                     </div>
                     <div className='popupPlayers'>
                         <h2>{props.state.players}</h2>
-                        
-                        <button className='closeBtn' onClick={() => props.updateLFG(true, props.state._id)}>Join LFG</button>
+                        {(Auth.loggedIn() && props.state.me !== props.state.creator) ? (
+                            <>
+                            {(props.state.players.find(player => player === props.state.me) !== undefined && props.state.players.length < props.state.capacity) ? (
+                            <button className='closeBtn' onClick={() => handleUpdate(false, props.state._id, props.state.me)}>Leave LFG</button> 
+                            ) : (
+                            <button className='closeBtn' onClick={() => handleUpdate(true, props.state._id, props.state.me)}>Join LFG</button> 
+                            )}
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </div>
                 </div>
                 <button className='closeBtn' onClick={() => props.setPopup({trigger: false})}>Close</button>

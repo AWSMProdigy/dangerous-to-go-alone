@@ -31,6 +31,7 @@ const Game = () => {
     players: [],
     playstyle: "",
     _id: "",
+    me: "",
     trigger: false
   })
   const [lfgArray, setLfg] = useState([]);
@@ -335,7 +336,7 @@ const Game = () => {
           <p className='player-entry'>{lfgArray[lfg].title}</p>
           <p className='player-entry'>{lfgArray[lfg].playstyle}</p>
           <p className='player-entry'>{lfgArray[lfg].players.length}/{lfgArray[lfg].capacity}</p>
-          <button onClick={() => setPopup({creator: lfgArray[lfg].creator, title: lfgArray[lfg].title, capacity: lfgArray[lfg].capacity, players: lfgArray[lfg].players, playstyle: lfgArray[lfg].playstyle, trigger: true, _id: lfgArray[lfg]._id})}>Details</button>
+          <button onClick={() => setPopup({creator: lfgArray[lfg].creator, title: lfgArray[lfg].title, capacity: lfgArray[lfg].capacity, players: lfgArray[lfg].players, playstyle: lfgArray[lfg].playstyle, trigger: true, _id: lfgArray[lfg]._id, me: data.me.username})}>Details</button>
           {(Auth.loggedIn() && data.me.username !== lfgArray[lfg].creator) ? (
             <>
             {(lfgArray[lfg].players.find(player => player === data.me.username) !== undefined && lfgArray[lfg].players.length < lfgArray[lfg].capacity) ? (
