@@ -15,10 +15,11 @@ function Popup(props){
                     </div>
                     <div className='popupPlayers'>
                         <h2>{props.state.players}</h2>
+                        
+                        <button className='closeBtn' onClick={() => props.updateLFG(true, props.state._id)}>Join LFG</button>
                     </div>
                 </div>
                 <button className='closeBtn' onClick={() => props.setPopup({trigger: false})}>Close</button>
-                {props.children}
             </div>
         </div>
     ) : ""

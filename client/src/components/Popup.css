@@ -8,7 +8,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 15px;
 }
 
 .popupInner{
@@ -16,7 +15,16 @@
     padding: 32px;
     width: 100%;
     max-width: 640px;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+}
+
+.popupHeader{
+    width: 100%;
+    height: 25%;
     background-color: white;
+    border-radius: 5px;
 }
 
 .popupBody {
@@ -24,12 +32,14 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    height: 70%;
 }
 
 .popupBody div{
     background-color: rgba(255, 0, 0, 0.20);
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 20px;
+    width: 50%;
 }
 
 .popupInner .closeBtn{
