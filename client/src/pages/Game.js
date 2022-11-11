@@ -400,26 +400,33 @@ const Game = () => {
             <h6 className="ml-4"><b>Platforms:</b> <span className="red-text">{data.game.platforms}</span></h6>
             <h6 className="mt-2 ml-4"><b>Current Player Count:</b> <span className="red-text">{data.game.players.length}</span></h6>
             {/* <p className="mt-2 ml-4 mt-4">You've inherited your grandfather's old farm plot in Stardew Valley. Armed with hand-me-down tools and a few coins, you set out to begin your new life. Can you learn to live off the land and turn these overgrown fields into a thriving home? </p> */}
-            <h4 className="ml-4 mt-5 mb-3">Players</h4>
-            <div className="playerContainer">
-              <p className='player-entry'>Username</p>
-              <div className='player-entry'>
-                <SelectTime></SelectTime>
+            {(tab === "players") ? (
+            <>
+              <h4 className="ml-4 mt-5 mb-3">Players</h4>
+              <div className="playerContainer">
+                <p className='player-entry'>Username</p>
+                <div className='player-entry'>
+                  <SelectTime></SelectTime>
+                </div>
+                <select className='player-entry' name="plats" defaultValue="Any Platform" onChange={handlePlatform}>
+                  <option value="Any">Any Platform</option>
+                  <option value="PC">PC</option>
+                  <option value="Xbox Series">Xbox Series</option>
+                  <option value="Xbox One">Xbox One</option>
+                  <option value="PS4">PS4</option>
+                  <option value="PS5">PS5</option>
+                </select>
+                <select className='player-entry' name="playstyle" defaultValue="Any" onChange={handlePlaystyle}>
+                  <option value="Any">Any</option>
+                  <option value="Casual">Casual</option>
+                  <option value="Serious">Serious</option>    
+                </select>
               </div>
-              <select className='player-entry' name="plats" defaultValue="Any Platform" onChange={handlePlatform}>
-                <option value="Any">Any Platform</option>
-                <option value="PC">PC</option>
-                <option value="Xbox Series">Xbox Series</option>
-                <option value="Xbox One">Xbox One</option>
-                <option value="PS4">PS4</option>
-                <option value="PS5">PS5</option>
-              </select>
-              <select className='player-entry' name="playstyle" defaultValue="Any" onChange={handlePlaystyle}>
-                <option value="Any">Any</option>
-                <option value="Casual">Casual</option>
-                <option value="Serious">Serious</option>    
-              </select>
-            </div>
+              </>
+            ) :
+            (
+              <></>
+            )}
             <div className="gameTabs">
               <button className={tab === "players" ? "selected" : "notSelected"} onClick={() => setTab("players")}>Players</button>
               <button className={tab === "players" ? "notSelected" : "selected"} onClick={() => setTab("lfg")}>LFG</button>
