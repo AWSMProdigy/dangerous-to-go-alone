@@ -12,22 +12,25 @@
 
 .popupInner{
     position: relative;
-    padding: 32px;
-    width: 100%;
-    max-width: 640px;
+    padding: 16px;
     border-radius: 15px;
     background-color: black;
-    color: white;
+    height: 60vh;
+    width: 80vw;
 }
 
 .popupHeader{
+    display: flex;
     width: 100%;
-    height: 25%;
+    height: 30%;
     background-color: white;
     border-radius: 5px;
+    color: black;
+    margin-bottom: 10px;
 }
 
 .popupBody {
+    color: white;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -35,17 +38,28 @@
     height: 70%;
 }
 
-.popupBody div{
+.popupInfo, .popupPlayers{
     background-color: rgba(255, 0, 0, 0.20);
+
+    margin: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border-radius: 5px;
     padding: 20px;
     width: 50%;
+    height: 100%;
 }
 
 .popupInner .closeBtn{
     position: absolute;
     top: 16px;
-    right: 16px
+    right: 16px;
+}
+
+.popupButton{
+    border: 2px solid red;
 }
 
 .popupHeader span{

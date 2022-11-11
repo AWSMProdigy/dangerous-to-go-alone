@@ -16,21 +16,23 @@ function Popup(props){
         <div className='popup'>
             <div className='popupInner'>
                 <div className='popupHeader'>
-                    <h1>{props.state.title}<span> by {props.state.creator}</span></h1>
+                    <h1>{props.state.title}</h1>
+                    <span> by {props.state.creator}</span>
                 </div>
                 <div className='popupBody'>
                     <div className='popupInfo'>
-                        <h2>Player Count: {props.state.players.length}/{props.state.capacity}</h2>
-                        <h2>Playstyle: {props.state.playstyle}</h2>
+                        <span>Player Count: {props.state.players.length}/{props.state.capacity}</span>
+                        <span>Playstyle: {props.state.playstyle}</span>
                     </div>
                     <div className='popupPlayers'>
-                        <h2>{props.state.players}</h2>
+                        <span>Current players:</span>
+                        <h3>{props.state.players}</h3>
                         {(Auth.loggedIn() && props.state.me !== props.state.creator) ? (
                             <>
                             {(props.state.players.find(player => player === props.state.me) !== undefined && props.state.players.length < props.state.capacity) ? (
-                            <button className='closeBtn' onClick={() => handleUpdate(false, props.state._id, props.state.me)}>Leave LFG</button> 
+                            <button className='popupButton' onClick={() => handleUpdate(false, props.state._id, props.state.me)}>Leave LFG</button> 
                             ) : (
-                            <button className='closeBtn' onClick={() => handleUpdate(true, props.state._id, props.state.me)}>Join LFG</button> 
+                            <button className='popupButton' onClick={() => handleUpdate(true, props.state._id, props.state.me)}>Join LFG</button> 
                             )}
                             </>
                         ) : (
