@@ -17,7 +17,7 @@ function Popup(props){
             <div className='popupInner'>
                 <div className='popupHeader'>
                     <h1>{props.state.title}</h1>
-                    <span> by {props.state.creator}</span>
+                    <h4> by {props.state.creator}</h4>
                 </div>
                 <div className='popupBody'>
                     <div className='popupInfo'>
