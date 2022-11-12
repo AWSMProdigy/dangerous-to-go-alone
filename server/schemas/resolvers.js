@@ -312,12 +312,14 @@ const resolvers = {
 
     addLfg: async (parent, {gameTitle, title, capacity, creator, playstyle}, context) => {
       if (context.user){
-        let me = await User.findOne({ _id: context.user._id, canLfg: true });
-        if(!me){
-          throw new GraphQLError("Cannot create new LFG with an LFG already", {
-            extensions: { code: '400' },
-          });
-        }
+        await User.findOne({ _id: context.user._id }).then(response => {
+          console.log(response.canLfg);
+          if(!response.canLfg){
+            throw new GraphQLError("Cannot create new LFG with an LFG already", {
+              extensions: { code: '400' },
+            });
+          }
+        })
         await Game.findOneAndUpdate(
           {title: gameTitle},
           { $pull: {lfgList: {creator: creator}}}
@@ -329,12 +331,12 @@ const resolvers = {
         )
         //Might be able to find a way to modify me object and not have to use this call
         await User.findOneAndUpdate(
-          {id: context.user._id},
+          {_id: context.user._id},
           {$set: {canLfg: false}},
           {new: true}
-        );
-        
-        
+        ).then(response => {
+          console.log("User updated");
+        });
         return myGame;
       }
       
@@ -369,7 +371,7 @@ const resolvers = {
           { $pull: {lfgList: {_id: _id}}},
           { new: true }
         )
-        User.findOneAndUpdate(
+        await User.findOneAndUpdate(
           {id: context.user._id},
           {$set: {canLfg: true}}
         )
