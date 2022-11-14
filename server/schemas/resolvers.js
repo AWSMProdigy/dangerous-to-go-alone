@@ -372,8 +372,9 @@ const resolvers = {
           { new: true }
         )
         await User.findOneAndUpdate(
-          {id: context.user._id},
-          {$set: {canLfg: true}}
+          {_id: context.user._id},
+          {$set: {canLfg: true}},
+          {new: true}
         )
         return myGame;
       }
